@@ -1,0 +1,31 @@
+---
+name: agent-context-kit
+description: Genera o actualiza la documentación de contexto de un proyecto (reglas, estado en caliente, backlog, historial, arquitectura, stack, integraciones externas) para que cualquier agente de IA sepa en qué momento está el proyecto sin depender de la memoria de una conversación. Úsalo al empezar a trabajar en un repositorio — para inicializar esta documentación si no existe, o para leerla y mantenerla al día si ya existe.
+---
+
+# agent-context-kit
+
+## Cuándo se dispara
+
+Al empezar a trabajar sobre un repositorio, antes de tocar código: para saber si ya existe documentación de contexto de este skill y, si no existe, decidir cuánta generar según el alcance de la tarea pedida.
+
+También se puede invocar explícitamente — ver "Cómo usar" en el `README.md` raíz. En particular, pedir explícitamente migrar (ej. *"...y migra mi proyecto"*) fuerza el chequeo de `docs/migration-flow.md` aunque la heurística automática por sí sola no encuentre suficientes coincidencias como para dispararse.
+
+## Qué hace (alto nivel)
+
+0. **Determina el idioma** en el que va a redactar todo el contenido — corre siempre, antes que cualquier otra cosa, y se persiste en `agents/rules.md` para no volver a preguntarlo en sesiones futuras. Ver [`docs/questions-flow.md`](./docs/questions-flow.md), sección "Idioma de la documentación".
+1. **Detecta** si el repo destino ya tiene `docs/agents/` y/o `docs/project/` (o sus equivalentes bajo `agent-context/`, si `docs/` está ocupado por otra documentación no relacionada).
+   - **Si ya existen** → el skill ya fue inicializado antes en este repo. No se repite el scaffolding: se lee `agents/rules.md` + `agents/handoff.md` + lo relevante de `agents/backlog.md`, se ejecuta la tarea pedida, y al terminar se actualiza `agents/handoff.md` (se sobrescribe) y se agrega la entrada correspondiente a `agents/history.md`.
+   - **Si no existen pero hay documentación de contexto previa en otro formato** (ej. un `docs/claude/` con su propio `backlog.md`/`handoff.md`) → se dispara el flujo de migración en vez de un scaffolding vacío, para reusar ese contenido en vez de perderlo. Ver [`docs/migration-flow.md`](./docs/migration-flow.md).
+   - **Si no existen y no hay nada reconocible para migrar** → se dispara el árbol de preguntas para decidir qué generar, según el alcance de la tarea (puntual, feature, testear, desarrollo prolongado) y, si aplica, la etapa del proyecto.
+2. **Genera o completa** la carpeta de documentación copiando desde `template/` solo lo que corresponda según las respuestas — nunca el catálogo completo por defecto.
+3. **Asegura un puntero explícito** en `CLAUDE.md` y `AGENTS.md` en la raíz del repo destino, para que cualquier agente sepa dónde está la documentación real sin adivinar ni duplicarla.
+
+La lógica de decisión completa — qué preguntar, en qué rondas, y qué archivo de `template/` copiar según cada respuesta — vive en [`docs/questions-flow.md`](./docs/questions-flow.md). Este archivo no la repite: es el punto de entrada, no el árbol de decisión.
+
+## Dónde está cada cosa
+
+- **Árbol de decisión (qué preguntar y qué copiar)** → [`docs/questions-flow.md`](./docs/questions-flow.md)
+- **Migración desde otro sistema de documentación** → [`docs/migration-flow.md`](./docs/migration-flow.md)
+- **Catálogo de plantillas y para qué sirve cada una** → [`docs/template-architecture.md`](./docs/template-architecture.md), plantillas en [`template/`](./template/)
+- **Lógica de detección de conflicto `docs/` vs. `agent-context/` y de los archivos puntero `CLAUDE.md`/`AGENTS.md`** → sección 4 de [`../docs/desing.md`](../docs/desing.md)
