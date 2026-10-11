@@ -71,7 +71,7 @@ Documentación pensada para que un agente de IA sepa cómo trabajar en el proyec
 - **`roadmap.md`** — Visión a mediano/largo plazo del proyecto. Da contexto de hacia dónde va el proyecto más allá de la tarea inmediata.
 - **`known-issues.md`** — Bugs conocidos y zonas frágiles del código, con su workaround temporal si existe. Evita que un agente "arregle" o refactorice algo sin saber que ese comportamiento raro es intencional o ya está siendo mitigado.
 
-### Anclas de sección (`handoff.md` y `backlog.md`)
+### Anclas de sección (`handoff.md`, `backlog.md` y, en modo multi, `team-backlog.md` y `operators.md`)
 
 Fuente de verdad de este mecanismo — las plantillas y los flujos solo lo mencionan y enlazan acá.
 
@@ -89,6 +89,9 @@ Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la lí
 | `backlog.md` | `free` | Tareas libres |
 | `backlog.md` | `blocked` | Tareas bloqueadas / pospuestas |
 | `backlog.md` | `grouped` | Tareas agrupadas |
+| `team-backlog.md` (multi) | `free` | Tareas libres (sin dueño) |
+| `team-backlog.md` (multi) | `blocked` | Tareas bloqueadas / pospuestas |
+| `operators.md` (multi) | `operators` | Lista de operadores |
 
 - **Por qué existen:** los headers se redactan en el idioma de la documentación del proyecto (Regla 3 de `rules.md`), así que una herramienta no puede buscar "Tareas libres" o "Tarea en progreso" literal. Las anclas dan un punto fijo, independiente del idioma, para cualquier herramienta que lea el estado de las tareas (por ejemplo, un script de seguimiento). Mismo prefijo que la firma `agent-context-kit:signature` de `handoff.md`.
 - **Se preservan siempre:** no se traducen, no se borran ni se mueven al actualizar el archivo. En `handoff.md`, que se edita solo en lo que cambia, no se tocan; si alguna vez se reescribe entero, se reescriben. Los ejemplos dentro de comentarios de las plantillas no llevan anclas reales.

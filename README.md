@@ -33,7 +33,7 @@ Pídeselo al agente al empezar a trabajar en un repositorio:
 
 ```
 SKILL.md        # Punto de entrada: cuándo se dispara y qué hace
-docs/           # Flujos (questions-flow, migration-flow, multi-operator) y template-architecture.md
+docs/           # Flujos (questions-flow, migration-flow, multi-operator, update-flow, version-check, asking-questions), template-architecture.md y changelog/
 template/       # Catálogo de plantillas que la skill copia al repo destino
 .claude-plugin/ # plugin.json y marketplace.json
 ```

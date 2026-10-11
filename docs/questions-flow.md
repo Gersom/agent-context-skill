@@ -198,7 +198,7 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 2. Determinar si se usó `docs/` o `agent-context/` (según «Carpeta destino», más arriba).
 3. **`AGENTS.md` (fuente de verdad — se asegura siempre, en cualquier set, incluso el mínimo):**
    - No existe → crear a partir de `template/AGENTS.md` (o `template/multi/AGENTS.md` en modo multi), ajustando la ruta `docs/`/`agent-context/` y quitando las líneas de los archivos que no se generaron (en el set mínimo: `docs/README.md`, `backlog.md` e `history.md`).
-   - Existe con otro contenido del operador → no se sobrescribe: se agrega la sección delimitada `<!-- agent-docs-skill:start -->` ... `<!-- agent-docs-skill:end -->` de `template/AGENTS.md` al final, solo si el marcador no está ya presente.
+   - Existe con otro contenido del operador → no se sobrescribe: se agrega la sección delimitada `<!-- agent-docs-skill:start -->` ... `<!-- agent-docs-skill:end -->` de `template/AGENTS.md` (o `template/multi/AGENTS.md` en modo multi) al final, solo si el marcador no está ya presente.
 4. **`CLAUDE.md` (redirige a `AGENTS.md`, nunca duplica su contenido — se asegura siempre, en cualquier set):**
    - No existe → crear a partir de `template/CLAUDE.md`, literal.
    - Existe con otro contenido del operador → agregar la sección delimitada de `template/CLAUDE.md` al final, solo si el marcador no está ya presente.
