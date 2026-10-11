@@ -99,6 +99,15 @@ Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la lí
 - **Set mínimo:** genera `handoff.md` pero no `backlog.md` ni `history.md` (ver [`questions-flow.md`](./questions-flow.md)), así que solo existen las anclas `in-progress` y `paused`; las herramientas que las leen tienen que tolerar que falten `backlog.md` e `history.md`.
 - **`history.md` (sin anclas):** el script de seguimiento de tareas también muestra las últimas entradas de `history.md`. No usa anclas: cada entrada es un header `## <fecha> — ✅|❌ [Tarea N —] título` (el segmento `Tarea N —` solo si la tarea tenía número; las descartadas pueden terminar con un sufijo entre paréntesis, ej. `(descartada)`), con las entradas nuevas **arriba** — el script toma las primeras. Lo que identifica una entrada es la marca ✅ (hecha) o ❌ (descartada), así que no se reemplaza por texto al traducir; los headers sin marca, dentro de comentarios o con placeholders se ignoran.
 
+### Marcador de versión (`rules.md`)
+
+Registra con qué versión de la skill se generaron las Reglas por defecto del proyecto.
+
+- **Formato:** comentario HTML de una línea que cumple la regex `<!-- agent-context-kit:version (d+.d+.d+)[^>]*-->`, en la **línea 1** de `docs/agents/rules.md` (antes del título), para leerlo con `head -n 3`. Un solo marcador por proyecto (en multi-operador `rules.md` es compartido).
+- **Quién lo lee:** [`version-check.md`](./version-check.md), que lo compara con la «Versión de esta skill» de `SKILL.md`.
+- **Único lugar con la versión:** ningún otro archivo del proyecto la registra.
+- **Se conserva siempre:** viene en `template/agents/rules.md`; no se quita como comentario de guía ni se traduce. Solo se reescribe, con el visto bueno del operador, al terminar una revisión de versión.
+
 ## `project/`
 
 Documentación técnica y de dominio sobre el proyecto en sí (no sobre el proceso de trabajo).

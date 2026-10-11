@@ -1,0 +1,41 @@
+# Chequeo de versión de la skill
+
+Detecta si un proyecto con documentación ya generada se creó con una versión de la skill distinta de la instalada, avisa y ofrece una revisión. **No edita nada por su cuenta.**
+
+## Cuándo se corre
+
+Cada vez que se aplica la skill sobre un repo que ya tiene documentación (rama «Si existe» de [`../SKILL.md`](../SKILL.md)), antes de ejecutar la tarea pedida.
+
+## Cómo se lee
+
+1. `head -n 3` de `docs/agents/rules.md` (o `agent-context/agents/rules.md`). No se abre el archivo entero.
+2. Buscar el marcador con la regex `<!-- agent-context-kit:version (\d+\.\d+\.\d+)[^>]*-->` (formato y dónde va: «Marcador de versión» en [`template-architecture.md`](./template-architecture.md)).
+3. Comparar ese valor con la «Versión de esta skill» de `SKILL.md`, por componentes numéricos (major, minor, patch), no como texto.
+
+## Casos
+
+- **Igual** → no decir nada y seguir con la tarea.
+- **Marcador ausente** → versión desconocida (los proyectos generados antes de la 1.9.0 no lo tienen). Se trata como «más vieja».
+- **Proyecto más nuevo que la skill** → avisar que la skill instalada es anterior a la que generó el proyecto, no tocar nada y sugerir actualizar la skill.
+- **Proyecto más viejo o desconocida** → avisar la diferencia (ej. «el proyecto se generó con 1.8.0; la skill es 1.9.0») y preguntar con `AskUserQuestion`: «Revisar ahora» / «Ahora no».
+  - «Ahora no» → seguir con la tarea y no volver a preguntar en esa sesión.
+
+## Revisión (solo si el operador acepta)
+
+Comparar **solo** las partes que la plantilla controla, por rangos, sin leer todo:
+
+- `rules.md`: las secciones «Reglas por defecto (fijas…)» y «Al cerrar una tarea (fijas…)» contra `template/agents/rules.md`. Se excluye la regla «Idioma de la documentación» (valor propio del proyecto).
+- Multi-operador: además el bloque «Trabajo en paralelo» contra `template/multi/rules.md`.
+- `AGENTS.md` y `CLAUDE.md` de la raíz: los bloques delimitados por `agent-docs-skill:start/end` contra `template/AGENTS.md` (o `template/multi/AGENTS.md`) y `template/CLAUDE.md`.
+
+Mostrar cada diferencia al operador sin decidir cuál es «la correcta»: puede ser una edición intencional del proyecto.
+
+## Qué se edita y qué no
+
+- Nunca se edita nada sin que el operador lo pida, diferencia por diferencia.
+- Al terminar la revisión, preguntar con `AskUserQuestion` si actualizar el marcador a la versión actual. Solo con sí se reescribe la línea 1 de `rules.md`.
+
+## Alcance
+
+- No actualiza automáticamente ni migra entre versiones (es otra tarea).
+- No compara `handoff.md`, `backlog.md` ni `history.md`: son contenido del proyecto.

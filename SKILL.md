@@ -5,6 +5,8 @@ description: Genera o actualiza la documentación de contexto de un proyecto (re
 
 # agent-context-kit
 
+Versión de esta skill: **1.9.0** (fuente: `.claude-plugin/plugin.json`; deben coincidir).
+
 ## Cuándo se dispara
 
 Al empezar a trabajar sobre un repositorio, antes de tocar código. También se puede invocar explícitamente — pedir explícitamente migrar (ej. *"...y migra mi proyecto"*) fuerza el chequeo de [`docs/migration-flow.md`](./docs/migration-flow.md) aunque la heurística automática no encuentre suficientes coincidencias.
@@ -29,7 +31,7 @@ Revisar si el repo destino tiene `docs/agents/` y/o `docs/project/` (o sus equiv
 
 ### Si existe → no hay nada que generar
 
-Seguir el `AGENTS.md` del repo (qué leer y en qué orden; el idioma de la documentación está en `rules.md`: no se vuelve a preguntar) y ejecutar la tarea pedida. Si el operador pide pasar a multi-operador (se suma otra persona), abrir [`docs/migration-flow.md`](./docs/migration-flow.md), sección "Pasar de plano a multi-operador". Si a `handoff.md` o `backlog.md` les faltan las anclas de sección (`<!-- agent-context-kit:section=... -->`), agregarlas — ver [`docs/template-architecture.md`](./docs/template-architecture.md), "Anclas de sección". No seguir con el árbol de preguntas.
+Antes de ejecutar la tarea pedida, leer solo las líneas 1-3 del `rules.md` del proyecto (`head -n 3`) y seguir [`docs/version-check.md`](./docs/version-check.md) (detecta si el proyecto se generó con otra versión de la skill). Después, seguir el `AGENTS.md` del repo (qué leer y en qué orden; el idioma de la documentación está en `rules.md`: no se vuelve a preguntar) y ejecutar la tarea pedida. Si el operador pide pasar a multi-operador (se suma otra persona), abrir [`docs/migration-flow.md`](./docs/migration-flow.md), sección "Pasar de plano a multi-operador". Si a `handoff.md` o `backlog.md` les faltan las anclas de sección (`<!-- agent-context-kit:section=... -->`), agregarlas — ver [`docs/template-architecture.md`](./docs/template-architecture.md), "Anclas de sección". No seguir con el árbol de preguntas.
 
 ### Si no existe → abrir el flujo que corresponda
 
@@ -41,5 +43,6 @@ Seguir el `AGENTS.md` del repo (qué leer y en qué orden; el idioma de la docum
 - **Qué preguntar y qué copiar** → [`docs/questions-flow.md`](./docs/questions-flow.md)
 - **Migración desde otro sistema de documentación** → [`docs/migration-flow.md`](./docs/migration-flow.md)
 - **Varias personas trabajando en paralelo (modo multi-operador, opcional)** → [`docs/multi-operator.md`](./docs/multi-operator.md); solo se abre si el operador lo activa
+- **Versión de la skill en un proyecto que ya tiene documentación (detectar y avisar)** → [`docs/version-check.md`](./docs/version-check.md)
 - **Catálogo de plantillas y para qué sirve cada una** → [`docs/template-architecture.md`](./docs/template-architecture.md); plantillas en [`template/`](./template/)
 - **Lógica de detección de conflicto `docs/` vs. `agent-context/` y de los archivos puntero `CLAUDE.md`/`AGENTS.md`** → «Carpeta destino» y Ronda final de [`docs/questions-flow.md`](./docs/questions-flow.md)

@@ -20,7 +20,7 @@ claude plugin marketplace add Gersom/agent-context-skill
 claude plugin install agent-context-kit@agent-context-skill
 ```
 
-Para fijar una versión, agrega el marketplace con un tag: `Gersom/agent-context-skill@v1.8.0`. Para actualizar: `claude plugin update agent-context-kit` (hay que reiniciar la sesión para aplicarlo).
+Para fijar una versión, agrega el marketplace con un tag: `Gersom/agent-context-skill@v1.9.0`. Para actualizar: `claude plugin update agent-context-kit` (hay que reiniciar la sesión para aplicarlo).
 
 ## Usar
 
@@ -42,7 +42,7 @@ Qué es cada plantilla: [`docs/template-architecture.md`](./docs/template-archit
 
 ## Versionado
 
-SemVer, con tags `vX.Y.Z` y la versión en `.claude-plugin/plugin.json`. Mientras `plugin.json` fije `version`, los usuarios reciben una actualización solo al subirla.
+SemVer, con tags `vX.Y.Z` y la versión en `.claude-plugin/plugin.json`. Mientras `plugin.json` fije `version`, los usuarios reciben una actualización solo al subirla. La versión vive en `.claude-plugin/plugin.json`, en `SKILL.md` («Versión de esta skill») y en el marcador de `template/agents/rules.md`, y deben coincidir; el tag `vX.Y.Z` se crea al publicar.
 
 - **patch**: fixes o ajustes de redacción en plantillas existentes.
 - **minor**: contenido nuevo que no rompe nada (una plantilla nueva, una rama nueva del árbol de preguntas).
