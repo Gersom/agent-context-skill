@@ -47,3 +47,7 @@ SemVer, con tags `vX.Y.Z` y la versión en `.claude-plugin/plugin.json`. Mientra
 - **patch**: fixes o ajustes de redacción en plantillas existentes.
 - **minor**: contenido nuevo que no rompe nada (una plantilla nueva, una rama nueva del árbol de preguntas).
 - **major**: cambios que rompen algo que un repo destino ya pudiera usar (mover o renombrar archivos de `template/` referenciados desde `questions-flow.md`, cambiar la estructura generada en `docs/agents` o `docs/project`).
+
+## Apoyar el proyecto
+
+Si la skill te sirve y quieres apoyar su desarrollo, puedes hacer una donación por PayPal: [paypal.me/gersomalaja](https://paypal.me/gersomalaja).
