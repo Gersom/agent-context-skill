@@ -5,7 +5,7 @@ description: Genera o actualiza la documentación de contexto de un proyecto (re
 
 # agent-context-kit
 
-Versión de esta skill: **1.9.0**
+Versión de esta skill: **1.10.0**
 
 ## Cuándo se dispara
 
