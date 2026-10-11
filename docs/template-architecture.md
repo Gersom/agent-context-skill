@@ -1,6 +1,6 @@
 # Arquitectura de `template/`
 
-Este documento describe la estructura de `skill/template/` — el catálogo maestro de plantillas de este skill — y para qué sirve cada archivo. Es documentación de este repo (`agent-context-kit`), no de un proyecto destino: acá no se decide si un archivo se copiará o no en un caso concreto (eso lo define [`questions-flow.md`](./questions-flow.md)), solo se explica qué es y para qué existe cada plantilla.
+Este documento describe la estructura de `template/` — el catálogo maestro de plantillas de esta skill — y para qué sirve cada archivo. Es documentación de la skill, no de un proyecto destino: acá no se decide si un archivo se copiará o no en un caso concreto (eso lo define [`questions-flow.md`](./questions-flow.md)), solo se explica qué es y para qué existe cada plantilla.
 
 Las plantillas llevan comentarios HTML de guía para quien las completa; al generar la documentación se quitan (salvo la firma, las anclas y los marcadores `agent-docs-skill`), ver "Al copiar una plantilla al repo destino" en [`questions-flow.md`](./questions-flow.md).
 
@@ -90,7 +90,7 @@ Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la lí
 | `backlog.md` | `blocked` | Tareas bloqueadas / pospuestas |
 | `backlog.md` | `grouped` | Tareas agrupadas |
 
-- **Por qué existen:** los headers se redactan en el idioma de la documentación del proyecto (Regla 3 de `rules.md`), así que una herramienta no puede buscar "Tareas libres" o "Tarea en progreso" literal. Las anclas dan un punto fijo, independiente del idioma, para el script de seguimiento de tareas de este repo (`scripts/task-tracker/`). Mismo prefijo que la firma `agent-context-kit:signature` de `handoff.md`.
+- **Por qué existen:** los headers se redactan en el idioma de la documentación del proyecto (Regla 3 de `rules.md`), así que una herramienta no puede buscar "Tareas libres" o "Tarea en progreso" literal. Las anclas dan un punto fijo, independiente del idioma, para cualquier herramienta que lea el estado de las tareas (por ejemplo, un script de seguimiento). Mismo prefijo que la firma `agent-context-kit:signature` de `handoff.md`.
 - **Se preservan siempre:** no se traducen, no se borran ni se mueven al actualizar el archivo. En `handoff.md`, que se edita solo en lo que cambia, no se tocan; si alguna vez se reescribe entero, se reescriben. Los ejemplos dentro de comentarios de las plantillas no llevan anclas reales.
 - **Tarea en progreso:** se identifica por la primera línea `Tarea N — título` de la sección `in-progress` que aparezca antes de su primera subsección `###` (en la plantilla, la línea `**Tarea:**`), sin contar ítems de lista como los pasos del plan; si no hay ninguna, no hay tarea en curso (no depende del texto traducido "Sin tarea en curso"). Las tareas de `backlog.md` y las pausadas son headers `### Tarea N — título` (`#### Tarea N — título` dentro de un grupo de "Tareas agrupadas").
 - **Plan de una tarea pausada:** el script muestra el avance del plan de cada pausada a partir de los checkboxes (`- [ ]` / `- [x]`) de su bloque — en la plantilla, los del campo opcional `Plan`, que se copia tal cual de "Tarea en progreso" al pausar la tarea. Ese campo no se repite como texto en la pantalla.
