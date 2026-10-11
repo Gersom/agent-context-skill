@@ -8,7 +8,7 @@ Cada vez que se aplica la skill sobre un repo que ya tiene documentación (rama 
 
 ## Cómo se lee
 
-1. `head -n 3` de `docs/agents/rules.md` (o `agent-context/agents/rules.md`). No se abre el archivo entero.
+1. `head -n 3` de `docs/agents/rules.md` (o `agent-context/agents/rules.md`). No se abre el archivo entero. Si no está donde se espera, usar la carpeta del `handoff.md` firmado (ver «Prioridad» en [`migration-flow.md`](./migration-flow.md)).
 2. Buscar el marcador con la regex `<!-- agent-context-kit:version (\d+\.\d+\.\d+)[^>]*-->` (formato y dónde va: «Marcador de versión» en [`template-architecture.md`](./template-architecture.md)).
 3. Comparar ese valor con la «Versión de esta skill» de `SKILL.md`, por componentes numéricos (major, minor, patch), no como texto.
 
@@ -17,10 +17,12 @@ Cada vez que se aplica la skill sobre un repo que ya tiene documentación (rama 
 - **Igual** → no decir nada y seguir con la tarea.
 - **Marcador ausente** → versión desconocida (los proyectos generados antes de la 1.9.0 no lo tienen). Se trata como «más vieja».
 - **Proyecto más nuevo que la skill** → avisar que la skill instalada es anterior a la que generó el proyecto, no tocar nada y sugerir actualizar la skill.
-- **Proyecto más viejo o desconocida** → avisar la diferencia (ej. «el proyecto se generó con 1.8.0; la skill es 1.9.0») y preguntar con `AskUserQuestion`: «Revisar ahora» / «Ahora no».
+- **Proyecto más viejo o desconocida** → avisar la diferencia (ej. «el proyecto se generó con 1.8.0; la skill es 1.9.0») y preguntar con `AskUserQuestion`: «Actualizar» / «Solo revisar» / «Ahora no».
+  - «Actualizar» → seguir [`update-flow.md`](./update-flow.md).
+  - «Solo revisar» → la revisión por diff de abajo; es también el respaldo cuando el changelog no cubre el salto.
   - «Ahora no» → seguir con la tarea y no volver a preguntar en esa sesión.
 
-## Revisión (solo si el operador acepta)
+## Revisión (solo si el operador elige «Solo revisar»)
 
 Comparar **solo** las partes que la plantilla controla, por rangos, sin leer todo:
 
@@ -37,5 +39,5 @@ Mostrar cada diferencia al operador sin decidir cuál es «la correcta»: puede 
 
 ## Alcance
 
-- No actualiza automáticamente ni migra entre versiones (es otra tarea).
+- Actualizar entre versiones es [`update-flow.md`](./update-flow.md); migrar documentación de otros sistemas es [`migration-flow.md`](./migration-flow.md).
 - No compara `handoff.md`, `backlog.md` ni `history.md`: son contenido del proyecto.
