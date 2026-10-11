@@ -98,7 +98,7 @@ Cuando un operador le pide al agente agregar una tarea, va a **su propio `backlo
 
 Ante la duda, si una preferencia cambia el código o los archivos compartidos, es una regla y va en `rules.md`.
 
-**Al agregar una regla a `rules.md` en modo multi**, el agente le recuerda al operador antes de escribirla: *"Esta regla se aplica a todo el proyecto y a los demás operadores; hay que agregarla con cuidado. ¿Confirmás que es del proyecto y no solo tuya?"* Si es solo suya, la propone para `preferences.md`.
+**Al agregar una regla a `rules.md` en modo multi**, el agente le recuerda al operador antes de escribirla: *"Esta regla se aplica a todo el proyecto y a los demás operadores; hay que agregarla con cuidado. ¿Confirmas que es del proyecto y no solo tuya?"* Si es solo suya, la propone para `preferences.md`.
 
 ## Reglas en modo multi-operador
 
