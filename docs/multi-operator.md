@@ -116,6 +116,25 @@ Las Reglas por defecto no cambian. Al generar la documentación en modo multi (o
 2. Resolver la carpeta propia y leer su `handoff.md` (y `preferences.md` si existe).
 3. Con una tarea en curso, no leer ningún backlog ni `history.md`. Sin tarea en curso: la lista de títulos de su `backlog.md`, y la del `team-backlog.md` solo si no le pidieron algo concreto.
 
-## Pasar de plano a multi
+## Pasar de plano a multi-operador
 
-Lo hace el operador existente cuando se suma otra persona (detalle y comandos en [`migration-flow.md`](./migration-flow.md), "Pasar de plano a multi-operador"): se crea su carpeta, se mueven con `git mv` su `handoff.md`, `backlog.md` e `history.md` (la numeración continúa) y se crea `operators.md` y un `team-backlog.md` vacío. Las tareas que no sean suyas pueden pasar después al `team-backlog.md`.
+El repo **ya usa este skill** en estructura plana (`docs/agents/handoff.md`, etc.) y se suma otra persona: se pasa al modo multi sin perder nada. Lo hace el operador existente y solo si lo pide (ej. *"usa agent-context-kit para pasar a multi-operador"*); la política de lectura de [`../SKILL.md`](../SKILL.md) rige igual.
+
+**Antes de tocar nada**, aplicar la [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio) (sobre `docs/agents`, `AGENTS.md` y `CLAUDE.md`) y preguntar con `AskUserQuestion` (regla general en [`../SKILL.md`](../SKILL.md#cómo-preguntarle-al-operador-obligatorio-al-aplicar-el-skill); las 3 son independientes, van en una sola llamada; las abiertas ofrecen candidatos o «Lo escribo yo» y «No aplica / omitir»):
+
+1. Header `Operador`: ¿con qué nombre corto y qué correo(s) de git se registra el operador actual? (candidato recomendado: el correo de `git config user.email`)
+2. Header `Otros`: ¿quiénes más van a trabajar? Su nombre corto y correo se agregan a `operators.md`; quien solo agregue tareas se registra como `(solo team-backlog)` y no tiene carpeta. Opciones: «Nadie más por ahora (Recomendado)» y «Lo escribo yo».
+3. Header `Team-backlog`: ¿alguna tarea del `backlog.md` actual debe pasar al `team-backlog.md` (sin dueño)? Los títulos (`grep -n "^###"`) se listan en el texto de la pregunta. Opciones: «Ninguna (Recomendado)» (todas quedan con el operador actual y la numeración continúa) y «Elegir tareas» (cuáles, por «Otro»).
+
+**Ejecución** (comandos de archivo, sin leer los archivos enteros):
+
+1. `docs/agents/<operador>/`: crear la carpeta y mover con `git mv` los archivos que existan entre `handoff.md`, `backlog.md` e `history.md` (el set mínimo solo tiene `handoff.md`). No se renombra ni se reescribe nada de su contenido, salvo el enlace a `rules.md` del `handoff.md`, que pasa a `../rules.md`.
+2. Crear `docs/agents/operators.md` desde `template/multi/operators.md` con las líneas de las respuestas 1 y 2, y `docs/agents/team-backlog.md` desde `template/multi/team-backlog.md`. Si se eligieron tareas en la respuesta 3, moverlas ahí sin número, con `Agregada: <fecha> por <operador>`, y sacarlas del `backlog.md` (el contador no retrocede).
+3. `AGENTS.md` de la raíz: si el marcador de versión del proyecto es anterior a la versión de la skill, avisar antes de reemplazar (ver [`version-check.md`](./version-check.md)). Con los marcadores `<!-- agent-docs-skill:start -->`/`end`, reemplazar esa sección por la de `template/multi/AGENTS.md`; sin marcadores, agregar esa sección al final del archivo. `CLAUDE.md` no cambia.
+4. `docs/README.md`: actualizar solo el árbol de `agents/` (ver la guía de `template/README.md`).
+5. `docs/agents/rules.md`: agregar, antes de "## Enlaces", el bloque "Trabajo en paralelo" de `template/multi/rules.md` (ver "Reglas en modo multi-operador", más arriba); las Reglas por defecto no se tocan. En `docs/README.md`, pasar la definición de "operador" a plural.
+6. Dejar registro: una entrada ✅ Hecha en el `history.md` del operador (qué pasó a multi y quiénes quedaron registrados), sin número de tarea.
+
+Los demás operadores no hacen nada especial: al hacer `pull`, su agente no encuentra su correo (o lo encuentra, si se registró en la respuesta 2) y se lo pregunta con `AskUserQuestion`. Las tareas que no sean del operador actual pueden pasar después al `team-backlog.md`.
+
+**No hace:** volver de multi a plano (se hace a mano: mover los archivos del único operador de vuelta a `docs/agents/` y borrar `operators.md` y `team-backlog.md`) ni tocar `docs/project/`, `external/` o `plans/`.
