@@ -2,7 +2,7 @@
 
 Este documento describe la estructura de `template/` — el catálogo maestro de plantillas de esta skill — y para qué sirve cada archivo. Es documentación de la skill, no de un proyecto destino: acá no se decide si un archivo se copiará o no en un caso concreto (eso lo define [`questions-flow.md`](./questions-flow.md)), solo se explica qué es y para qué existe cada plantilla.
 
-Las plantillas llevan comentarios HTML de guía para quien las completa; al generar la documentación se quitan (salvo la firma, las anclas y los marcadores `agent-docs-skill`), ver "Al copiar una plantilla al repo destino" en [`questions-flow.md`](./questions-flow.md).
+Las plantillas llevan comentarios HTML de guía para quien las completa; al generar la documentación se quitan (salvo la firma, las anclas y los marcadores `agent-context-skill:`), ver "Al copiar una plantilla al repo destino" en [`questions-flow.md`](./questions-flow.md).
 
 ## Estructura
 
@@ -54,7 +54,7 @@ Guía para generar el `docs/README.md` del proyecto destino: lo primero que lee 
 
 ## `AGENTS.md` / `CLAUDE.md` (raíz de `template/`)
 
-Los punteros que se aseguran en la raíz del repo destino, en **cualquier** set (incluso el mínimo) — son lo único que le permite a un agente genérico (no solo este skill) encontrar la documentación de contexto sin invocarlo de nuevo. `AGENTS.md` es la fuente de verdad: dice qué leer (README, reglas y handoff) y qué no leer salvo necesidad (el resto, y `backlog.md`/`history.md` con una tarea en curso). `CLAUDE.md` nunca duplica ese contenido, solo redirige a `AGENTS.md`. Ambos llevan la sección delimitada `<!-- agent-docs-skill:start/end -->` para poder agregarse al final de un archivo ya existente del operador sin sobrescribirlo ni duplicarse en corridas futuras. Ver el paso 3-4 de la "Ronda final" en [`questions-flow.md`](./questions-flow.md).
+Los punteros que se aseguran en la raíz del repo destino, en **cualquier** set (incluso el mínimo) — son lo único que le permite a un agente genérico (no solo este skill) encontrar la documentación de contexto sin invocarlo de nuevo. `AGENTS.md` es la fuente de verdad: dice qué leer (README, reglas y handoff) y qué no leer salvo necesidad (el resto, y `backlog.md`/`history.md` con una tarea en curso). `CLAUDE.md` nunca duplica ese contenido, solo redirige a `AGENTS.md`. Ambos llevan la sección delimitada `<!-- agent-context-skill:start/end -->` para poder agregarse al final de un archivo ya existente del operador sin sobrescribirlo ni duplicarse en corridas futuras. Ver el paso 3-4 de la "Ronda final" en [`questions-flow.md`](./questions-flow.md).
 
 ## `multi/` (modo multi-operador, opcional)
 
@@ -78,7 +78,7 @@ Fuente de verdad de este mecanismo — las plantillas y los flujos solo lo menci
 Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la línea inmediatamente anterior a su header `##`, por un comentario HTML de máquina:
 
 ```md
-<!-- agent-context-kit:section=<id> -->
+<!-- agent-context-skill:section=<id> -->
 ## <header en el idioma de la documentación>
 ```
 
@@ -93,7 +93,8 @@ Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la lí
 | `team-backlog.md` (multi) | `blocked` | Tareas bloqueadas / pospuestas |
 | `operators.md` (multi) | `operators` | Lista de operadores |
 
-- **Por qué existen:** los headers se redactan en el idioma de la documentación del proyecto (Regla 3 de `rules.md`), así que una herramienta no puede buscar "Tareas libres" o "Tarea en progreso" literal. Las anclas dan un punto fijo, independiente del idioma, para cualquier herramienta que lea el estado de las tareas (por ejemplo, un script de seguimiento). Mismo prefijo que la firma `agent-context-kit:signature` de `handoff.md`.
+- **Por qué existen:** los headers se redactan en el idioma de la documentación del proyecto (Regla 3 de `rules.md`), así que una herramienta no puede buscar "Tareas libres" o "Tarea en progreso" literal. Las anclas dan un punto fijo, independiente del idioma, para cualquier herramienta que lea el estado de las tareas (por ejemplo, un script de seguimiento). Mismo prefijo que la firma `agent-context-skill:signature` de `handoff.md`.
+- **Un solo prefijo, `agent-context-skill:`:** anclas (`section=`), marcador de versión, firma y bloques `start/end` de `AGENTS.md` y `CLAUDE.md` lo usan, igual que el nombre del repo. Las plantillas y lo que la skill escribe llevan solo ese prefijo. Los proyectos generados antes de la 2.0.0 tienen los anteriores (`agent-context-kit:` en anclas, versión y firma; `agent-docs-skill:` en los bloques `start/end`): se siguen leyendo y, al actualizar, se reemplazan por el nuevo (ver `changelog/2.0.md`).
 - **Se preservan siempre:** no se traducen, no se borran ni se mueven al actualizar el archivo. En `handoff.md`, que se edita solo en lo que cambia, no se tocan; si alguna vez se reescribe entero, se reescriben. Los ejemplos dentro de comentarios de las plantillas no llevan anclas reales.
 - **Tarea en progreso:** se identifica por la primera línea `Tarea N — título` de la sección `in-progress` que aparezca antes de su primera subsección `###` (en la plantilla, la línea `**Tarea:**`), sin contar ítems de lista como los pasos del plan; si no hay ninguna, no hay tarea en curso (no depende del texto traducido "Sin tarea en curso"). Las tareas de `backlog.md` y las pausadas son headers `### Tarea N — título` (`#### Tarea N — título` dentro de un grupo de "Tareas agrupadas").
 - **Plan de una tarea pausada:** el script muestra el avance del plan de cada pausada a partir de los checkboxes (`- [ ]` / `- [x]`) de su bloque — en la plantilla, los del campo opcional `Plan`, que se copia tal cual de "Tarea en progreso" al pausar la tarea. Ese campo no se repite como texto en la pantalla.
@@ -106,7 +107,7 @@ Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la lí
 
 Registra con qué versión de la skill se generaron las Reglas por defecto del proyecto.
 
-- **Formato:** comentario HTML de una línea que cumple la regex `<!-- agent-context-kit:version (\d+\.\d+\.\d+)[^>]*-->`, en la **línea 1** de `docs/agents/rules.md` (antes del título), para leerlo con `head -n 3`. Un solo marcador por proyecto (en multi-operador `rules.md` es compartido).
+- **Formato:** comentario HTML de una línea que cumple la regex `<!-- agent-context-skill:version (\d+\.\d+\.\d+)[^>]*-->` (o con el prefijo anterior `agent-context-kit:`), en la **línea 1** de `docs/agents/rules.md` (antes del título), para leerlo con `head -n 3`. Un solo marcador por proyecto (en multi-operador `rules.md` es compartido).
 - **Quién lo lee:** [`version-check.md`](./version-check.md), que lo compara con la «Versión de esta skill» de `SKILL.md`.
 - **Único lugar con la versión:** ningún otro archivo del proyecto la registra.
 - **Cambios entre versiones:** se describen en `docs/changelog/` (ver su [README](./changelog/README.md)) y se aplican con [`update-flow.md`](./update-flow.md).

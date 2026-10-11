@@ -9,7 +9,7 @@ Cada vez que se aplica la skill sobre un repo que ya tiene documentación (rama 
 ## Cómo se lee
 
 1. `head -n 3` de `docs/agents/rules.md` (o `agent-context/agents/rules.md`). No se abre el archivo entero. Si no está donde se espera, usar la carpeta del `handoff.md` firmado (ver «Prioridad» en [`migration-flow.md`](./migration-flow.md)).
-2. Buscar el marcador con la regex `<!-- agent-context-kit:version (\d+\.\d+\.\d+)[^>]*-->` (formato y dónde va: «Marcador de versión» en [`template-architecture.md`](./template-architecture.md)).
+2. Buscar el marcador con la regex `<!-- agent-context-(?:skill|kit):version (\d+\.\d+\.\d+)[^>]*-->` (acepta el prefijo anterior `agent-context-kit:`; formato y dónde va: «Marcador de versión» en [`template-architecture.md`](./template-architecture.md)).
 3. Comparar ese valor con la «Versión de esta skill» de `SKILL.md`, por componentes numéricos (major, minor, patch), no como texto.
 
 ## Casos
@@ -28,7 +28,7 @@ Comparar **solo** las partes que la plantilla controla, por rangos, sin leer tod
 
 - `rules.md`: las secciones «Reglas por defecto (fijas…)» y «Al cerrar una tarea (fijas…)» contra `template/agents/rules.md`. Se excluye la regla «Idioma de la documentación» (valor propio del proyecto).
 - Multi-operador: además el bloque «Trabajo en paralelo» contra `template/multi/rules.md`.
-- `AGENTS.md` y `CLAUDE.md` de la raíz: los bloques delimitados por `agent-docs-skill:start/end` contra `template/AGENTS.md` (o `template/multi/AGENTS.md`) y `template/CLAUDE.md`.
+- `AGENTS.md` y `CLAUDE.md` de la raíz: los bloques delimitados por `agent-context-skill:start/end` (o el prefijo anterior `agent-docs-skill:start/end`) contra `template/AGENTS.md` (o `template/multi/AGENTS.md`) y `template/CLAUDE.md`.
 
 Mostrar cada diferencia al operador sin decidir cuál es «la correcta»: puede ser una edición intencional del proyecto.
 

@@ -98,7 +98,7 @@ Preguntar las 3 juntas, en una sola llamada a `AskUserQuestion` (son independien
 Una plantilla se completa, no se copia tal cual:
 
 1. Reemplazar los `[Placeholder]` por contenido real (o por la frase alternativa que la propia plantilla sugiere, ej. "Ninguna").
-2. **Quitar los comentarios HTML de guía** (`<!-- ... -->`): son instrucciones para quien completa la plantilla y, si quedan, se vuelven a leer en cada sesión. Se conservan solo la firma `agent-context-kit:signature`, las anclas `agent-context-kit:section=...`, el marcador `agent-context-kit:version` (línea 1 de `rules.md`) y los marcadores `agent-docs-skill:start/end`. Lo que hace falta para mantener el archivo después (formato de una tarea, de una entrada, de una tarea pausada) está en el texto visible de la plantilla, no en comentarios. Excepción: `external/_example-service.md` se copia sin modificar, con `cp` (Ronda 4).
+2. **Quitar los comentarios HTML de guía** (`<!-- ... -->`): son instrucciones para quien completa la plantilla y, si quedan, se vuelven a leer en cada sesión. Se conservan solo la firma `agent-context-skill:signature`, las anclas `agent-context-skill:section=...`, el marcador `agent-context-skill:version` (línea 1 de `rules.md`) y los marcadores `agent-context-skill:start/end`. Lo que hace falta para mantener el archivo después (formato de una tarea, de una entrada, de una tarea pausada) está en el texto visible de la plantilla, no en comentarios. Excepción: `external/_example-service.md` se copia sin modificar, con `cp` (Ronda 4).
 3. En el set mínimo (sin `docs/README.md`), agregar al inicio de `rules.md` (después del marcador de versión de la línea 1) la definición de "operador" que lleva el `README.md`: *"**Operador:** la persona dueña del proyecto que le pide tareas al agente, aprueba decisiones y a quien se le pregunta cuando algo no está definido."*
 4. Escribir solo lo que aporta al agente: no volcar listas de dependencias ni módulos uno por uno; sí convenciones, decisiones y restricciones y, en `architecture.md`, el árbol anotado de los niveles superiores del código (una línea de propósito por entrada). Conciso, sin relleno, y lo que ya vive en otro archivo se enlaza, no se repite.
 
@@ -198,10 +198,10 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 2. Determinar si se usó `docs/` o `agent-context/` (según «Carpeta destino», más arriba).
 3. **`AGENTS.md` (fuente de verdad — se asegura siempre, en cualquier set, incluso el mínimo):**
    - No existe → crear a partir de `template/AGENTS.md` (o `template/multi/AGENTS.md` en modo multi), ajustando la ruta `docs/`/`agent-context/` y quitando las líneas de los archivos que no se generaron (en el set mínimo: `docs/README.md`, `backlog.md` e `history.md`).
-   - Existe con otro contenido del operador → no se sobrescribe: se agrega la sección delimitada `<!-- agent-docs-skill:start -->` ... `<!-- agent-docs-skill:end -->` de `template/AGENTS.md` (o `template/multi/AGENTS.md` en modo multi) al final, solo si el marcador no está ya presente.
+   - Existe con otro contenido del operador → no se sobrescribe: se agrega la sección delimitada `<!-- agent-context-skill:start -->` ... `<!-- agent-context-skill:end -->` de `template/AGENTS.md` (o `template/multi/AGENTS.md` en modo multi) al final, solo si el marcador (o el anterior `agent-docs-skill:start`) no está ya presente.
 4. **`CLAUDE.md` (redirige a `AGENTS.md`, nunca duplica su contenido — se asegura siempre, en cualquier set):**
    - No existe → crear a partir de `template/CLAUDE.md`, literal.
-   - Existe con otro contenido del operador → agregar la sección delimitada de `template/CLAUDE.md` al final, solo si el marcador no está ya presente.
+   - Existe con otro contenido del operador → agregar la sección delimitada de `template/CLAUDE.md` al final, solo si el marcador (o el anterior `agent-docs-skill:start`) no está ya presente.
 5. Si `ALCANCE` fue `a` o `c` (set mínimo) → preguntar opt-in de cierre (header `Completa`, opciones «No (Recomendado)» y «Sí»):
 
    **"¿Quieres igual la documentación completa porque vas a seguir trabajando este proyecto?"**

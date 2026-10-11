@@ -31,7 +31,7 @@ Revisar si el repo destino tiene `docs/agents/` y/o `docs/project/` (o bajo `age
 
 ### Si existe → no hay nada que generar
 
-Antes de la tarea, seguir [`docs/version-check.md`](./docs/version-check.md) (versión de la skill; `head -n 3` del `rules.md`). Luego, seguir el `AGENTS.md` del repo (qué leer y en qué orden; el idioma está en `rules.md`, no se pregunta) y ejecutar la tarea pedida. Si se suma otra persona y el operador pide multi-operador, abrir [`docs/multi-operator.md`](./docs/multi-operator.md), sección "Pasar de plano a multi-operador". Si a `handoff.md`/`backlog.md` les faltan las anclas de sección (`<!-- agent-context-kit:section=... -->`), agregarlas; ver [`docs/template-architecture.md`](./docs/template-architecture.md), "Anclas de sección". No seguir con el árbol de preguntas.
+Antes de la tarea, seguir [`docs/version-check.md`](./docs/version-check.md) (versión de la skill; `head -n 3` del `rules.md`). Luego, seguir el `AGENTS.md` del repo (qué leer y en qué orden; el idioma está en `rules.md`, no se pregunta) y ejecutar la tarea pedida. Si se suma otra persona y el operador pide multi-operador, abrir [`docs/multi-operator.md`](./docs/multi-operator.md), sección "Pasar de plano a multi-operador". Si a `handoff.md`/`backlog.md` les faltan las anclas de sección (`<!-- agent-context-skill:section=... -->`), agregarlas; ver [`docs/template-architecture.md`](./docs/template-architecture.md), "Anclas de sección". No seguir con el árbol de preguntas.
 
 ### Si no existe → abrir el flujo que corresponda
 

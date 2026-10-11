@@ -28,7 +28,7 @@ Una o dos líneas: qué trae esta serie.
 
 ## Reglas
 
-- Solo partes que la plantilla controla: las reglas fijas de `rules.md` y los bloques `agent-docs-skill:start/end` de `AGENTS.md` y `CLAUDE.md`. El resto es contenido del proyecto. Excepción: el tipo `manual` puede referirse a cualquier archivo generado (p. ej. `handoff.md`).
+- Solo partes que la plantilla controla: las reglas fijas de `rules.md` y los bloques `agent-context-skill:start/end` de `AGENTS.md` y `CLAUDE.md`. El resto es contenido del proyecto. Excepción: el tipo `manual` puede referirse a cualquier archivo generado (p. ej. `handoff.md`).
 - **Tipos:** `insertar` (texto que no existía), `reemplazar` (el texto anterior pasa a ser el nuevo), `eliminar` (el texto anterior desaparece), `manual` (cambios de estructura, como un campo nuevo en `handoff.md`: se describen y el agente ayuda a aplicarlos, no se automatizan).
 - Los textos van **exactos**, en bloques de código, para poder compararlos con lo que tiene el proyecto.
 - `{{versión}}` en un texto es la versión de la skill a la que se actualiza (lo usa el marcador de versión).
