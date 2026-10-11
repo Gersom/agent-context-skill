@@ -5,15 +5,15 @@ description: Genera o actualiza la documentación de contexto de un proyecto (re
 
 # agent-context-kit
 
-Versión de esta skill: **1.10.0**
+Versión de esta skill: **1.11.0**
 
 ## Cuándo se dispara
 
-Al empezar a trabajar sobre un repositorio, antes de tocar código. También se invoca explícitamente; pedir migrar (ej. *"...y migra mi proyecto"*) fuerza el chequeo de [`docs/migration-flow.md`](./docs/migration-flow.md) aunque la heurística no encuentre suficientes coincidencias.
+Al empezar a trabajar en un repositorio, antes de tocar código. También se invoca explícitamente; pedir migrar (ej. *"...y migra mi proyecto"*) fuerza el chequeo de [`docs/migration-flow.md`](./docs/migration-flow.md) aunque la heurística no halle suficientes coincidencias.
 
 ## Política de lectura (obligatoria al aplicar el skill)
 
-Este skill se aplica una vez por repo (generar o migrar); en las sesiones siguientes el agente lee solo la documentación ya generada, guiado por el `AGENTS.md` del repo. Esta política rige lo que se lee **ahora**, incluidos los flujos que enlaza; si un paso la contradice, gana ella.
+Este skill se aplica una vez por repo (generar o migrar); luego el agente lee solo la documentación generada, guiado por el `AGENTS.md` del repo. Rige lo que se lee **ahora**, incluidos los flujos que enlaza; si un paso la contradice, gana ella.
 
 1. **Leer solo lo que el paso actual necesita.** Si ningún paso requiere un archivo, no se abre.
 2. **Medir antes de leer** (`wc -c`). Se lee entero solo si pesa ≤ 8 KB o el flujo lo manda expresamente; si pesa más, por búsqueda (`grep -n`) o por rango (`offset`/`limit`).
@@ -27,11 +27,11 @@ Toda pregunta al operador —en este archivo y en los flujos que enlaza— se ha
 
 ## Paso 1 — ¿Ya existe documentación de este skill?
 
-Revisar si el repo destino tiene `docs/agents/` y/o `docs/project/` (o sus equivalentes bajo `agent-context/`, si `docs/` está ocupado).
+Revisar si el repo destino tiene `docs/agents/` y/o `docs/project/` (o bajo `agent-context/`) con firma o marcador de versión de la skill (sin ninguno: «Prioridad» de [`docs/migration-flow.md`](./docs/migration-flow.md)).
 
 ### Si existe → no hay nada que generar
 
-Antes de la tarea, `head -n 3` del `rules.md` del proyecto y seguir [`docs/version-check.md`](./docs/version-check.md) (versión de la skill). Luego, seguir el `AGENTS.md` del repo (qué leer y en qué orden; el idioma está en `rules.md`: no se vuelve a preguntar) y ejecutar la tarea pedida. Si el operador pide pasar a multi-operador (se suma otra persona), abrir [`docs/migration-flow.md`](./docs/migration-flow.md), sección "Pasar de plano a multi-operador". Si a `handoff.md` o `backlog.md` les faltan las anclas de sección (`<!-- agent-context-kit:section=... -->`), agregarlas — ver [`docs/template-architecture.md`](./docs/template-architecture.md), "Anclas de sección". No seguir con el árbol de preguntas.
+Antes de la tarea, seguir [`docs/version-check.md`](./docs/version-check.md) (versión de la skill; `head -n 3` del `rules.md`). Luego, seguir el `AGENTS.md` del repo (qué leer y en qué orden; el idioma está en `rules.md`, no se pregunta) y ejecutar la tarea pedida. Si se suma otra persona y el operador pide multi-operador, abrir [`docs/multi-operator.md`](./docs/multi-operator.md), sección "Pasar de plano a multi-operador". Si a `handoff.md`/`backlog.md` les faltan las anclas de sección (`<!-- agent-context-kit:section=... -->`), agregarlas; ver [`docs/template-architecture.md`](./docs/template-architecture.md), "Anclas de sección". No seguir con el árbol de preguntas.
 
 ### Si no existe → abrir el flujo que corresponda
 

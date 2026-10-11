@@ -14,7 +14,7 @@ Convención de rutas: `template/X` se refiere a la plantilla en este skill; `doc
 
 Se decide mirando el repo destino, en este orden:
 
-1. **Existe `docs/agents/` o `docs/project/`** → el skill ya se inicializó acá: no se repite el scaffolding, se sigue el flujo de proyecto existente (ver [`../SKILL.md`](../SKILL.md), Paso 1).
+1. **Existe `docs/agents/` o `docs/project/`, con la firma o el marcador de versión de la skill** → el skill ya se inicializó acá: no se repite el scaffolding, se sigue el flujo de proyecto existente (ver [`../SKILL.md`](../SKILL.md), Paso 1). Sin firma ni marcador, ver «Prioridad» en [`migration-flow.md`](./migration-flow.md).
 2. **Existe `docs/` pero sin esas subcarpetas** (documentación de otra naturaleza: guía de usuario, Docusaurus, etc.) → **conflicto**: no se toca esa carpeta y se usa `agent-context/` en la raíz como respaldo.
 3. **No existe `docs/`** → se crea `docs/` con la estructura del catálogo.
 
@@ -56,9 +56,9 @@ Guardar la respuesta como `ALCANCE`.
 
 ## Detección automática (sin preguntar, corre después de la Ronda 1)
 
-El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/agents/` y/o `docs/project/` (o sus equivalentes bajo `agent-context/`); si existen, el flujo terminó allá. Acá solo se llega si **no** existen. Falta distinguir:
+El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/agents/` y/o `docs/project/` (o sus equivalentes bajo `agent-context/`) con la firma o el marcador de versión de la skill (detalle en «Prioridad» de [`migration-flow.md`](./migration-flow.md)); si existen, el flujo terminó allá. Acá solo se llega si **no** existen. Falta distinguir:
 
-- **No existen, pero `docs/` (o carpeta equivalente) tiene archivos cuyo nombre matchea el catálogo de este skill en una proporción significativa** → hay documentación de contexto previa, pero de otro formato/convención. No se trata como conflicto genuino (eso sería `agent-context/`, ver «Carpeta destino» más arriba): se dispara el **flujo de migración** — ver [`./migration-flow.md`](./migration-flow.md). `ALCANCE` deja de ser relevante hasta que ese flujo termine (internamente se comporta como `ALCANCE = d`).
+- **No existen, pero la carpeta de documentación vieja (`docs/`, `doc/`, `documentation/` o archivos sueltos de la raíz; ver «Cuándo se dispara» en `migration-flow.md`) tiene archivos cuyo nombre matchea el catálogo de este skill en una proporción significativa (3 o más archivos, o el 30 % o más de los `.md`)** → hay documentación de contexto previa, pero de otro formato/convención. No se trata como conflicto genuino (eso sería `agent-context/`, ver «Carpeta destino» más arriba): se dispara el **flujo de migración** — ver [`./migration-flow.md`](./migration-flow.md). `ALCANCE` deja de ser relevante hasta que ese flujo termine (internamente se comporta como `ALCANCE = d`).
 
 - **NO** → no hay documentación previa de este skill ni nada reconocible para migrar. Continuar según `ALCANCE`:
 
