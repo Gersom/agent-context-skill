@@ -9,7 +9,7 @@ Solo desde [`version-check.md`](./version-check.md), cuando el operador elige «
 ## Precondiciones
 
 - Repo git. Si no lo es, avisar que no habría cómo revertir y pedir confirmación explícita (`AskUserQuestion`) antes de seguir sin rama.
-- `git status --porcelain` sobre la carpeta de documentación (`docs/` o `agent-context/`), `AGENTS.md` y `CLAUDE.md`: sin cambios sin commitear. Si los hay, pedir que se commiteen o guarden y parar.
+- Git limpio, según [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio). Aquí, si hay cambios sin commitear, no se sigue con confirmación: se pide que se commiteen o guarden y se para.
 - Crear la rama `agent-context-update-<versión destino>` desde la actual (`git switch -c`; si existe, sufijo numérico). Nunca se trabaja en la rama principal ni se hace merge.
 
 ## Qué leer
