@@ -103,9 +103,10 @@ Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la lí
 
 Registra con qué versión de la skill se generaron las Reglas por defecto del proyecto.
 
-- **Formato:** comentario HTML de una línea que cumple la regex `<!-- agent-context-kit:version (d+.d+.d+)[^>]*-->`, en la **línea 1** de `docs/agents/rules.md` (antes del título), para leerlo con `head -n 3`. Un solo marcador por proyecto (en multi-operador `rules.md` es compartido).
+- **Formato:** comentario HTML de una línea que cumple la regex `<!-- agent-context-kit:version (\d+\.\d+\.\d+)[^>]*-->`, en la **línea 1** de `docs/agents/rules.md` (antes del título), para leerlo con `head -n 3`. Un solo marcador por proyecto (en multi-operador `rules.md` es compartido).
 - **Quién lo lee:** [`version-check.md`](./version-check.md), que lo compara con la «Versión de esta skill» de `SKILL.md`.
 - **Único lugar con la versión:** ningún otro archivo del proyecto la registra.
+- **Cambios entre versiones:** se describen en `docs/changelog/` (ver su [README](./changelog/README.md)) y se aplican con [`update-flow.md`](./update-flow.md).
 - **Se conserva siempre:** viene en `template/agents/rules.md`; no se quita como comentario de guía ni se traduce. Solo se reescribe, con el visto bueno del operador, al terminar una revisión de versión.
 
 ## `project/`
