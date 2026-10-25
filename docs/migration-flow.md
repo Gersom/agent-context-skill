@@ -49,10 +49,10 @@ Por cada archivo `.md` dentro de la carpeta de documentación vieja (recursivo, 
 | `known-issues` / `issues` | `agents/known-issues.md` |
 | `rules` / `conventions` / `guidelines` | `agents/rules.md` |
 | `architecture` / `structure` | `project/architecture.md` |
-| `stack` (ej. `stack-backend`, `tech-stack`) | `project/stack.md` |
+| `stack` (ej. `stack-backend`, `tech-stack`) | `project/decisions/stack.md` |
 | `entities` / `schema` / `data-model` / `database` | `project/entities.md` |
 | `infrastructure` / `infra` / `deploy` | `project/infrastructure.md` |
-| `decisions` / `adr` | `project/decisions.md` |
+| `decisions` / `adr` | `project/decisions/<tema>.md` (un tema por archivo viejo; `general.md` si es uno solo) |
 | `glossary` / `terms` | `project/glossary.md` |
 | `testing` / `tests` | `project/testing.md` |
 | `setup` / `getting-started` / `onboarding` | `project/setup.md` |
@@ -63,7 +63,7 @@ Por cada archivo `.md` dentro de la carpeta de documentación vieja (recursivo, 
 | cualquier archivo dentro de una carpeta `external/` propia | `external/<mismo-nombre>.md` (ya es 1:1 con la convención de este skill, se mantiene el nombre) |
 | `README.md` en la raíz de la carpeta vieja | no se migra 1:1 — se regenera en la Ronda final de `questions-flow.md`, como con cualquier scaffolding |
 
-Si **dos o más archivos viejos matchean al mismo destino** (ej. `stack-backend.md` y `stack-frontend.md` apuntando ambos a `stack.md`), no se pisan entre sí: se fusionan en un único archivo destino conservando el contenido de ambos. La tabla de la ronda de confirmación muestra qué archivos se fusionan, y la fusión se pregunta aparte; no se asume en silencio.
+Si **dos o más archivos viejos matchean al mismo destino** (ej. `stack-backend.md` y `stack-frontend.md` apuntando ambos a `decisions/stack.md`), no se pisan entre sí: se fusionan en un único archivo destino conservando el contenido de ambos. La tabla de la ronda de confirmación muestra qué archivos se fusionan, y la fusión se pregunta aparte; no se asume en silencio.
 
 Si un archivo **no matchea ningún patrón** → va a `docs/others/<subruta>/<nombre-original>.md`, sin transformar (ver "Contenido sin mapeo" más abajo).
 

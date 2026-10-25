@@ -46,8 +46,7 @@ docs/
 │   └── known-issues.md   # bugs conocidos y zonas frágiles *
 ├── project/
 │   ├── architecture.md   # estructura del código, convenciones y dónde va cada cosa nueva *
-│   ├── stack.md          # decisiones de stack que no se ven en las dependencias *
-│   ├── decisions.md      # el porqué de decisiones ya tomadas *
+│   ├── decisions/        # decisiones por tema: README.md (índice) y stack.md; un archivo más por tema *
 │   ├── entities.md       # modelo de datos *
 │   ├── infrastructure.md # entornos y deploy *
 │   ├── glossary.md       # términos de negocio propios *

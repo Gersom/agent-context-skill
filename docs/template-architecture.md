@@ -78,10 +78,9 @@ Registra con qué versión de la skill se generaron las Reglas por defecto del p
 Documentación técnica y de dominio sobre el proyecto en sí (no sobre el proceso de trabajo).
 
 - **`architecture.md`** — El mapa del código del proyecto destino: un árbol anotado de los niveles superiores (una línea de propósito por entrada, para orientarse sin explorar), las convenciones de organización que no se deducen de las carpetas (por qué está organizado así, reglas de dependencia) y dónde va cada cosa nueva. Se lee solo cuando hace falta ubicarse en el código.
-- **`stack.md`** — Las decisiones de stack que no se ven en los archivos de dependencias: qué se eligió a propósito, por qué cuando no es la opción obvia y qué alternativas se descartaron. No es un inventario de lenguajes y librerías.
 - **`entities.md`** — Modelo de datos o esquema de base de datos, cuando vale la pena documentarlo aparte del código (por ejemplo, si no hay un ORM autodescriptivo o el esquema es complejo).
 - **`infrastructure.md`** — Cómo y dónde se despliega el proyecto: entornos, infraestructura, pipeline de deploy.
-- **`decisions.md`** — ADRs (Architecture Decision Records): el "por qué" detrás de decisiones técnicas ya tomadas, para no repetir debates ya cerrados ni revertir algo sin saber por qué se hizo así.
+- **`decisions/`** — Decisiones técnicas ya tomadas, un archivo por tema, para no repetir debates cerrados ni revertir algo sin saber por qué. `README.md` es el índice (una línea por tema con cuándo leerlo, qué va y qué no, y cómo crear un tema nuevo); `stack.md` es el stack acordado de la etapa `idea` en adelante (estado por pieza y qué NO usar; no es un inventario de dependencias); los demás temas (ADRs simplificados) se crean cuando hay algo que registrar. `docs-check` verifica que el índice liste todos los archivos.
 - **`glossary.md`** — Términos de negocio/dominio propios del proyecto que un agente externo no entendería a simple vista.
 - **`testing.md`** — Estrategia y convenciones de testing: qué se testea, cómo, con qué herramientas.
 - **`setup.md`** — Comandos exactos que un agente necesita (dev, build, lint, typecheck) y cómo levantar el proyecto en local, cuando el setup no es trivial (variables de entorno, seeds, servicios externos corriendo, etc.).

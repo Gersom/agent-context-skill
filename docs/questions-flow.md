@@ -73,7 +73,7 @@ El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/ag
 
 ## Ronda 2 — Contexto base (solo si `ALCANCE = d`)
 
-Preguntar las 3 juntas, en una sola llamada a `AskUserQuestion` (son independientes):
+Preguntar las 4 juntas, en una sola llamada a `AskUserQuestion` (son independientes):
 
 1. **Header `Proyecto`: ¿es un proyecto nuevo o uno existente al que se le agrega documentación retroactiva?** Opciones «Existente» y «Nuevo»; la recomendada es la que indique `git log` (con historial, «Existente»).
    - Si es **existente** → revisar el historial de git (`git log --oneline`, sin diffs) para reconstruir un `agents/history.md` inicial en vez de dejarlo vacío. Extraer hitos relevantes de los commits, no un volcado literal del log (todas las entradas reconstruidas así van como ✅ Hecha).
@@ -84,12 +84,17 @@ Preguntar las 3 juntas, en una sola llamada a `AskUserQuestion` (son independien
    - `desarrollo activo (MVP)`
    - `producción/mantenimiento`
 
-3. **Header `Tipo`: ¿qué tipo de proyecto es?** (recomendada: la que indique lo detectado en el repo; `otro` se cubre con «Otro», porque la herramienta admite 4 opciones) → informativo, para redactar `project/architecture.md` y `project/stack.md` con el enfoque correcto:
+3. **Header `Tipo`: ¿qué tipo de proyecto es?** (recomendada: la que indique lo detectado en el repo; `otro` se cubre con «Otro», porque la herramienta admite 4 opciones) → informativo, para redactar `project/architecture.md` y `project/decisions/stack.md` con el enfoque correcto:
    - `frontend`
    - `backend`
    - `fullstack (repo único)`
    - `fullstack (monorepo)`
    - `otro`
+
+4. **Header `Stack`: ¿ya está definido el stack del proyecto?** (recomendada: «Está en el repo» si hay archivos de dependencias; «Por definir» en un proyecto nuevo sin ellos) → llena `project/decisions/stack.md`:
+   - «Está en el repo» → se registran solo las decisiones no obvias (qué NO usar, por qué se eligió algo), no el inventario de dependencias.
+   - «Lo escribo yo» → el stack acordado llega por «Otro»; cada pieza queda como `acordado` (o `instalado` si ya está en el repo).
+   - «Por definir» → `stack.md` queda con la línea «Stack por definir: al elegirlo, registrarlo acá».
 
 ---
 
@@ -100,7 +105,7 @@ Una plantilla se completa, no se copia tal cual:
 1. Reemplazar los `[Placeholder]` por contenido real (o por la frase alternativa que la propia plantilla sugiere, ej. "Ninguna").
 2. **Quitar los comentarios HTML de guía** (`<!-- ... -->`), salvo la firma `agent-context-skill:signature`, las anclas `agent-context-skill:section=...`, el marcador `agent-context-skill:version` (línea 1 de `rules.md`) y los marcadores `agent-context-skill:start/end`. Excepción: `external/_example-service.md` se copia sin modificar, con `cp` (Ronda 4).
 3. En el set mínimo (sin `docs/README.md`), agregar al inicio de `rules.md` (después del marcador de versión de la línea 1) la definición de "operador" que lleva el `README.md`: *"**Operador:** la persona dueña del proyecto que le pide tareas al agente, aprueba decisiones y a quien se le pregunta cuando algo no está definido."*
-4. **Sin contenido real, sin inventar:** en las plantillas cuyo cuerpo son ejemplos (`roadmap.md`, `decisions.md`, `known-issues.md`), si el operador no dio contenido, se conservan el título y la introducción y se agrega una línea («Sin … registrados todavía»); no se inventan bloques de ejemplo ni se dejan los de la plantilla.
+4. **Sin contenido real, sin inventar:** en las plantillas cuyo cuerpo son ejemplos (`roadmap.md`, `known-issues.md`), si el operador no dio contenido, se conservan el título y la introducción y se agrega una línea («Sin … registrados todavía»); no se inventan bloques de ejemplo ni se dejan los de la plantilla.
 5. Escribir solo lo que aporta al agente: no volcar listas de dependencias ni módulos uno por uno; sí convenciones, decisiones y restricciones y, en `architecture.md`, el árbol anotado de los niveles superiores del código (una línea de propósito por entrada). Lo que ya vive en otro archivo se enlaza, no se repite.
 
 ---
@@ -114,13 +119,14 @@ Cuando `ALCANCE = d`, copiar siempre:
 - `template/agents/backlog.md` → `docs/agents/backlog.md`
 - `template/agents/history.md` → `docs/agents/history.md`
 - `template/project/architecture.md` → `docs/project/architecture.md`
-- `template/project/stack.md` → `docs/project/stack.md`
+- `template/project/decisions/README.md` → `docs/project/decisions/README.md` (el índice)
+- `template/project/decisions/stack.md` → `docs/project/decisions/stack.md`, con lo que respondió `Stack` (Ronda 2) o, sin Ronda 2, con lo que se detecte en el repo; sin stack definido queda en la línea «Stack por definir»
 
 Y según `ETAPA` (sin preguntar):
 
-- **`ETAPA` ≠ `idea/setup`** → copiar también:
-  - `template/agents/roadmap.md` → `docs/agents/roadmap.md`
-  - `template/project/decisions.md` → `docs/project/decisions.md`
+- **`ETAPA` ≠ `idea/setup`** → copiar también `template/agents/roadmap.md` → `docs/agents/roadmap.md`.
+
+Los otros temas de `docs/project/decisions/` no se copian vacíos: se crean cuando hay una decisión firme que registrar (ver su `README.md`).
 
 `docs/README.md` **no se copia acá.** Su contenido varía según el set y las respuestas de cada ronda (qué archivos terminaron existiendo), así que se genera al final del flujo (ver Ronda final, paso 1) usando `template/README.md` solo como guía de estructura/formato, no como fuente literal.
 
@@ -179,7 +185,7 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 1. **Operador actual:** leer `git config user.email` (si no está, preguntarlo) y preguntar con qué nombre corto registrarlo (minúsculas, sin espacios). Son preguntas abiertas e independientes: una sola llamada de `AskUserQuestion` (headers `Correo` y `Nombre`), con como candidatos el correo de git y el usuario de git en minúsculas, o «Lo escribo yo» y «No aplica / omitir» si no hay. Quien genera la documentación toma tareas, así que tiene carpeta.
 2. **Dónde va cada archivo:**
    - `template/agents/rules.md`, `roadmap.md` y `known-issues.md` (según las condiciones de siempre) → `docs/agents/`, compartidos.
-   - `template/agents/handoff.md`, `backlog.md` e `history.md` → `docs/agents/<operador>/`. Los enlaces a archivos compartidos pasan a `../` (ej. el de `rules.md`). Al revés, un archivo compartido (`roadmap.md`, `decisions.md`) que enlaza a `backlog.md`, `handoff.md` o `history.md` no puede apuntar a una ruta fija: se reescribe como mención «el `backlog.md` de cada operador (`docs/agents/<operador>/`)», sin enlace.
+   - `template/agents/handoff.md`, `backlog.md` e `history.md` → `docs/agents/<operador>/`. Los enlaces a archivos compartidos pasan a `../` (ej. el de `rules.md`). Al revés, un archivo compartido (`roadmap.md`, los temas de `decisions/`) que enlaza a `backlog.md`, `handoff.md` o `history.md` no puede apuntar a una ruta fija: se reescribe como mención «el `backlog.md` de cada operador (`docs/agents/<operador>/`)», sin enlace.
    - `template/multi/operators.md` → `docs/agents/operators.md`, con la línea del operador actual (`- <carpeta>: <correo>`).
    - `template/multi/team-backlog.md` → `docs/agents/team-backlog.md`, vacío.
    - `template/multi/preferences.md` → `docs/agents/<operador>/preferences.md`, solo si el operador quiere definir sus preferencias; es opcional.
@@ -216,8 +222,8 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 | Set | Se dispara con | Archivos incluidos |
 |---|---|---|
 | **Mínimo** | a) Tarea puntual / c) Testear algo puntual | `agents/rules.md`, `agents/handoff.md`, `AGENTS.md`/`CLAUDE.md` (raíz) |
-| **Intermedio** | b) Agregar una feature a un proyecto existente | Todo el mínimo + `agents/backlog.md`, `agents/history.md`, `project/architecture.md`, `project/stack.md`, `README.md` (generado) |
-| **Completo** | d) Desarrollo prolongado / proyecto nuevo | Todo el intermedio + los condicionales de Ronda 2-4 (`roadmap`, `decisions`, `known-issues`, `glossary`, `entities`, `infrastructure`, `testing`, `setup`, `external/*`, `plans/*`) |
+| **Intermedio** | b) Agregar una feature a un proyecto existente | Todo el mínimo + `agents/backlog.md`, `agents/history.md`, `project/architecture.md`, `project/decisions/README.md`, `project/decisions/stack.md`, `README.md` (generado) |
+| **Completo** | d) Desarrollo prolongado / proyecto nuevo | Todo el intermedio + los condicionales de Ronda 2-4 (`roadmap`, temas de `decisions/`, `known-issues`, `glossary`, `entities`, `infrastructure`, `testing`, `setup`, `external/*`, `plans/*`) |
 
 ## Resumen — condición de disparo por archivo
 
@@ -233,8 +239,8 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 | `agents/roadmap.md` | Set completo y `ETAPA` ≠ `idea/setup` |
 | `agents/known-issues.md` | Set completo, `ETAPA` = `producción/mantenimiento` y hay bugs/zonas frágiles conocidas |
 | `project/architecture.md` | Set intermedio y completo |
-| `project/stack.md` | Set intermedio y completo |
-| `project/decisions.md` | Set completo y `ETAPA` ≠ `idea/setup` |
+| `project/decisions/README.md` y `project/decisions/stack.md` | Set intermedio y completo, desde la etapa `idea/setup` |
+| `project/decisions/<tema>.md` | Hay una decisión firme que registrar (no se copian vacíos) |
 | `project/glossary.md` | Hay términos de negocio propios |
 | `project/entities.md` | Hay modelo de datos/esquema relevante |
 | `project/infrastructure.md` | Hay infraestructura/deploy relevante |

@@ -25,7 +25,7 @@ docs/agents/
 
 `operators.md` es el mapa carpeta ↔ correos de git; `team-backlog.md`, las tareas sin dueño y sin numeración.
 
-Un operador que solo agrega tareas no tiene carpeta (ver "Quién es el operador actual"). `docs/project/`, `docs/external/`, `docs/plans/` y `docs/README.md` no cambian: son del proyecto y se comparten. Las decisiones técnicas van a `decisions.md`, no al `history.md` de nadie.
+Un operador que solo agrega tareas no tiene carpeta (ver "Quién es el operador actual"). `docs/project/`, `docs/external/`, `docs/plans/` y `docs/README.md` no cambian: son del proyecto y se comparten. Las decisiones técnicas van a `decisions/`, no al `history.md` de nadie.
 
 ## Quién es el operador actual
 
