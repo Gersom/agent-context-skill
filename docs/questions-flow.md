@@ -6,7 +6,7 @@ Este archivo se abre solo cuando **no** existe documentación de este skill en e
 
 **Cómo se pregunta:** según [`asking-questions.md`](./asking-questions.md). Acá cada pregunta se escribe como `header` (≤12 caracteres) + opciones, con la recomendada primero.
 
-Rige la política de lectura de [`../SKILL.md`](../SKILL.md): de `template/` se lee solo cada plantilla que se va a completar, y lo que se copia sin cambios (`CLAUDE.md`, `external/_example-service.md`) se copia con `cp`, sin leerlo.
+Rige la política de lectura de [`../SKILL.md`](../SKILL.md): de `template/` se lee solo cada plantilla que se va a completar, y lo que se copia sin cambios (`CLAUDE.md`, `external/_example-service.md`) se copia con el comando nativo del shell, sin leerlo.
 
 Convención de rutas: `template/X` se refiere a la plantilla en este skill; `docs/X` se refiere al destino en el repo del operador (o `agent-context/X` si aplica el conflicto descrito en «Carpeta destino» más abajo).
 
@@ -76,8 +76,8 @@ El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/ag
 Preguntar las 4 juntas, en una sola llamada a `AskUserQuestion` (son independientes):
 
 1. **Header `Proyecto`: ¿es un proyecto nuevo o uno existente al que se le agrega documentación retroactiva?** Opciones «Existente» y «Nuevo»; la recomendada es la que indique `git log` (con historial, «Existente»).
-   - Si es **existente** → revisar el historial de git (`git log --oneline`, sin diffs) para reconstruir un `agents/history.md` inicial en vez de dejarlo vacío. Extraer hitos relevantes de los commits, no un volcado literal del log (todas las entradas reconstruidas así van como ✅ Hecha).
-   - Si es **nuevo** → `agents/history.md` se copia vacío/con la plantilla base.
+   - Si es **existente** → con 2 o más commits, revisar el historial de git (`git log --oneline`, sin diffs) para reconstruir un `agents/history.md` inicial en vez de dejarlo vacío. Extraer hitos relevantes de los commits, no un volcado literal del log (todas las entradas reconstruidas así van como ✅ Hecha). Con 1 o ninguno, se trata como «nuevo».
+   - Si es **nuevo** → `agents/history.md` queda con la plantilla base y la línea «Sin tareas cerradas todavía.».
 
 2. **Header `Etapa`: ¿en qué etapa está el proyecto?** (recomendada: la que sugiera el repo, ej. releases o deploy configurado apuntan a producción) → guardar como `ETAPA`:
    - `idea/setup`
@@ -100,13 +100,14 @@ Preguntar las 4 juntas, en una sola llamada a `AskUserQuestion` (son independien
 
 ## Al copiar una plantilla al repo destino (aplica a todas las rondas)
 
-Una plantilla se completa, no se copia tal cual:
+Copia literal: primero se copia el archivo entero de `template/` al destino con el comando nativo del shell (o la herramienta de archivos) y después se edita con `Edit` solo lo que los pasos siguientes indican (`[Placeholder]` y comentarios de guía). Todo lo demás queda literal, carácter por carácter: no resumir, parafrasear, reordenar, «limpiar» ni agregar texto, tampoco las secciones fijas de `handoff.md`, `backlog.md`, `history.md`, `rules.md`, `roadmap.md` ni `decisions/stack.md`.
 
-1. Reemplazar los `[Placeholder]` por contenido real (o por la frase alternativa que la propia plantilla sugiere, ej. "Ninguna").
-2. **Quitar los comentarios HTML de guía** (`<!-- ... -->`), salvo la firma `agent-context-skill:signature`, las anclas `agent-context-skill:section=...`, el marcador `agent-context-skill:version` (línea 1 de `rules.md`) y los marcadores `agent-context-skill:start/end`. Excepción: `external/_example-service.md` se copia sin modificar, con `cp` (Ronda 4).
+1. Reemplazar los `[Placeholder]` por contenido real (o por la frase alternativa que la propia plantilla sugiere, ej. "Ninguna"). Si no hay contenido y la plantilla no trae frase alternativa propia, la frase es siempre «Ninguna registrada todavía.» (con punto final), la misma en todos los archivos.
+2. **Quitar los comentarios HTML de guía** (`<!-- ... -->`), salvo la firma `agent-context-skill:signature`, las anclas `agent-context-skill:section=...`, el marcador `agent-context-skill:version` (línea 1 de `rules.md`) y los marcadores `agent-context-skill:start/end`. Excepción: `external/_example-service.md` se copia sin modificar, con el comando nativo del shell (Ronda 4).
 3. En el set mínimo (sin `docs/README.md`), agregar al inicio de `rules.md` (después del marcador de versión de la línea 1) la definición de "operador" que lleva el `README.md`: *"**Operador:** la persona dueña del proyecto que le pide tareas al agente, aprueba decisiones y a quien se le pregunta cuando algo no está definido."*
 4. **Sin contenido real, sin inventar:** en las plantillas cuyo cuerpo son ejemplos (`roadmap.md`, `known-issues.md`), si el operador no dio contenido, se conservan el título y la introducción y se agrega una línea («Sin … registrados todavía»); no se inventan bloques de ejemplo ni se dejan los de la plantilla.
 5. Escribir solo lo que aporta al agente: no volcar listas de dependencias ni módulos uno por uno; sí convenciones, decisiones y restricciones y, en `architecture.md`, el árbol anotado de los niveles superiores del código (una línea de propósito por entrada). Lo que ya vive en otro archivo se enlaza, no se repite.
+6. **Enlaces a archivos que no se generan:** la línea de `rules.md` «Bugs conocidos / zonas frágiles → ./known-issues.md» (sección «Enlaces») se conserva solo si `agents/known-issues.md` se copia; si no, se quita esa línea.
 
 ---
 

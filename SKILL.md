@@ -5,7 +5,7 @@ description: Genera o actualiza la documentación de contexto de un proyecto (re
 
 # agent-context-kit
 
-Versión de esta skill: **2.0.0**
+Versión de esta skill: **2.0.1**
 
 ## Cuándo se dispara
 
@@ -18,7 +18,7 @@ Se aplica una vez por repo; después el `AGENTS.md` del repo guía al agente. Ri
 1. Leer solo lo que el paso actual necesita.
 2. Medir con `wc -c`: entero solo si ≤ 8 KB o lo manda el flujo; si no, `grep -n` o `offset`/`limit`.
 3. Clasificar con `ls`, `wc -c` y `head`, sin abrir el contenido.
-4. Mover o copiar con `cp`/`mv`, nunca leyendo y reescribiendo; leer solo para transformar.
+4. Mover o copiar con el comando nativo del shell (`cp`/`mv`, o `Copy-Item`/`Move-Item` en PowerShell) o con la herramienta de archivos, nunca leyendo y reescribiendo; leer solo para transformar.
 5. De a uno, sin acarrear ni releer: procesar, escribir, pasar al siguiente.
 
 ## Cómo preguntarle al operador (obligatorio al aplicar el skill)
