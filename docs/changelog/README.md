@@ -34,3 +34,7 @@ Una o dos líneas: qué trae esta serie.
 - `{{versión}}` en un texto es la versión de la skill a la que se actualiza (lo usa el marcador de versión).
 - Los textos del changelog están en el idioma de la plantilla (español); el agente los adapta al `IDIOMA` del proyecto (ver [`../update-flow.md`](../update-flow.md)).
 - Dentro de una serie, las secciones van de la más vieja a la más nueva.
+
+## Aplicar a mano, sin la skill
+
+Un proyecto que ya no usa la skill conserva el texto con el que se generó. Para ponerlo al día sin correrla: leer las secciones `## X.Y.Z` posteriores a la versión de su `rules.md` (línea 1) y, en cada cambio, buscar el «Texto anterior» en el archivo indicado y reemplazarlo por el «Texto nuevo»; si no coincide, es una edición propia del proyecto y se decide a mano. Al terminar, subir la versión de la línea 1. Los cambios de tipo `manual` traen su instrucción.
