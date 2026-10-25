@@ -126,7 +126,7 @@ Cuando `ALCANCE = d`, copiar siempre:
 
 Y según `ETAPA` (sin preguntar):
 
-- **`ETAPA` ≠ `idea/setup`** → copiar también `template/agents/roadmap.md` → `docs/agents/roadmap.md`.
+- **`ETAPA` ≠ `idea/setup`** → copiar también `template/agents/roadmap.md` → `docs/agents/roadmap.md`. En una migración no rige: el roadmap se genera solo si la documentación vieja tenía uno ([`migration-flow.md`](./migration-flow.md), «Ejecución», paso 4).
 
 Los otros temas de `docs/project/decisions/` no se copian vacíos: se crean cuando hay una decisión firme que registrar (ver su `README.md`).
 
@@ -238,7 +238,7 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 | `agents/handoff.md` | Siempre |
 | `agents/backlog.md` | Set intermedio y completo |
 | `agents/history.md` | Set intermedio y completo |
-| `agents/roadmap.md` | Set completo y `ETAPA` ≠ `idea/setup` |
+| `agents/roadmap.md` | Set completo y `ETAPA` ≠ `idea/setup` (en una migración, solo si la documentación vieja tenía uno) |
 | `agents/known-issues.md` | Set completo, `ETAPA` = `producción/mantenimiento` y hay bugs/zonas frágiles conocidas |
 | `project/architecture.md` | Set intermedio y completo |
 | `project/decisions/README.md` y `project/decisions/stack.md` | Set intermedio y completo, desde la etapa `idea/setup` |
