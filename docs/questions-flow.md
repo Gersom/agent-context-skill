@@ -4,7 +4,7 @@
 
 Este archivo se abre solo cuando **no** existe documentación de este skill en el repo destino: el caso "ya existe" se resuelve en [`../SKILL.md`](../SKILL.md), sin pasar por acá.
 
-**Cómo se pregunta:** según [`asking-questions.md`](./asking-questions.md). Acá cada pregunta se escribe como `header` (≤12 caracteres) + opciones, con la recomendada primero.
+**Cómo se pregunta:** según [`asking-questions.md`](./asking-questions.md). Acá cada pregunta se escribe como `header` (≤12 caracteres) + opciones, con la recomendada primero. Las preguntas van cortas y el contexto que las respalda se escribe antes en el chat (regla 5 de [`asking-questions.md`](./asking-questions.md)).
 
 Rige la política de lectura de [`../SKILL.md`](../SKILL.md): de `template/` se lee solo cada plantilla que se va a completar, y lo que se copia sin cambios (`CLAUDE.md`, `external/_example-service.md`) se copia con el comando nativo del shell, sin leerlo.
 
@@ -73,7 +73,7 @@ El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/ag
 
 ## Ronda 2 — Contexto base (solo si `ALCANCE = d`)
 
-Preguntar las 4 juntas, en una sola llamada a `AskUserQuestion` (son independientes):
+Antes de la tanda, escribir en el chat una línea breve por pregunta (o un bloque corto) con la evidencia que respalda las recomendadas (historial de `git log`, archivos de dependencias, releases o deploy detectados). Preguntar las 4 juntas, en una sola llamada a `AskUserQuestion` (son independientes):
 
 1. **Header `Proyecto`: ¿es un proyecto nuevo o uno existente al que se le agrega documentación retroactiva?** Opciones «Existente» y «Nuevo»; la recomendada es la que indique `git log` (con historial, «Existente»).
    - Si es **existente** → con 2 o más commits, revisar el historial de git (`git log --oneline`, sin diffs) para reconstruir un `agents/history.md` inicial en vez de dejarlo vacío. Extraer hitos relevantes de los commits, no un volcado literal del log (todas las entradas reconstruidas así van como ✅ Hecha). Con 1 o ninguno, se trata como «nuevo».
@@ -136,7 +136,7 @@ Los otros temas de `docs/project/decisions/` no se copian vacíos: se crean cuan
 
 ## Ronda 3 — Preguntas condicionadas (solo si `ALCANCE = d`, con `ETAPA` ya conocida)
 
-Todas son independientes entre sí (solo dependen de `ETAPA`, que ya se conoce de la Ronda 2), así que se preguntan con `AskUserQuestion` en llamadas de hasta 4: llamada 1 = multi-operador, glosario, planes e integraciones; llamada 2 = infraestructura, entidades, testing y setup; llamada 3 (solo si `ETAPA = producción/mantenimiento`) = bugs conocidos. Cada una es de opciones «Sí» / «No» (la recomendada primero según lo visto en el repo; sin señal, «No»), con el header indicado entre paréntesis:
+Todas son independientes entre sí (solo dependen de `ETAPA`, que ya se conoce de la Ronda 2), así que se preguntan con `AskUserQuestion` en llamadas de hasta 4: llamada 1 = multi-operador, glosario, planes e integraciones; llamada 2 = infraestructura, entidades, testing y setup; llamada 3 (solo si `ETAPA = producción/mantenimiento`) = bugs conocidos. Cada una es de opciones «Sí» / «No» (la recomendada primero según lo visto en el repo; sin señal, «No»), con el header indicado entre paréntesis. Antes de cada llamada, una línea breve por pregunta (o un bloque corto) en el chat con lo visto en el repo que respalda las recomendadas:
 
 - (`Multi`) "¿Van a trabajar varias personas en paralelo en este proyecto, cada una con su agente?" (también se pregunta con `ALCANCE = b`)
   → Sí: **modo multi-operador**, ver la sección homónima más abajo. No: estructura plana, sin cambios.
@@ -171,7 +171,7 @@ Todas son independientes entre sí (solo dependen de `ETAPA`, que ya se conoce d
 
 Solo si en la Ronda 3 la respuesta fue "sí" a integraciones externas.
 
-**Preguntar** (abierta, header `Servicios`): "¿Cuántas y cuáles son?" Opciones: los servicios detectados en dependencias o variables de entorno como candidatos (recomendado primero, máximo 3) o, si no hay, «Lo escribo yo» y «No aplica / omitir»; la lista real llega por «Otro».
+**Preguntar** (abierta, header `Servicios`; antes, una línea breve en el chat con los servicios detectados y dónde, para que la pregunta quede corta): "¿Cuántas y cuáles son?" Opciones: los servicios detectados en dependencias o variables de entorno como candidatos (recomendado primero, máximo 3) o, si no hay, «Lo escribo yo» y «No aplica / omitir»; la lista real llega por «Otro».
 
 1. Copiar también `template/external/_example-service.md` → `docs/external/_example-service.md`, **sin renombrar ni modificar.** Queda ahí como plantilla disponible para que, más adelante, otra IA (o el operador) pueda documentar una nueva integración sin depender de este skill.
 2. Por cada servicio declarado ahora:
@@ -203,7 +203,7 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 ## Ronda final — Generar README + puntero en la raíz (siempre, en cualquier rama que haya copiado algo)
 
 1. **Generar `docs/README.md`** (no copiar `template/README.md` literal): usando ese archivo solo como guía, armar el mapa mínimo (~1,5 KB como máximo) con la descripción del proyecto, la definición de "operador" y el árbol de `docs/` con solo los archivos que existen tras esta ejecución (si no se copió `glossary.md`, no aparece; si se crearon 3 `external/*.md`, los 3 quedan listados). Este paso se omite en el set mínimo (no hay README en ese set); en ese caso, el paso 3 tampoco enlaza a `docs/README.md`.
-   - **Descripción del proyecto:** si `docs/README.md` no existe todavía, o existe pero no la tiene, preguntar (abierta, header `Descripción`): *"¿Puedes describir en 1-2 frases qué es este proyecto (qué hace, para quién)?"*, con como candidato una frase propuesta a partir del `README.md` o `package.json` si existen, o «Lo escribo yo» y «No aplica / omitir»; la descripción real llega por «Otro». Escribirla justo debajo del título. Si ya existe, preservarla tal cual al regenerar el resto — no se vuelve a preguntar.
+   - **Descripción del proyecto:** si `docs/README.md` no existe todavía, o existe pero no la tiene, preguntar (abierta, header `Descripción`; antes, una línea breve en el chat con lo visto en el `README.md` o `package.json` de donde sale la frase propuesta): *"¿Puedes describir en 1-2 frases qué es este proyecto (qué hace, para quién)?"*, con como candidato una frase propuesta a partir del `README.md` o `package.json` si existen, o «Lo escribo yo» y «No aplica / omitir»; la descripción real llega por «Otro». Escribirla justo debajo del título. Si ya existe, preservarla tal cual al regenerar el resto — no se vuelve a preguntar.
 2. Determinar si se usó `docs/` o `agent-context/` (según «Carpeta destino», más arriba).
 3. **`AGENTS.md` (fuente de verdad — se asegura siempre, en cualquier set, incluso el mínimo):**
    - No existe → crear a partir de `template/AGENTS.md` (o `template/multi/AGENTS.md` en modo multi), ajustando la ruta `docs/`/`agent-context/` y quitando las líneas de los archivos que no se generaron (en el set mínimo: `docs/README.md`, `backlog.md` e `history.md`).

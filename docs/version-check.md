@@ -17,7 +17,7 @@ Al aplicar la skill sobre un repo con documentación (Paso 1 de [`../SKILL.md`](
 - **Igual** → no decir nada y seguir con la tarea.
 - **Marcador ausente** → versión desconocida (los proyectos generados antes de la 1.9.0 no lo tienen). Se trata como «más vieja».
 - **Proyecto más nuevo que la skill** → avisar que la skill instalada es anterior a la que generó el proyecto, no tocar nada y sugerir actualizar la skill.
-- **Proyecto más viejo o desconocida** → avisar la diferencia (ej. «el proyecto se generó con 1.8.0; la skill es 1.9.0») y preguntar con `AskUserQuestion`: «Actualizar» / «Solo revisar» / «Ahora no».
+- **Proyecto más viejo o desconocida** → mostrar en el chat la diferencia (ej. «el proyecto se generó con 1.8.0; la skill es 1.9.0») y los títulos de los cambios del changelog que se aplicarían, y después preguntar con `AskUserQuestion`: «Actualizar» / «Solo revisar» / «Ahora no».
   - «Actualizar» → seguir [`update-flow.md`](./update-flow.md).
   - «Solo revisar» → la revisión por diff de abajo; es también el respaldo cuando el changelog no cubre el salto.
   - «Ahora no» → seguir con la tarea y no volver a preguntar en esa sesión.
@@ -34,7 +34,7 @@ Mostrar cada diferencia al operador sin decidir cuál es «la correcta»: puede 
 
 ## Qué se edita y qué no
 
-Nada, salvo lo que el operador pida diferencia por diferencia; al terminar la revisión se pregunta con `AskUserQuestion` si actualizar el marcador, y solo con sí se reescribe la línea 1 de `rules.md`.
+Nada, salvo lo que el operador pida diferencia por diferencia; al terminar la revisión se muestran en el chat las diferencias encontradas y después se pregunta con `AskUserQuestion` si actualizar el marcador, y solo con sí se reescribe la línea 1 de `rules.md`.
 
 ## Alcance
 

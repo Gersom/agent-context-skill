@@ -24,20 +24,20 @@ Política de lectura de [`../SKILL.md`](../SKILL.md): por rangos, sin abrir arch
 
 ## Resumen previo
 
-Antes de tocar nada, un resumen único (como la «Ronda de confirmación» de [`migration-flow.md`](./migration-flow.md)): lista de cambios con versión, título, archivo, tipo y estado (aplicable / ya aplicado / conflicto / manual).
+Antes de tocar nada, un resumen único escrito completo en el chat, antes de pedir nada (como la «Ronda de confirmación» de [`migration-flow.md`](./migration-flow.md)): lista de cambios con versión, título, archivo, tipo y estado (aplicable / ya aplicado / conflicto / manual).
 
 ## Aplicar
 
-En orden, de la versión más vieja a la más nueva, confirmando cada cambio con `AskUserQuestion` («Aplicar» / «Omitir»).
+En orden, de la versión más vieja a la más nueva, confirmando cada cambio con `AskUserQuestion` («Aplicar» / «Omitir»). Cada cambio (versión, título, texto anterior/nuevo o instrucción) se muestra en el chat antes de su pregunta; si los cambios son independientes entre sí (no tocan el mismo archivo/sección ni dependen de un conflicto previo) se pueden mostrar todos antes y preguntar en tandas de hasta 4, cada pregunta con un header distinto de ≤12 caracteres (ej. `Cambio 1`, `Cambio 2`); si no, uno por llamada (regla 3 de [`asking-questions.md`](./asking-questions.md)).
 
-- **Comparación:** el «texto anterior» debe coincidir con lo que tiene el proyecto. Si el texto nuevo ya está → «ya aplicado», se salta. Si no coincide → conflicto: mostrar la diferencia y preguntar «Conservar el del proyecto» / «Pisar con el nuevo» / «Fusionar a mano».
+- **Comparación:** el «texto anterior» debe coincidir con lo que tiene el proyecto. Si el texto nuevo ya está → «ya aplicado», se salta. Si no coincide → conflicto: escribir en el chat la diferencia (texto del proyecto frente al texto nuevo) y, después, preguntar «Conservar el del proyecto» / «Pisar con el nuevo» / «Fusionar a mano».
 - **Idioma:** el changelog está en el idioma de la plantilla (español). Si `IDIOMA` del proyecto es otro, no se compara literal sino por sentido y el texto nuevo se escribe traducido a `IDIOMA` (solo el marcador va literal).
 - **Tipo `manual`:** mostrar la instrucción y ofrecer ayuda; no se automatiza.
 - `{{versión}}` = versión de la skill.
 
 ## Marcador
 
-Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si todos los cambios aplicables se aplicaron o se resolvieron. Si se omitió alguno, preguntar si subirlo igual (advertir que oculta lo pendiente; por defecto no).
+Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si todos los cambios aplicables se aplicaron o se resolvieron. Si se omitió alguno, listar en el chat los cambios omitidos y preguntar si subirlo igual (advertir que oculta lo pendiente; por defecto no).
 
 ## Cierre
 

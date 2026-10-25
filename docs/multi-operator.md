@@ -7,7 +7,7 @@ Un proyecto de una sola persona **no usa este modo**: sigue con la estructura pl
 ## Cómo se detecta el modo
 
 - **Multi** si existe `docs/agents/operators.md`; **plano** si no. Una sola comprobación para el agente y para las herramientas.
-- **Estado inconsistente:** si no existe `operators.md` pero `docs/agents/` tiene subcarpetas con su `handoff.md` (carpetas de operador), el agente **no asume plano en silencio**: avisa y pregunta al operador qué hacer (con `AskUserQuestion`; reglas en [`asking-questions.md`](./asking-questions.md); opciones las de abajo), sin modificar nada hasta que responda:
+- **Estado inconsistente:** si no existe `operators.md` pero `docs/agents/` tiene subcarpetas con su `handoff.md` (carpetas de operador), el agente **no asume plano en silencio**: avisa, muestra en el chat el estado detectado (carpetas de operador presentes en `docs/agents/`, si existe `operators.md` y qué contiene) y pregunta al operador qué hacer, con la pregunta corta (con `AskUserQuestion`; reglas en [`asking-questions.md`](./asking-questions.md); opciones las de abajo), sin modificar nada hasta que responda:
   1. Restaurarlo desde `HEAD` (`git restore docs/agents/operators.md`; sirve si se borró sin commitear).
   2. Restaurarlo desde un commit anterior (`git log -- docs/agents/operators.md` para elegir y `git restore --source=<commit> docs/agents/operators.md`; sirve si el borrado ya se commiteó).
   3. Dejarlo así: el repo se trata como plano y las carpetas de operador se ignoran.
@@ -31,7 +31,7 @@ Un operador que solo agrega tareas no tiene carpeta (ver "Quién es el operador 
 
 1. Leer `git config user.email` (si no está definido, preguntarle al operador su correo con `AskUserQuestion`).
 2. Buscarlo, sin distinguir mayúsculas, en `operators.md` → esa es su carpeta.
-3. Si no está, preguntar con `AskUserQuestion` (una sola llamada con las dos, son independientes; reglas en [`asking-questions.md`](./asking-questions.md)): *"¿Con qué nombre corto te registro? (si ya figuras con otro correo, dime cuál)"* (abierta: candidato el usuario de git en minúsculas, o «Lo escribo yo») y *"¿Vas a tomar tareas o solo a agregarlas al `team-backlog.md`?"* (opciones «Tomar tareas (Recomendado)» y «Solo agregar al team-backlog»). Si es una persona nueva que toma tareas, crear su carpeta con las plantillas vacías y agregar su línea a `operators.md`; si solo agrega tareas, registrarla sin carpeta; si ya existía, agregar el correo a su línea.
+3. Si no está, mostrar en el chat el contenido actual de `operators.md` y preguntar con `AskUserQuestion` (una sola llamada con las dos, son independientes; reglas en [`asking-questions.md`](./asking-questions.md)): *"¿Con qué nombre corto te registro? (si ya figuras con otro correo, dime cuál)"* (abierta: candidato el usuario de git en minúsculas, o «Lo escribo yo») y *"¿Vas a tomar tareas o solo a agregarlas al `team-backlog.md`?"* (opciones «Tomar tareas (Recomendado)» y «Solo agregar al team-backlog»). Si es una persona nueva que toma tareas, crear su carpeta con las plantillas vacías y agregar su línea a `operators.md`; si solo agrega tareas, registrarla sin carpeta; si ya existía, agregar el correo a su línea.
 
 `operators.md` tiene una línea por operador, `- <carpeta>: <correo>, <correo>`, para que una persona con varios correos (trabajo, personal, `noreply` de GitHub) siga en la misma carpeta. Así el correo no aparece en las rutas.
 
@@ -110,7 +110,7 @@ El repo **ya usa este skill** en estructura plana (`docs/agents/handoff.md`, etc
 
 1. Header `Operador`: ¿con qué nombre corto y qué correo(s) de git se registra el operador actual? (candidato recomendado: el correo de `git config user.email`)
 2. Header `Otros`: ¿quiénes más van a trabajar? Su nombre corto y correo se agregan a `operators.md`; quien solo agregue tareas se registra como `(solo team-backlog)` y no tiene carpeta. Opciones: «Nadie más por ahora (Recomendado)» y «Lo escribo yo».
-3. Header `Team-backlog`: ¿alguna tarea del `backlog.md` actual debe pasar al `team-backlog.md` (sin dueño)? Los títulos (`grep -n "^###"`) se listan en el texto de la pregunta. Opciones: «Ninguna (Recomendado)» (todas quedan con el operador actual y la numeración continúa) y «Elegir tareas» (cuáles, por «Otro»).
+3. Header `Team-backlog`: ¿alguna tarea del `backlog.md` actual debe pasar al `team-backlog.md` (sin dueño)? Los títulos (`grep -n "^###"`) se muestran en el chat antes de la tanda; la pregunta queda corta. Opciones: «Ninguna (Recomendado)» (todas quedan con el operador actual y la numeración continúa) y «Elegir tareas» (cuáles, por «Otro»).
 
 **Ejecución** (comandos de archivo, sin leer los archivos enteros):
 

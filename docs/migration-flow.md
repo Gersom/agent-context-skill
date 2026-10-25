@@ -19,13 +19,13 @@ Inmediatamente después del chequeo «ya existe» (Paso 1 de [`../SKILL.md`](../
 Si el operador pide explícitamente migrar (ej. *"usa la skill agent-context-kit y migra mi proyecto"*), este flujo se dispara **sin depender del umbral de «Cuándo se dispara».**
 
 - La heurística de nombres sigue corriendo igual: sirve para construir la tabla de mapeo propuesta, no para decidir si el flujo se dispara.
-- Si no encuentra ningún archivo que matchee nada, no se asume en silencio que no hay nada para migrar: se muestra una tabla vacía (o con pocos matches) en la ronda de confirmación, y se pregunta explícitamente (abierta; candidatos: los archivos de la carpeta vieja sin match, o «Lo escribo yo» y «No aplica / omitir») qué archivos corresponde migrar a mano.
+- Si no encuentra ningún archivo que matchee nada, no se asume en silencio que no hay nada para migrar: se muestra una tabla vacía (o con pocos matches) en la ronda de confirmación, y se pregunta explícitamente, después de mostrar en el chat la lista de archivos sin match (abierta; candidatos: los archivos de la carpeta vieja sin match, o «Lo escribo yo» y «No aplica / omitir») qué archivos corresponde migrar a mano.
 ## Prioridad: firma de este skill sobre la heurística
 
 **Chequeo «ya existe»** (lo usan el Paso 1 de [`../SKILL.md`](../SKILL.md) y [`questions-flow.md`](./questions-flow.md)): que exista `docs/agents/` y/o `docs/project/` (o su equivalente bajo `agent-context/`) no basta para decidir que es de esta skill. La carpeta debe ir acompañada de la firma o del marcador de versión (abajo).
 
 - **Carpeta con firma o marcador** → es de esta skill: flujo de proyecto existente.
-- **Carpeta sin firma ni marcador** → preguntar con `AskUserQuestion`, header `Origen`: «¿Esta documentación la generó esta skill?». «Sí» → flujo de proyecto existente, con [`version-check.md`](./version-check.md) tratando la versión como desconocida. «No» → este flujo.
+- **Carpeta sin firma ni marcador** → escribir antes en el chat una línea con qué carpeta se revisó y que no se halló firma ni marcador, y preguntar con `AskUserQuestion`, header `Origen`: «¿Esta documentación la generó esta skill?». «Sí» → flujo de proyecto existente, con [`version-check.md`](./version-check.md) tratando la versión como desconocida. «No» → este flujo.
 - **Sin carpeta** → se sigue con «Cuándo se dispara».
 
 Antes de aplicar la tabla de heurística, revisar si alguno de los archivos candidatos a `handoff.md` (cualquiera que matchee el patrón `handoff` en el nombre) contiene el comentario de firma `agent-context-skill:signature` (o `agent-context-kit:signature`, el prefijo anterior). Se mira solo con `head -n 3`, sin abrir el archivo (ver `template/agents/handoff.md`).
@@ -69,11 +69,11 @@ Si un archivo **no matchea ningún patrón** → va a `docs/others/<subruta>/<no
 
 ## Precondición: git limpio
 
-Verificar con `git status --porcelain` la carpeta de documentación (`docs/` o `agent-context/`; en una migración, también las otras carpetas de origen y los sueltos que matchearon), `AGENTS.md` y `CLAUDE.md`. Si hay cambios sin commitear, avisar que el original no tendría respaldo y pedir confirmación explícita (`AskUserQuestion`) o que se commiteen antes. Si el repo no es git, avisar que no habría cómo revertir y pedir confirmación.
+Verificar con `git status --porcelain` la carpeta de documentación (`docs/` o `agent-context/`; en una migración, también las otras carpetas de origen y los sueltos que matchearon), `AGENTS.md` y `CLAUDE.md`. Si hay cambios sin commitear, mostrar en el chat la salida de `git status --short`, avisar que el original no tendría respaldo y pedir confirmación explícita (`AskUserQuestion`) o que se commiteen antes. Si el repo no es git, avisar que no habría cómo revertir y pedir confirmación.
 
 ## Ronda de confirmación (siempre, antes de tocar nada)
 
-Antes de mover o escribir un solo archivo, mostrar al operador la tabla de mapeo propuesta completa (origen → destino, con tamaños), incluyendo qué archivos van a `docs/others/` por no tener match y cuáles quedarían fusionados (con sus orígenes). La tabla se muestra como texto (es contenido a revisar, no una pregunta). Las preguntas van después, en **dos tandas** ([`asking-questions.md`](./asking-questions.md)): la de fusiones depende de las correcciones al mapeo, así que no puede ir junto a ellas.
+Antes de mover o escribir un solo archivo, mostrar al operador la tabla de mapeo propuesta completa (origen → destino, con tamaños), incluyendo qué archivos van a `docs/others/` por no tener match y cuáles quedarían fusionados (con sus orígenes). La tabla se muestra como texto (es contenido a revisar, no una pregunta), así que las preguntas `Mapeo`, `Legacy` y `Texto` van cortas, remitiendo a ella. Las preguntas van después, en **dos tandas** ([`asking-questions.md`](./asking-questions.md)): la de fusiones depende de las correcciones al mapeo, así que no puede ir junto a ellas.
 
 **Primera tanda** (independientes):
 
@@ -81,7 +81,7 @@ Antes de mover o escribir un solo archivo, mostrar al operador la tabla de mapeo
 2. Header `Legacy`: **¿quieres conservar la documentación vieja en `docs-legacy/`?** Opciones: «Conservar (Recomendado)» y «No conservar». Si `docs-legacy/` ya existe (de una migración anterior), decirlo en la pregunta y ofrecer «Conservar la existente» (se conserva tal cual y no se crea otro respaldo) y «Reemplazarla».
 3. Header `Texto`: **¿quieres condensar el texto para ahorrar tokens, o mantenerlo tal cual?** Opciones: «Mantener (Recomendado)» y «Condensar» (definido en Ejecución, paso 2).
 
-**Segunda tanda** (solo si, tras aplicar las correcciones de `Mapeo` y mostrar la tabla actualizada, quedan fusiones): header `Fusiones`: ¿corresponde fusionarlas tal cual, o deberían quedar separadas? Opciones: «Fusionar tal cual (Recomendado)» y «Dejarlas separadas». «Dejarlas separadas» = cada origen va a un destino propio (ej. `stack-backend.md` y `stack-frontend.md` quedan como archivos distintos, en la misma carpeta del destino original (`project/`, o `project/decisions/` para `stack-*`)).
+**Segunda tanda** (solo si, tras aplicar las correcciones de `Mapeo` y mostrar la tabla actualizada, quedan fusiones; la lista de fusiones propuestas se escribe en el chat junto a la tabla actualizada, antes de preguntar): header `Fusiones`: ¿corresponde fusionarlas tal cual, o deberían quedar separadas? Opciones: «Fusionar tal cual (Recomendado)» y «Dejarlas separadas». «Dejarlas separadas» = cada origen va a un destino propio (ej. `stack-backend.md` y `stack-frontend.md` quedan como archivos distintos, en la misma carpeta del destino original (`project/`, o `project/decisions/` para `stack-*`)).
 
 Solo después de la confirmación se ejecuta la migración — nunca se mueve o transforma contenido en base a una heurística sin confirmar.
 
@@ -96,7 +96,7 @@ Solo después de la confirmación se ejecuta la migración — nunca se mueve o 
    - **Numeración del backlog:** si las tareas migradas a `backlog.md` no tienen número, numerarlas de arriba hacia abajo, dejar "Próximo número de tarea" en max+1 y anotar en el archivo "Numeración iniciada el <fecha>; las tareas cerradas antes (en `history.md`) no tienen número retroactivo". No se renumera `history.md` hacia atrás.
 5. **Ronda final.** Igual que en `questions-flow.md`: generar `docs/README.md` (listando `others/` en el índice si va a existir, y `docs-legacy/` si se creó, con la nota «no leer: respaldo de la documentación anterior»), asegurar el puntero en `CLAUDE.md`/`AGENTS.md`. No se toca el bloque delimitado `agent-context-skill:` de esos archivos: se compara con la plantilla. Avisos:
    - Si el `AGENTS.md`/`CLAUDE.md` existente (fuera de ese bloque) apunta a rutas viejas, las de la documentación migrada, avisar al operador y ofrecer corregirlas. No se corrigen sin confirmar.
-6. **Retirar los originales.** Con las copias verificadas (existen y no están vacías: `ls`, `wc -c`) y confirmación explícita del operador (`AskUserQuestion`, header `Originales`: «Retirar (Recomendado)» / «Dejarlos»), quitar de la carpeta vieja los originales ya migrados con `git rm`; si no es repo git, `rm` solo con esa confirmación. Se omite el original cuyo destino es su misma ruta. Los sin mapeo (paso 3) se mueven con `mv`/`git mv`. Con «Conservar» el respaldo ya está en `docs-legacy/`; con «No conservar», la pregunta avisa que el único respaldo es git.
+6. **Retirar los originales.** Con las copias verificadas (existen y no están vacías: `ls`, `wc -c`) y confirmación explícita del operador (antes se muestra en el chat la lista de las copias verificadas con sus tamaños de `wc -c`; después, `AskUserQuestion`, header `Originales`: «Retirar (Recomendado)» / «Dejarlos»), quitar de la carpeta vieja los originales ya migrados con `git rm`; si no es repo git, `rm` solo con esa confirmación. Se omite el original cuyo destino es su misma ruta. Los sin mapeo (paso 3) se mueven con `mv`/`git mv`. Con «Conservar» el respaldo ya está en `docs-legacy/`; con «No conservar», la pregunta avisa que el único respaldo es git.
 7. **Dejar registro de la migración.** La primera entrada de `docs/agents/history.md` no queda vacía ni es un volcado de `git log`: se registra la migración en sí (como ✅ Hecha) — qué se migró y desde qué archivos (de `docs-legacy/` o del git si no se conservó), si se condensó o se mantuvo el texto, y qué quedó en `others/` sin mapear.
 
 ## Qué NO hace este flujo
