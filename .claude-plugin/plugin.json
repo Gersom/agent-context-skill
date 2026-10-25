@@ -1,5 +1,5 @@
 {
-  "name": "agent-context-kit",
+  "name": "agent-context-skill",
   "version": "2.0.4",
   "description": "Genera o actualiza la documentación de contexto de un proyecto (reglas, estado en caliente, backlog, historial, arquitectura) para que cualquier agente de IA sepa en qué momento está sin depender de la memoria de una conversación.",
   "author": { "name": "Gersom Alaja" },

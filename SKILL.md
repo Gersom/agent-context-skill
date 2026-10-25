@@ -1,9 +1,9 @@
 ---
-name: agent-context-kit
+name: agent-context-skill
 description: Genera o actualiza la documentación de contexto de un proyecto (reglas, estado en caliente, backlog, historial, arquitectura, stack, integraciones externas) para que cualquier agente de IA sepa en qué momento está el proyecto sin depender de la memoria de una conversación. Úsalo al empezar a trabajar en un repositorio — para inicializar esta documentación si no existe, o para leerla y mantenerla al día si ya existe.
 ---
 
-# agent-context-kit
+# agent-context-skill
 
 Versión de esta skill: **2.0.4**
 

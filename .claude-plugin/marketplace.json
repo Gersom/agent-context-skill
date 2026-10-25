@@ -4,7 +4,7 @@
   "metadata": { "description": "Skill que genera documentación de contexto de proyecto para agentes de IA." },
   "plugins": [
     {
-      "name": "agent-context-kit",
+      "name": "agent-context-skill",
       "source": "./",
       "description": "Genera o actualiza la documentación de contexto de un proyecto para agentes de IA."
     }

@@ -16,7 +16,7 @@ Inmediatamente después del chequeo «ya existe» (Paso 1 de [`../SKILL.md`](../
 
 ## Intención explícita del operador
 
-Si el operador pide explícitamente migrar (ej. *"usa la skill agent-context-kit y migra mi proyecto"*), este flujo se dispara **sin depender del umbral de «Cuándo se dispara».**
+Si el operador pide explícitamente migrar (ej. *"usa la skill agent-context-skill y migra mi proyecto"*), este flujo se dispara **sin depender del umbral de «Cuándo se dispara».**
 
 - La heurística de nombres sigue corriendo igual: sirve para construir la tabla de mapeo propuesta, no para decidir si el flujo se dispara.
 - Si no encuentra ningún archivo que matchee nada, no se asume en silencio que no hay nada para migrar: se muestra una tabla vacía (o con pocos matches) en la ronda de confirmación, y se pregunta explícitamente qué archivos corresponde migrar a mano, en texto como mensaje final del turno: la lista de archivos sin match como contexto y la pregunta debajo, esperando la respuesta en el chat (regla 5 de [`asking-questions.md`](./asking-questions.md)).

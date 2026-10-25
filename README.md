@@ -2,32 +2,30 @@
 
 Skill de Claude Code que genera o actualiza la documentación de contexto de un proyecto (reglas, estado en caliente, backlog, historial, arquitectura) para que cualquier agente de IA sepa en qué momento está el proyecto sin depender de la memoria de una conversación.
 
-La skill se llama `agent-context-kit` (el nombre de su `SKILL.md`); este repo se llama `agent-context-skill`.
-
 ## Instalar como plugin de Claude Code
 
 Desde una sesión de Claude Code:
 
 ```
 /plugin marketplace add Gersom/agent-context-skill
-/plugin install agent-context-kit@agent-context-skill
+/plugin install agent-context-skill@agent-context-skill
 ```
 
 O desde la terminal:
 
 ```sh
 claude plugin marketplace add Gersom/agent-context-skill
-claude plugin install agent-context-kit@agent-context-skill
+claude plugin install agent-context-skill@agent-context-skill
 ```
 
-Para fijar una versión, agrega el marketplace con un tag: `Gersom/agent-context-skill@v1.9.0`. Para actualizar: `claude plugin update agent-context-kit` (hay que reiniciar la sesión para aplicarlo).
+Para fijar una versión, agrega el marketplace con un tag: `Gersom/agent-context-skill@v1.9.0`. Para actualizar: `claude plugin update agent-context-skill` (hay que reiniciar la sesión para aplicarlo). Si la instalaste antes como `agent-context-kit@agent-context-skill`, reinstálala con el nombre nuevo: la skill pasó a llamarse igual que su repo.
 
 ## Usar
 
 Pídeselo al agente al empezar a trabajar en un repositorio:
 
-- **"Usa la skill agent-context-kit"**: si el repo ya tiene documentación de la skill, sigue el flujo existente; si no, evalúa si hay documentación de otro sistema para migrar o dispara el árbol de preguntas para generarla.
-- **"Usa la skill agent-context-kit y migra mi proyecto"**: fuerza el chequeo de migración (ver [`docs/migration-flow.md`](./docs/migration-flow.md)).
+- **"Usa la skill agent-context-skill"**: si el repo ya tiene documentación de la skill, sigue el flujo existente; si no, evalúa si hay documentación de otro sistema para migrar o dispara el árbol de preguntas para generarla.
+- **"Usa la skill agent-context-skill y migra mi proyecto"**: fuerza el chequeo de migración (ver [`docs/migration-flow.md`](./docs/migration-flow.md)).
 
 ## Qué hay en el repo
 
