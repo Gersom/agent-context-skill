@@ -13,17 +13,17 @@ Al empezar a trabajar en un repositorio, antes de tocar código. También se inv
 
 ## Política de lectura (obligatoria al aplicar el skill)
 
-Este skill se aplica una vez por repo (generar o migrar); luego el agente lee solo la documentación generada, guiado por el `AGENTS.md` del repo. Rige lo que se lee **ahora**, incluidos los flujos que enlaza; si un paso la contradice, gana ella.
+Se aplica una vez por repo; después el `AGENTS.md` del repo guía al agente. Rige también en los flujos que enlaza: si un paso la contradice, gana ella.
 
-1. **Leer solo lo que el paso actual necesita.** Si ningún paso requiere un archivo, no se abre.
-2. **Medir antes de leer** (`wc -c`). Se lee entero solo si pesa ≤ 8 KB o el flujo lo manda expresamente; si pesa más, por búsqueda (`grep -n`) o por rango (`offset`/`limit`).
-3. **Clasificar con nombres, tamaños y primeras líneas** (`ls`, `wc -c`, `head`), sin abrir el contenido.
-4. **Mover o copiar con `cp`/`mv`**, nunca leyendo y reescribiendo. Un archivo se lee solo para transformarlo.
-5. **De a un archivo, sin acarrear ni releer:** procesar uno, escribir su resultado y pasar al siguiente.
+1. Leer solo lo que el paso actual necesita.
+2. Medir con `wc -c`: entero solo si ≤ 8 KB o lo manda el flujo; si no, `grep -n` o `offset`/`limit`.
+3. Clasificar con `ls`, `wc -c` y `head`, sin abrir el contenido.
+4. Mover o copiar con `cp`/`mv`, nunca leyendo y reescribiendo; leer solo para transformar.
+5. De a uno, sin acarrear ni releer: procesar, escribir, pasar al siguiente.
 
 ## Cómo preguntarle al operador (obligatorio al aplicar el skill)
 
-Toda pregunta al operador —en este archivo y en los flujos que enlaza— se hace con `AskUserQuestion` (recuadro con opciones), también las abiertas, no como texto en el chat. Reglas completas (opciones, abiertas, tandas, respaldo) en [`docs/asking-questions.md`](./docs/asking-questions.md).
+Toda pregunta al operador se hace con `AskUserQuestion` (recuadro), también las abiertas, nunca como texto en el chat. Reglas: [`docs/asking-questions.md`](./docs/asking-questions.md).
 
 ## Paso 1 — ¿Ya existe documentación de este skill?
 

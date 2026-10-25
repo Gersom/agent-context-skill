@@ -7,7 +7,7 @@ Un proyecto de una sola persona **no usa este modo**: sigue con la estructura pl
 ## Cómo se detecta el modo
 
 - **Multi** si existe `docs/agents/operators.md`; **plano** si no. Una sola comprobación para el agente y para las herramientas.
-- **Estado inconsistente:** si no existe `operators.md` pero `docs/agents/` tiene subcarpetas con su `handoff.md` (carpetas de operador), el agente **no asume plano en silencio**: avisa y pregunta al operador qué hacer (con `AskUserQuestion`; regla general en [`../SKILL.md`](../SKILL.md#cómo-preguntarle-al-operador-obligatorio-al-aplicar-el-skill), opciones las de abajo), sin modificar nada hasta que responda:
+- **Estado inconsistente:** si no existe `operators.md` pero `docs/agents/` tiene subcarpetas con su `handoff.md` (carpetas de operador), el agente **no asume plano en silencio**: avisa y pregunta al operador qué hacer (con `AskUserQuestion`; reglas en [`asking-questions.md`](./asking-questions.md); opciones las de abajo), sin modificar nada hasta que responda:
   1. Restaurarlo desde `HEAD` (`git restore docs/agents/operators.md`; sirve si se borró sin commitear).
   2. Restaurarlo desde un commit anterior (`git log -- docs/agents/operators.md` para elegir y `git restore --source=<commit> docs/agents/operators.md`; sirve si el borrado ya se commiteó).
   3. Dejarlo así: el repo se trata como plano y las carpetas de operador se ignoran.
@@ -18,18 +18,12 @@ Un proyecto de una sola persona **no usa este modo**: sigue con la estructura pl
 
 ```
 docs/agents/
-├── operators.md      # mapa carpeta ↔ correos de git (compartido)
-├── rules.md          # reglas del proyecto (compartido)
-├── team-backlog.md   # tareas sin dueño, sin numeración (compartido)
-├── roadmap.md        # compartido, si existe
-├── known-issues.md   # compartido, si existe
-├── gersom/           # un operador: nombre corto, minúsculas, sin espacios
-│   ├── handoff.md        # su tarea en curso y sus pausadas
-│   ├── backlog.md        # las tareas que tomó, con su propia numeración
-│   ├── history.md        # sus tareas cerradas
-│   └── preferences.md    # opcional: sus preferencias de trabajo
-└── ana/              # otro operador, misma estructura
+├── operators.md, rules.md, team-backlog.md, roadmap.md, known-issues.md   # compartidos (roadmap y known-issues, si existen)
+└── gersom/, ana/, …   # una carpeta por operador: nombre corto, minúsculas, sin espacios
+    └── handoff.md (en curso y pausadas), backlog.md (las que tomó, con su numeración), history.md (cerradas), preferences.md (opcional)
 ```
+
+`operators.md` es el mapa carpeta ↔ correos de git; `team-backlog.md`, las tareas sin dueño y sin numeración.
 
 Un operador que solo agrega tareas no tiene carpeta (ver "Quién es el operador actual"). `docs/project/`, `docs/external/`, `docs/plans/` y `docs/README.md` no cambian: son del proyecto y se comparten. Las decisiones técnicas van a `decisions.md`, no al `history.md` de nadie.
 
@@ -37,7 +31,7 @@ Un operador que solo agrega tareas no tiene carpeta (ver "Quién es el operador 
 
 1. Leer `git config user.email` (si no está definido, preguntarle al operador su correo con `AskUserQuestion`).
 2. Buscarlo, sin distinguir mayúsculas, en `operators.md` → esa es su carpeta.
-3. Si no está, preguntar con `AskUserQuestion` (una sola llamada con las dos, son independientes; regla general en [`../SKILL.md`](../SKILL.md#cómo-preguntarle-al-operador-obligatorio-al-aplicar-el-skill)): *"¿Con qué nombre corto te registro? (si ya figuras con otro correo, dime cuál)"* (abierta: candidato el usuario de git en minúsculas, o «Lo escribo yo») y *"¿Vas a tomar tareas o solo a agregarlas al `team-backlog.md`?"* (opciones «Tomar tareas (Recomendado)» y «Solo agregar al team-backlog»). Si es una persona nueva que toma tareas, crear su carpeta con las plantillas vacías y agregar su línea a `operators.md`; si solo agrega tareas, registrarla sin carpeta; si ya existía, agregar el correo a su línea.
+3. Si no está, preguntar con `AskUserQuestion` (una sola llamada con las dos, son independientes; reglas en [`asking-questions.md`](./asking-questions.md)): *"¿Con qué nombre corto te registro? (si ya figuras con otro correo, dime cuál)"* (abierta: candidato el usuario de git en minúsculas, o «Lo escribo yo») y *"¿Vas a tomar tareas o solo a agregarlas al `team-backlog.md`?"* (opciones «Tomar tareas (Recomendado)» y «Solo agregar al team-backlog»). Si es una persona nueva que toma tareas, crear su carpeta con las plantillas vacías y agregar su línea a `operators.md`; si solo agrega tareas, registrarla sin carpeta; si ya existía, agregar el correo a su línea.
 
 `operators.md` tiene una línea por operador, `- <carpeta>: <correo>, <correo>`, para que una persona con varios correos (trabajo, personal, `noreply` de GitHub) siga en la misma carpeta. Así el correo no aparece en las rutas.
 
@@ -65,14 +59,6 @@ Un operador que solo agrega tareas no tiene carpeta (ver "Quién es el operador 
 - Si dos operadores toman la misma a la vez, el merge muestra un conflicto sobre ese bloque, en vez de dejar dos copias en silencio.
 - **Devolver una tarea** que no se puede seguir: se quita del `backlog.md` del operador y vuelve al `team-backlog.md`, sin número y con la nota `Devuelta por <operador> (antes T-N@operador)`. El número queda retirado y no se reutiliza.
 - **Quien solo recolecta tareas** completa como mínimo título y descripción; el desarrollador que la toma completa el resto.
-
-### Flujo de una tarea
-
-```
-team-backlog.md → backlog.md → handoff.md → history.md     (se toma y espera su turno)
-team-backlog.md →              handoff.md → history.md     (se toma y se empieza ya)
-                  backlog.md → handoff.md → history.md     (la agregó el propio operador)
-```
 
 ### "Agrega esta tarea"
 
@@ -120,7 +106,7 @@ Las Reglas por defecto no cambian. Al generar la documentación en modo multi (o
 
 El repo **ya usa este skill** en estructura plana (`docs/agents/handoff.md`, etc.) y se suma otra persona: se pasa al modo multi sin perder nada. Lo hace el operador existente y solo si lo pide (ej. *"usa agent-context-kit para pasar a multi-operador"*); la política de lectura de [`../SKILL.md`](../SKILL.md) rige igual.
 
-**Antes de tocar nada**, aplicar la [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio) (sobre `docs/agents`, `AGENTS.md` y `CLAUDE.md`) y preguntar con `AskUserQuestion` (regla general en [`../SKILL.md`](../SKILL.md#cómo-preguntarle-al-operador-obligatorio-al-aplicar-el-skill); las 3 son independientes, van en una sola llamada; las abiertas ofrecen candidatos o «Lo escribo yo» y «No aplica / omitir»):
+**Antes de tocar nada**, aplicar la [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio) (sobre `docs/agents`, `AGENTS.md` y `CLAUDE.md`) y preguntar con `AskUserQuestion` (reglas en [`asking-questions.md`](./asking-questions.md); las 3 son independientes, van en una sola llamada; las abiertas ofrecen candidatos o «Lo escribo yo» y «No aplica / omitir»):
 
 1. Header `Operador`: ¿con qué nombre corto y qué correo(s) de git se registra el operador actual? (candidato recomendado: el correo de `git config user.email`)
 2. Header `Otros`: ¿quiénes más van a trabajar? Su nombre corto y correo se agregan a `operators.md`; quien solo agregue tareas se registra como `(solo team-backlog)` y no tiene carpeta. Opciones: «Nadie más por ahora (Recomendado)» y «Lo escribo yo».

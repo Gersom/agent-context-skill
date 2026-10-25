@@ -6,47 +6,7 @@ Las plantillas llevan comentarios HTML de guía para quien las completa; al gene
 
 ## Estructura
 
-```
-template/
-├── README.md
-├── AGENTS.md
-├── CLAUDE.md
-│
-├── agents/
-│   ├── rules.md
-│   ├── handoff.md
-│   ├── backlog.md
-│   ├── history.md
-│   ├── roadmap.md
-│   └── known-issues.md
-│
-├── multi/                 (solo modo multi-operador)
-│   ├── AGENTS.md
-│   ├── operators.md
-│   ├── team-backlog.md
-│   ├── preferences.md
-│   └── rules.md            (bloque para agregar a agents/rules.md)
-│
-├── project/
-│   ├── architecture.md
-│   ├── stack.md
-│   ├── entities.md
-│   ├── infrastructure.md
-│   ├── decisions.md
-│   ├── glossary.md
-│   ├── testing.md
-│   └── setup.md
-│
-├── external/
-│   └── _example-service.md
-│
-└── plans/
-    ├── README.md
-    ├── tiers.md
-    ├── costs.md
-    ├── limits.md
-    └── payments.md
-```
+`template/` contiene `README.md`, `AGENTS.md`, `CLAUDE.md` y las carpetas `agents/`, `multi/` (solo modo multi-operador), `project/`, `external/` y `plans/`; cada una se describe en las secciones siguientes.
 
 ## `README.md` (raíz de `template/`)
 
@@ -93,12 +53,12 @@ Las secciones de tareas de `handoff.md` y `backlog.md` van precedidas, en la lí
 | `team-backlog.md` (multi) | `blocked` | Tareas bloqueadas / pospuestas |
 | `operators.md` (multi) | `operators` | Lista de operadores |
 
-- **Por qué existen:** los headers se redactan en el idioma de la documentación del proyecto (Regla 3 de `rules.md`), así que una herramienta no puede buscar "Tareas libres" o "Tarea en progreso" literal. Las anclas dan un punto fijo, independiente del idioma, para cualquier herramienta que lea el estado de las tareas (por ejemplo, un script de seguimiento). Mismo prefijo que la firma `agent-context-skill:signature` de `handoff.md`.
-- **Un solo prefijo, `agent-context-skill:`:** anclas (`section=`), marcador de versión, firma y bloques `start/end` de `AGENTS.md` y `CLAUDE.md` lo usan, igual que el nombre del repo. Las plantillas y lo que la skill escribe llevan solo ese prefijo. Los proyectos generados antes de la 2.0.0 tienen los anteriores (`agent-context-kit:` en anclas, versión y firma; `agent-docs-skill:` en los bloques `start/end`): se siguen leyendo y, al actualizar, se reemplazan por el nuevo (ver `changelog/2.0.md`).
+- **Por qué existen:** anclas independientes del idioma para las herramientas que leen el estado de las tareas.
+- **Un solo prefijo, `agent-context-skill:`:** anclas (`section=`), marcador de versión, firma y bloques `start/end` de `AGENTS.md` y `CLAUDE.md` lo usan. Las plantillas y lo que la skill escribe llevan solo ese prefijo. Los proyectos generados antes de la 2.0.0 tienen los anteriores (`agent-context-kit:` en anclas, versión y firma; `agent-docs-skill:` en los bloques `start/end`): se siguen leyendo y, al actualizar, se reemplazan por el nuevo (ver `changelog/2.0.md`).
 - **Se preservan siempre:** no se traducen, no se borran ni se mueven al actualizar el archivo. En `handoff.md`, que se edita solo en lo que cambia, no se tocan; si alguna vez se reescribe entero, se reescriben. Los ejemplos dentro de comentarios de las plantillas no llevan anclas reales.
 - **Tarea en progreso:** se identifica por la primera línea `Tarea N — título` de la sección `in-progress` que aparezca antes de su primera subsección `###` (en la plantilla, la línea `**Tarea:**`), sin contar ítems de lista como los pasos del plan; si no hay ninguna, no hay tarea en curso (no depende del texto traducido "Sin tarea en curso"). Las tareas de `backlog.md` y las pausadas son headers `### Tarea N — título` (`#### Tarea N — título` dentro de un grupo de "Tareas agrupadas").
 - **Plan de una tarea pausada:** el script muestra el avance del plan de cada pausada a partir de los checkboxes (`- [ ]` / `- [x]`) de su bloque — en la plantilla, los del campo opcional `Plan`, que se copia tal cual de "Tarea en progreso" al pausar la tarea. Ese campo no se repite como texto en la pantalla.
-- **Tag de bloqueo:** de cada tarea bloqueada se toma el tag `[...]` **con el que empieza el campo** (`[dependencia]`, `[postergada]` o su traducción), buscando en cualquier campo porque las etiquetas también se traducen; un tag en medio del texto (ej. un `[algo]` dentro de una descripción) no cuenta. Por eso el valor de `Bloqueos` tiene que **empezar** con el tag (o ser "Ninguno"). Si el tag con el que empieza un campo es `[Resuelto…]`, ese campo entero es historial (Regla 8) y no cuenta. Por eso, cuando una tarea ya desbloqueada se vuelve a bloquear, el bloqueo vigente va **primero** en `Bloqueos` y el historial resuelto después: `` `[dependencia]` espera la Tarea 9. Antes: `[Resuelto el <fecha>]` — era … ``. Una tarea en "Tareas bloqueadas / pospuestas" sin ningún bloqueo vigente se avisa en pantalla como candidata a volver a "Tareas libres".
+- **Tag de bloqueo:** de cada tarea bloqueada se toma el tag `[...]` **con el que empieza el campo** (`[dependencia]`, `[postergada]` o su traducción), buscando en cualquier campo porque las etiquetas también se traducen; un tag en medio del texto (ej. un `[algo]` dentro de una descripción) no cuenta. Por eso el valor de `Bloqueos` tiene que **empezar** con el tag (o ser "Ninguno"). Si el tag con el que empieza un campo es `[Resuelto…]`, ese campo entero es historial (Regla 8) y no cuenta. Por eso, cuando una tarea ya desbloqueada se vuelve a bloquear, el bloqueo vigente va **primero** en `Bloqueos` y el historial resuelto después (`` `[dependencia]` motivo. Antes: `[Resuelto el <fecha>]` — era … ``). Una tarea en "Tareas bloqueadas / pospuestas" sin ningún bloqueo vigente se avisa en pantalla como candidata a volver a "Tareas libres".
 - **Si faltan** (docs generados antes de existir este mecanismo, o editados a mano): el agente las agrega al actualizar el archivo — en el flujo de proyecto existente de [`../SKILL.md`](../SKILL.md) y al migrar con [`migration-flow.md`](./migration-flow.md). Mientras tanto, el script cae a un plan B: ubica las secciones `##` por su orden de aparición y avisa que está en ese modo.
 - **Set mínimo:** genera `handoff.md` pero no `backlog.md` ni `history.md` (ver [`questions-flow.md`](./questions-flow.md)), así que solo existen las anclas `in-progress` y `paused`; las herramientas que las leen tienen que tolerar que falten `backlog.md` e `history.md`.
 - **`history.md` (sin anclas):** el script de seguimiento de tareas también muestra las últimas entradas de `history.md`. No usa anclas: cada entrada es un header `## <fecha> — ✅|❌ [Tarea N —] título` (el segmento `Tarea N —` solo si la tarea tenía número; las descartadas pueden terminar con un sufijo entre paréntesis, ej. `(descartada)`), con las entradas nuevas **arriba** — el script toma las primeras. Lo que identifica una entrada es la marca ✅ (hecha) o ❌ (descartada), así que no se reemplaza por texto al traducir; los headers sin marca, dentro de comentarios o con placeholders se ignoran.

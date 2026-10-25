@@ -1,10 +1,10 @@
 # questions-flow
 
-Árbol de decisión que el agente debe seguir al ejecutar este skill sobre un repositorio. Cada paso indica: qué preguntar (si algo), cómo interpretar la respuesta, y qué acción concreta tomar (qué archivo copiar de `template/` a `docs/<destino>/` en el repo destino, o qué leer/actualizar).
+Árbol de decisión que el agente sigue al ejecutar este skill sobre un repositorio: qué preguntar, cómo interpretar la respuesta y qué archivo copiar de `template/` a `docs/<destino>/` (o qué leer/actualizar).
 
 Este archivo se abre solo cuando **no** existe documentación de este skill en el repo destino: el caso "ya existe" se resuelve en [`../SKILL.md`](../SKILL.md), sin pasar por acá.
 
-**Cómo se pregunta:** toda pregunta de este árbol se hace con `AskUserQuestion`, según la regla general de [`../SKILL.md`](../SKILL.md#cómo-preguntarle-al-operador-obligatorio-al-aplicar-el-skill). Acá cada pregunta se escribe como `header` (≤12 caracteres) + opciones, con la recomendada primero; «Otro» lo agrega la herramienta.
+**Cómo se pregunta:** según [`asking-questions.md`](./asking-questions.md). Acá cada pregunta se escribe como `header` (≤12 caracteres) + opciones, con la recomendada primero.
 
 Rige la política de lectura de [`../SKILL.md`](../SKILL.md): de `template/` se lee solo cada plantilla que se va a completar, y lo que se copia sin cambios (`CLAUDE.md`, `external/_example-service.md`) se copia con `cp`, sin leerlo.
 
@@ -20,7 +20,7 @@ Se decide mirando el repo destino, en este orden:
 
 El puntero en la raíz (`AGENTS.md`/`CLAUDE.md`) deja explícito cuál se usó; ver la Ronda final.
 
-**Convención de interacción — rondas:** las preguntas se agrupan en rondas. Dentro de una misma ronda las preguntas son independientes entre sí (ninguna depende de la respuesta de otra de la misma ronda), así que se hacen juntas en una llamada a `AskUserQuestion` (máximo 4 por llamada; si una ronda tiene más, se parte en llamadas consecutivas de hasta 4). Solo se avanza a la siguiente ronda una vez respondida la anterior, porque su resultado puede condicionar qué se pregunta después.
+**Convención de interacción — rondas:** las preguntas se agrupan en rondas. Dentro de una misma ronda las preguntas son independientes entre sí (ninguna depende de la respuesta de otra de la misma ronda), así que se hacen juntas en una llamada a `AskUserQuestion` (tandas de hasta 4, ver [`asking-questions.md`](./asking-questions.md)). Solo se avanza a la siguiente ronda una vez respondida la anterior, porque su resultado puede condicionar qué se pregunta después.
 
 ---
 
@@ -58,7 +58,7 @@ Guardar la respuesta como `ALCANCE`.
 
 El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/agents/` y/o `docs/project/` (o sus equivalentes bajo `agent-context/`) con la firma o el marcador de versión de la skill (detalle en «Prioridad» de [`migration-flow.md`](./migration-flow.md)); si existen, el flujo terminó allá. Acá solo se llega si **no** existen. Falta distinguir:
 
-- **No existen, pero la carpeta de documentación vieja (`docs/`, `doc/`, `documentation/` o archivos sueltos de la raíz; ver «Cuándo se dispara» en `migration-flow.md`) tiene archivos cuyo nombre matchea el catálogo de este skill en una proporción significativa (3 o más archivos, o el 30 % o más de los `.md`)** → hay documentación de contexto previa, pero de otro formato/convención. No se trata como conflicto genuino (eso sería `agent-context/`, ver «Carpeta destino» más arriba): se dispara el **flujo de migración** — ver [`./migration-flow.md`](./migration-flow.md). `ALCANCE` deja de ser relevante hasta que ese flujo termine (internamente se comporta como `ALCANCE = d`).
+- **No existen, pero la documentación vieja tiene archivos cuyo nombre matchea el catálogo de este skill en proporción significativa (carpetas y umbral en [«Cuándo se dispara»](./migration-flow.md#cuándo-se-dispara))** → hay documentación de contexto previa, pero de otro formato/convención. No se trata como conflicto genuino (eso sería `agent-context/`, ver «Carpeta destino» más arriba): se dispara el **flujo de migración** — ver [`./migration-flow.md`](./migration-flow.md). `ALCANCE` deja de ser relevante hasta que ese flujo termine (internamente se comporta como `ALCANCE = d`).
 
 - **NO** → no hay documentación previa de este skill ni nada reconocible para migrar. Continuar según `ALCANCE`:
 
@@ -98,10 +98,10 @@ Preguntar las 3 juntas, en una sola llamada a `AskUserQuestion` (son independien
 Una plantilla se completa, no se copia tal cual:
 
 1. Reemplazar los `[Placeholder]` por contenido real (o por la frase alternativa que la propia plantilla sugiere, ej. "Ninguna").
-2. **Quitar los comentarios HTML de guía** (`<!-- ... -->`): son instrucciones para quien completa la plantilla y, si quedan, se vuelven a leer en cada sesión. Se conservan solo la firma `agent-context-skill:signature`, las anclas `agent-context-skill:section=...`, el marcador `agent-context-skill:version` (línea 1 de `rules.md`) y los marcadores `agent-context-skill:start/end`. Lo que hace falta para mantener el archivo después (formato de una tarea, de una entrada, de una tarea pausada) está en el texto visible de la plantilla, no en comentarios. Excepción: `external/_example-service.md` se copia sin modificar, con `cp` (Ronda 4).
+2. **Quitar los comentarios HTML de guía** (`<!-- ... -->`), salvo la firma `agent-context-skill:signature`, las anclas `agent-context-skill:section=...`, el marcador `agent-context-skill:version` (línea 1 de `rules.md`) y los marcadores `agent-context-skill:start/end`. Excepción: `external/_example-service.md` se copia sin modificar, con `cp` (Ronda 4).
 3. En el set mínimo (sin `docs/README.md`), agregar al inicio de `rules.md` (después del marcador de versión de la línea 1) la definición de "operador" que lleva el `README.md`: *"**Operador:** la persona dueña del proyecto que le pide tareas al agente, aprueba decisiones y a quien se le pregunta cuando algo no está definido."*
 4. **Sin contenido real, sin inventar:** en las plantillas cuyo cuerpo son ejemplos (`roadmap.md`, `decisions.md`, `known-issues.md`), si el operador no dio contenido, se conservan el título y la introducción y se agrega una línea («Sin … registrados todavía»); no se inventan bloques de ejemplo ni se dejan los de la plantilla.
-5. Escribir solo lo que aporta al agente: no volcar listas de dependencias ni módulos uno por uno; sí convenciones, decisiones y restricciones y, en `architecture.md`, el árbol anotado de los niveles superiores del código (una línea de propósito por entrada). Conciso, sin relleno, y lo que ya vive en otro archivo se enlaza, no se repite.
+5. Escribir solo lo que aporta al agente: no volcar listas de dependencias ni módulos uno por uno; sí convenciones, decisiones y restricciones y, en `architecture.md`, el árbol anotado de los niveles superiores del código (una línea de propósito por entrada). Lo que ya vive en otro archivo se enlaza, no se repite.
 
 ---
 
@@ -213,11 +213,11 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
 
 ## Resumen — sets de archivos
 
-| Set | Se dispara con | Archivos incluidos | Por qué |
-|---|---|---|---|
-| **Mínimo** | a) Tarea puntual / c) Testear algo puntual | `agents/rules.md`, `agents/handoff.md`, `AGENTS.md`/`CLAUDE.md` (raíz) | Solo necesita no romper nada (reglas) y saber en qué está el proyecto ahora (handoff). No amerita backlog/history: es de un solo uso, sin ciclo de vida que registrar. El puntero raíz sí se asegura igual, porque es lo único que le permite a un agente genérico (no solo este skill) encontrar esa documentación sin invocar el skill de nuevo. |
-| **Intermedio** | b) Agregar una feature a un proyecto existente | Todo el mínimo + `agents/backlog.md`, `agents/history.md`, `project/architecture.md`, `project/stack.md`, `README.md` (generado) | Una feature sí tiene ciclo de vida (se agenda, se trabaja, se cierra o se descarta) → backlog/history. Para encajarla bien hace falta conocer las convenciones de organización (architecture) y las decisiones de stack que no se ven en el código (stack). `README.md` como mapa que se lee primero y evita abrir archivos de más; se genera y no se copia porque su contenido depende de qué se haya creado. |
-| **Completo** | d) Desarrollo prolongado / proyecto nuevo | Todo el intermedio + los condicionales de Ronda 2-4 (`roadmap`, `decisions`, `known-issues`, `glossary`, `entities`, `infrastructure`, `testing`, `setup`, `external/*`, `plans/*`) | Proyecto de largo aliento necesita cobertura completa: visión a futuro, decisiones técnicas, dominio de negocio, integraciones, testing. |
+| Set | Se dispara con | Archivos incluidos |
+|---|---|---|
+| **Mínimo** | a) Tarea puntual / c) Testear algo puntual | `agents/rules.md`, `agents/handoff.md`, `AGENTS.md`/`CLAUDE.md` (raíz) |
+| **Intermedio** | b) Agregar una feature a un proyecto existente | Todo el mínimo + `agents/backlog.md`, `agents/history.md`, `project/architecture.md`, `project/stack.md`, `README.md` (generado) |
+| **Completo** | d) Desarrollo prolongado / proyecto nuevo | Todo el intermedio + los condicionales de Ronda 2-4 (`roadmap`, `decisions`, `known-issues`, `glossary`, `entities`, `infrastructure`, `testing`, `setup`, `external/*`, `plans/*`) |
 
 ## Resumen — condición de disparo por archivo
 

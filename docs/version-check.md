@@ -4,7 +4,7 @@ Detecta si un proyecto con documentación ya generada se creó con una versión 
 
 ## Cuándo se corre
 
-Cada vez que se aplica la skill sobre un repo que ya tiene documentación (rama «Si existe» de [`../SKILL.md`](../SKILL.md)), antes de ejecutar la tarea pedida.
+Al aplicar la skill sobre un repo con documentación (Paso 1 de [`../SKILL.md`](../SKILL.md)), antes de la tarea pedida.
 
 ## Cómo se lee
 
@@ -34,8 +34,7 @@ Mostrar cada diferencia al operador sin decidir cuál es «la correcta»: puede 
 
 ## Qué se edita y qué no
 
-- Nunca se edita nada sin que el operador lo pida, diferencia por diferencia.
-- Al terminar la revisión, preguntar con `AskUserQuestion` si actualizar el marcador a la versión actual. Solo con sí se reescribe la línea 1 de `rules.md`.
+Nada, salvo lo que el operador pida diferencia por diferencia; al terminar la revisión se pregunta con `AskUserQuestion` si actualizar el marcador, y solo con sí se reescribe la línea 1 de `rules.md`.
 
 ## Alcance
 
