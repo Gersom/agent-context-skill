@@ -81,7 +81,7 @@ Antes de mover o escribir un solo archivo, mostrar al operador la tabla de mapeo
 2. Header `Legacy`: **¿quieres conservar la documentación vieja en `docs-legacy/`?** Opciones: «Conservar (Recomendado)» y «No conservar». Si `docs-legacy/` ya existe (de una migración anterior), decirlo en la pregunta y ofrecer «Conservar la existente» (se conserva tal cual y no se crea otro respaldo) y «Reemplazarla».
 3. Header `Texto`: **¿quieres condensar el texto para ahorrar tokens, o mantenerlo tal cual?** Opciones: «Mantener (Recomendado)» y «Condensar» (definido en Ejecución, paso 2).
 
-**Segunda tanda** (solo si, tras aplicar las correcciones de `Mapeo` y mostrar la tabla actualizada, quedan fusiones): header `Fusiones`: ¿corresponde fusionarlas tal cual, o deberían quedar separadas? Opciones: «Fusionar tal cual (Recomendado)» y «Dejarlas separadas». «Dejarlas separadas» = cada origen va a un destino propio (ej. `stack-backend.md` y `stack-frontend.md` quedan como archivos distintos, en la misma carpeta del destino original, `project/`).
+**Segunda tanda** (solo si, tras aplicar las correcciones de `Mapeo` y mostrar la tabla actualizada, quedan fusiones): header `Fusiones`: ¿corresponde fusionarlas tal cual, o deberían quedar separadas? Opciones: «Fusionar tal cual (Recomendado)» y «Dejarlas separadas». «Dejarlas separadas» = cada origen va a un destino propio (ej. `stack-backend.md` y `stack-frontend.md` quedan como archivos distintos, en la misma carpeta del destino original (`project/`, o `project/decisions/` para `stack-*`)).
 
 Solo después de la confirmación se ejecuta la migración — nunca se mueve o transforma contenido en base a una heurística sin confirmar.
 

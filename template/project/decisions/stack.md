@@ -15,7 +15,7 @@ Un bloque por pieza relevante (lenguaje, framework, librería, base de datos...)
 - **Por qué se eligió:** solo si no es la opción obvia o por defecto. Si hay una entrada de decisión, enlazarla.
 - **Qué NO usar en su lugar:** alternativas descartadas a propósito (ej. "no usar Redux, el estado global va con Zustand"), o «No aplica».
 
-Si todavía no se definió el stack, el archivo queda con una sola línea («Stack por definir: al elegirlo, registrarlo acá») y se reemplaza cuando se elija. Quitar esta guía al generar.
+Si todavía no se definió el stack, el archivo conserva el título y la introducción y, en vez de los bloques, una sola línea («Stack por definir: al elegirlo, registrarlo acá») y se reemplaza cuando se elija. Quitar esta guía al generar.
 -->
 
 ## [Placeholder — pieza]

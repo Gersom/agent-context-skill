@@ -66,7 +66,7 @@ El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/ag
   |---|---|---|
   | a) tarea puntual | Mínimo | Copiar el set mínimo (ver tabla de sets más abajo) y saltar a la **Ronda final (con opt-in)** |
   | c) testear puntual | Mínimo | Igual que (a) |
-  | b) agregar feature | Intermedio | Copiar el set intermedio; evaluar Ronda 3 solo si la feature toca esa área (glossary, external, infra, entities, testing, setup), salvo la pregunta de varias personas, que se hace siempre; luego **Ronda final** (sin opt-in, ya se decidió documentar) |
+  | b) agregar feature | Intermedio | Copiar el set intermedio (`decisions/stack.md` se redacta con lo que se detecte en el repo, o queda en «Stack por definir»); evaluar Ronda 3 solo si la feature toca esa área (glossary, external, infra, entities, testing, setup), salvo la pregunta de varias personas, que se hace siempre; luego **Ronda final** (sin opt-in, ya se decidió documentar) |
   | d) desarrollo prolongado | Completo | Ir a **Ronda 2** |
 
 ---
@@ -93,7 +93,7 @@ Preguntar las 4 juntas, en una sola llamada a `AskUserQuestion` (son independien
 
 4. **Header `Stack`: ¿ya está definido el stack del proyecto?** (recomendada: «Está en el repo» si hay archivos de dependencias; «Por definir» en un proyecto nuevo sin ellos) → llena `project/decisions/stack.md`:
    - «Está en el repo» → se registran solo las decisiones no obvias (qué NO usar, por qué se eligió algo), no el inventario de dependencias.
-   - «Lo escribo yo» → el stack acordado llega por «Otro»; cada pieza queda como `acordado` (o `instalado` si ya está en el repo).
+   - «Otro» → el operador escribe el stack acordado; cada pieza queda como `acordado` (o `instalado` si ya está en el repo).
    - «Por definir» → `stack.md` queda con la línea «Stack por definir: al elegirlo, registrarlo acá».
 
 ---
@@ -120,7 +120,7 @@ Cuando `ALCANCE = d`, copiar siempre:
 - `template/agents/history.md` → `docs/agents/history.md`
 - `template/project/architecture.md` → `docs/project/architecture.md`
 - `template/project/decisions/README.md` → `docs/project/decisions/README.md` (el índice)
-- `template/project/decisions/stack.md` → `docs/project/decisions/stack.md`, con lo que respondió `Stack` (Ronda 2) o, sin Ronda 2, con lo que se detecte en el repo; sin stack definido queda en la línea «Stack por definir»
+- `template/project/decisions/stack.md` → `docs/project/decisions/stack.md`, con lo que respondió `Stack` (Ronda 2); sin stack definido queda en la línea «Stack por definir»
 
 Y según `ETAPA` (sin preguntar):
 

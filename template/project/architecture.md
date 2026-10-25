@@ -1,6 +1,6 @@
 # Arquitectura
 
-Mapa del código: qué hay en cada parte, las convenciones de organización que **no se deducen mirando las carpetas** y por qué están así. No incluye el stack ([`./stack.md`](./stack.md)) ni el modelo de datos ([`./entities.md`](./entities.md), si aplica).
+Mapa del código: qué hay en cada parte, las convenciones de organización que **no se deducen mirando las carpetas** y por qué están así. No incluye el stack ([`./decisions/stack.md`](./decisions/stack.md)) ni el modelo de datos ([`./entities.md`](./entities.md), si aplica).
 
 ---
 
