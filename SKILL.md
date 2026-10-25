@@ -5,7 +5,7 @@ description: Genera o actualiza la documentación de contexto de un proyecto (re
 
 # agent-context-kit
 
-Versión de esta skill: **2.0.3**
+Versión de esta skill: **2.0.4**
 
 ## Cuándo se dispara
 
@@ -23,7 +23,7 @@ Se aplica una vez por repo; después el `AGENTS.md` del repo guía al agente. Ri
 
 ## Cómo preguntarle al operador (obligatorio al aplicar el skill)
 
-Toda pregunta al operador se hace con `AskUserQuestion` (recuadro), también las abiertas, nunca como texto en el chat. El contexto que la pregunta necesita se escribe completo en el chat antes de preguntar y la pregunta va corta (regla 5). Reglas: [`docs/asking-questions.md`](./docs/asking-questions.md).
+Toda pregunta al operador se hace con `AskUserQuestion` (recuadro), también las abiertas, salvo las que necesitan que el operador revise contenido (plan, tabla, lista, diff): esas van en texto, con el contexto completo, como mensaje final del turno (regla 5). Reglas: [`docs/asking-questions.md`](./docs/asking-questions.md).
 
 ## Paso 1 — ¿Ya existe documentación de este skill?
 

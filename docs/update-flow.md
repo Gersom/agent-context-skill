@@ -24,24 +24,24 @@ Política de lectura de [`../SKILL.md`](../SKILL.md): por rangos, sin abrir arch
 
 ## Resumen previo
 
-Antes de tocar nada, un resumen único escrito completo en el chat, antes de pedir nada (como la «Ronda de confirmación» de [`migration-flow.md`](./migration-flow.md)): lista de cambios con versión, título, archivo, tipo y estado (aplicable / ya aplicado / conflicto / manual).
+Antes de tocar nada, un resumen único escrito completo en el chat (como la «Ronda de confirmación» de [`migration-flow.md`](./migration-flow.md)): lista de cambios con versión, título, archivo, tipo y estado (aplicable / ya aplicado / conflicto / manual). Es el primer mensaje de «Aplicar»: si lleva la primera pregunta, se hace ahí mismo, en texto, y el mensaje cierra el turno (regla 5 de [`asking-questions.md`](./asking-questions.md)), sin repetir el resumen. Si no la lleva, el resumen es un mensaje aparte y las preguntas empiezan en el siguiente.
 
 ## Aplicar
 
-En orden, de la versión más vieja a la más nueva, confirmando cada cambio con `AskUserQuestion` («Aplicar» / «Omitir»). Cada cambio (versión, título, texto anterior/nuevo o instrucción) se muestra en el chat antes de su pregunta; si los cambios son independientes entre sí (no tocan el mismo archivo/sección ni dependen de un conflicto previo) se pueden mostrar todos antes y preguntar en tandas de hasta 4, cada pregunta con un header distinto de ≤12 caracteres (ej. `Cambio 1`, `Cambio 2`); si no, uno por llamada (regla 3 de [`asking-questions.md`](./asking-questions.md)).
+En orden, de la versión más vieja a la más nueva, confirmando cada cambio («Aplicar» / «Omitir») en texto, como mensaje final del turno: el cambio (versión, título, texto anterior/nuevo o instrucción) como contexto y la pregunta debajo, esperando la respuesta en el chat (regla 5 de [`asking-questions.md`](./asking-questions.md)). Si los cambios son independientes entre sí (no tocan el mismo archivo/sección ni dependen de un conflicto previo) se pueden mostrar todos en un mismo mensaje, con las preguntas numeradas; si no, uno por mensaje.
 
-- **Comparación:** el «texto anterior» debe coincidir con lo que tiene el proyecto. Si el texto nuevo ya está → «ya aplicado», se salta. Si no coincide → conflicto: escribir en el chat la diferencia (texto del proyecto frente al texto nuevo) y, después, preguntar «Conservar el del proyecto» / «Pisar con el nuevo» / «Fusionar a mano».
+- **Comparación:** el «texto anterior» debe coincidir con lo que tiene el proyecto. Si el texto nuevo ya está → «ya aplicado», se salta. Si no coincide → conflicto: en texto, como mensaje final del turno, la diferencia (texto del proyecto frente al texto nuevo) como contexto y, debajo, la pregunta «Conservar el del proyecto» / «Pisar con el nuevo» / «Fusionar a mano».
 - **Idioma:** el changelog está en el idioma de la plantilla (español). Si `IDIOMA` del proyecto es otro, no se compara literal sino por sentido y el texto nuevo se escribe traducido a `IDIOMA` (solo el marcador va literal).
 - **Tipo `manual`:** mostrar la instrucción y ofrecer ayuda; no se automatiza.
 - `{{versión}}` = versión de la skill.
 
 ## Marcador
 
-Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si todos los cambios aplicables se aplicaron o se resolvieron. Si se omitió alguno, listar en el chat los cambios omitidos y preguntar si subirlo igual (advertir que oculta lo pendiente; por defecto no).
+Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si todos los cambios aplicables se aplicaron o se resolvieron. Si se omitió alguno, preguntar en texto, como mensaje final del turno, con la lista de los cambios omitidos como contexto, si subirlo igual (advertir que oculta lo pendiente; por defecto no).
 
 ## Cierre
 
-Con confirmación, un commit en la rama nueva (`docs: actualizar la documentación de la skill de X a Y`). Informar el nombre de la rama, el resumen de aplicados/omitidos/manuales y cómo revisar (`git diff <rama principal>`). No hace merge: lo decide el operador.
+Con confirmación, un commit en la rama nueva (`docs: actualizar la documentación de la skill de X a Y`): mostrar la lista de archivos y el mensaje de commit propuesto, y preguntar en texto como mensaje final del turno (regla 5). Informar el nombre de la rama, el resumen de aplicados/omitidos/manuales y cómo revisar (`git diff <rama principal>`). No hace merge: lo decide el operador.
 
 ## Alcance
 
