@@ -1,20 +1,20 @@
 # questions-flow
 
-Árbol de decisión que el agente sigue al ejecutar este skill sobre un repositorio: qué preguntar, cómo interpretar la respuesta y qué archivo copiar de `template/` a `docs/<destino>/` (o qué leer/actualizar).
+Árbol de decisión que el agente sigue al ejecutar esta skill sobre un repositorio: qué preguntar, cómo interpretar la respuesta y qué archivo copiar de `template/` a `docs/<destino>/` (o qué leer/actualizar).
 
-Este archivo se abre solo cuando **no** existe documentación de este skill en el repo destino: el caso "ya existe" se resuelve en [`../SKILL.md`](../SKILL.md), sin pasar por acá.
+Este archivo se abre solo cuando **no** existe documentación de esta skill en el repo destino: el caso "ya existe" se resuelve en [`../SKILL.md`](../SKILL.md), sin pasar por acá.
 
 **Cómo se pregunta:** según [`asking-questions.md`](./asking-questions.md). Acá cada pregunta se escribe como `header` (≤12 caracteres) + opciones, con la recomendada primero. Las preguntas de las rondas van con el recuadro; si una necesita que el operador revise contenido, va en texto (regla 5 de [`asking-questions.md`](./asking-questions.md)).
 
 Rige la política de lectura de [`../SKILL.md`](../SKILL.md): de `template/` se lee solo cada plantilla que se va a completar, y lo que se copia sin cambios (`CLAUDE.md`, `external/_example-service.md`) se copia con el comando nativo del shell, sin leerlo.
 
-Convención de rutas: `template/X` se refiere a la plantilla en este skill; `docs/X` se refiere al destino en el repo del operador (o `agent-context/X` si aplica el conflicto descrito en «Carpeta destino» más abajo).
+Convención de rutas: `template/X` se refiere a la plantilla en esta skill; `docs/X` se refiere al destino en el repo del operador (o `agent-context/X` si aplica el conflicto descrito en «Carpeta destino» más abajo).
 
 ## Carpeta destino: `docs/` o `agent-context/`
 
 Se decide mirando el repo destino, en este orden:
 
-1. **Existe `docs/agents/` o `docs/project/`, con la firma o el marcador de versión de la skill** → el skill ya se inicializó acá: no se repite el scaffolding, se sigue el flujo de proyecto existente (ver [`../SKILL.md`](../SKILL.md), Paso 1). Sin firma ni marcador, ver «Prioridad» en [`migration-flow.md`](./migration-flow.md).
+1. **Existe `docs/agents/` o `docs/project/`, con la firma o el marcador de versión de la skill** → la skill ya se inicializó acá: no se repite el scaffolding, se sigue el flujo de proyecto existente (ver [`../SKILL.md`](../SKILL.md), Paso 1). Sin firma ni marcador, ver «Prioridad» en [`migration-flow.md`](./migration-flow.md).
 2. **Existe `docs/` pero sin esas subcarpetas** (documentación de otra naturaleza: guía de usuario, Docusaurus, etc.) → **conflicto**: no se toca esa carpeta y se usa `agent-context/` en la raíz como respaldo.
 3. **No existe `docs/`** → se crea `docs/` con la estructura del catálogo.
 
@@ -58,9 +58,9 @@ Guardar la respuesta como `ALCANCE`.
 
 El agente ya revisó en [`../SKILL.md`](../SKILL.md) (paso 1) si existe `docs/agents/` y/o `docs/project/` (o sus equivalentes bajo `agent-context/`) con la firma o el marcador de versión de la skill (detalle en «Prioridad» de [`migration-flow.md`](./migration-flow.md)); si existen, el flujo terminó allá. Acá solo se llega si **no** existen. Falta distinguir:
 
-- **No existen, pero la documentación vieja tiene archivos cuyo nombre matchea el catálogo de este skill en proporción significativa (carpetas y umbral en [«Cuándo se dispara»](./migration-flow.md#cuándo-se-dispara))** → hay documentación de contexto previa, pero de otro formato/convención. No se trata como conflicto genuino (eso sería `agent-context/`, ver «Carpeta destino» más arriba): se dispara el **flujo de migración** — ver [`./migration-flow.md`](./migration-flow.md). `ALCANCE` deja de ser relevante hasta que ese flujo termine (internamente se comporta como `ALCANCE = d`).
+- **No existen, pero la documentación vieja tiene archivos cuyo nombre matchea el catálogo de esta skill en proporción significativa (carpetas y umbral en [«Cuándo se dispara»](./migration-flow.md#cuándo-se-dispara))** → hay documentación de contexto previa, pero de otro formato/convención. No se trata como conflicto genuino (eso sería `agent-context/`, ver «Carpeta destino» más arriba): se dispara el **flujo de migración** — ver [`./migration-flow.md`](./migration-flow.md). `ALCANCE` deja de ser relevante hasta que ese flujo termine (internamente se comporta como `ALCANCE = d`).
 
-- **NO** → no hay documentación previa de este skill ni nada reconocible para migrar. Continuar según `ALCANCE`:
+- **NO** → no hay documentación previa de esta skill ni nada reconocible para migrar. Continuar según `ALCANCE`:
 
   | ALCANCE | Set | Continúa a |
   |---|---|---|
@@ -173,7 +173,7 @@ Solo si en la Ronda 3 la respuesta fue "sí" a integraciones externas.
 
 **Preguntar** (abierta, header `Servicios`; los servicios detectados y dónde van en una línea del enunciado, sin mensaje previo): "¿Cuántas y cuáles son?" Opciones: los servicios detectados en dependencias o variables de entorno como candidatos (recomendado primero, máximo 3) o, si no hay, «Lo escribo yo» y «No aplica / omitir»; la lista real llega por «Otro».
 
-1. Copiar también `template/external/_example-service.md` → `docs/external/_example-service.md`, **sin renombrar ni modificar.** Queda ahí como plantilla disponible para que, más adelante, otra IA (o el operador) pueda documentar una nueva integración sin depender de este skill.
+1. Copiar también `template/external/_example-service.md` → `docs/external/_example-service.md`, **sin renombrar ni modificar.** Queda ahí como plantilla disponible para que, más adelante, otra IA (o el operador) pueda documentar una nueva integración sin depender de esta skill.
 2. Por cada servicio declarado ahora:
    - Duplicar `template/external/_example-service.md` → `docs/external/<nombre-servicio>.md`
    - Renombrar el título/contenido de la copia para reflejar el servicio real.

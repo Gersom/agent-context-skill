@@ -104,7 +104,7 @@ Las Reglas por defecto no cambian. Al generar la documentación en modo multi (o
 
 ## Pasar de plano a multi-operador
 
-El repo **ya usa este skill** en estructura plana (`docs/agents/handoff.md`, etc.) y se suma otra persona: se pasa al modo multi sin perder nada. Lo hace el operador existente y solo si lo pide (ej. *"usa agent-context-skill para pasar a multi-operador"*); la política de lectura de [`../SKILL.md`](../SKILL.md) rige igual.
+El repo **ya usa esta skill** en estructura plana (`docs/agents/handoff.md`, etc.) y se suma otra persona: se pasa al modo multi sin perder nada. Lo hace el operador existente y solo si lo pide (ej. *"usa agent-context-skill para pasar a multi-operador"*); la política de lectura de [`../SKILL.md`](../SKILL.md) rige igual.
 
 **Antes de tocar nada**, aplicar la [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio) (sobre `docs/agents`, `AGENTS.md` y `CLAUDE.md`) y preguntar en dos rondas que no se mezclan (reglas en [`asking-questions.md`](./asking-questions.md)): primero la 1 y la 2, independientes, en una sola llamada a `AskUserQuestion` (las abiertas ofrecen candidatos o «Lo escribo yo» y «No aplica / omitir»); después la 3, en texto como mensaje final del turno (regla 5), esperando la respuesta en el chat:
 

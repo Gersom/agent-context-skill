@@ -11,7 +11,7 @@ Versión de esta skill: **2.0.4**
 
 Al empezar a trabajar en un repositorio, antes de tocar código. También se invoca explícitamente; pedir migrar (ej. *"...y migra mi proyecto"*) fuerza el chequeo de [`docs/migration-flow.md`](./docs/migration-flow.md) aunque la heurística no halle suficientes coincidencias.
 
-## Política de lectura (obligatoria al aplicar el skill)
+## Política de lectura (obligatoria al aplicar la skill)
 
 Se aplica una vez por repo; después el `AGENTS.md` del repo guía al agente. Rige también en los flujos que enlaza: si un paso la contradice, gana ella.
 
@@ -21,11 +21,11 @@ Se aplica una vez por repo; después el `AGENTS.md` del repo guía al agente. Ri
 4. Mover o copiar con el comando nativo del shell (`cp`/`mv`, o `Copy-Item`/`Move-Item` en PowerShell) o con la herramienta de archivos, nunca leyendo y reescribiendo; leer solo para transformar.
 5. De a uno, sin acarrear ni releer: procesar, escribir, pasar al siguiente.
 
-## Cómo preguntarle al operador (obligatorio al aplicar el skill)
+## Cómo preguntarle al operador (obligatorio al aplicar la skill)
 
 Toda pregunta al operador se hace con `AskUserQuestion` (recuadro), también las abiertas, salvo las que necesitan que el operador revise contenido (plan, tabla, lista, diff): esas van en texto, con el contexto completo, como mensaje final del turno (regla 5). Reglas: [`docs/asking-questions.md`](./docs/asking-questions.md).
 
-## Paso 1 — ¿Ya existe documentación de este skill?
+## Paso 1 — ¿Ya existe documentación de esta skill?
 
 Revisar si el repo destino tiene `docs/agents/` y/o `docs/project/` (o bajo `agent-context/`) con firma o marcador de versión de la skill (sin ninguno: «Prioridad» de [`docs/migration-flow.md`](./docs/migration-flow.md)).
 

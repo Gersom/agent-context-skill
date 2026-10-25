@@ -14,7 +14,7 @@ Guía para generar el `docs/README.md` del proyecto destino: lo primero que lee 
 
 ## `AGENTS.md` / `CLAUDE.md` (raíz de `template/`)
 
-Los punteros que se aseguran en la raíz del repo destino, en **cualquier** set (incluso el mínimo) — son lo único que le permite a un agente genérico (no solo este skill) encontrar la documentación de contexto sin invocarlo de nuevo. `AGENTS.md` es la fuente de verdad: dice qué leer (README, reglas y handoff) y qué no leer salvo necesidad (el resto, y `backlog.md`/`history.md` con una tarea en curso). `CLAUDE.md` nunca duplica ese contenido, solo redirige a `AGENTS.md`. Ambos llevan la sección delimitada `<!-- agent-context-skill:start/end -->` para poder agregarse al final de un archivo ya existente del operador sin sobrescribirlo ni duplicarse en corridas futuras. Ver el paso 3-4 de la "Ronda final" en [`questions-flow.md`](./questions-flow.md).
+Los punteros que se aseguran en la raíz del repo destino, en **cualquier** set (incluso el mínimo) — son lo único que le permite a un agente genérico (no solo esta skill) encontrar la documentación de contexto sin invocarla de nuevo. `AGENTS.md` es la fuente de verdad: dice qué leer (README, reglas y handoff) y qué no leer salvo necesidad (el resto, y `backlog.md`/`history.md` con una tarea en curso). `CLAUDE.md` nunca duplica ese contenido, solo redirige a `AGENTS.md`. Ambos llevan la sección delimitada `<!-- agent-context-skill:start/end -->` para poder agregarse al final de un archivo ya existente del operador sin sobrescribirlo ni duplicarse en corridas futuras. Ver el paso 3-4 de la "Ronda final" en [`questions-flow.md`](./questions-flow.md).
 
 ## `multi/` (modo multi-operador, opcional)
 
