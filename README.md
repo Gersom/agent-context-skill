@@ -34,6 +34,7 @@ SKILL.md        # Punto de entrada: cuándo se dispara y qué hace
 docs/           # Flujos (questions-flow, migration-flow, multi-operator, update-flow, version-check, asking-questions), template-architecture.md y changelog/
 template/       # Catálogo de plantillas que la skill copia al repo destino
 .claude-plugin/ # plugin.json y marketplace.json
+LICENSE         # Licencia MIT
 ```
 
 Qué es cada plantilla: [`docs/template-architecture.md`](./docs/template-architecture.md).
@@ -45,6 +46,10 @@ SemVer, con tags `vX.Y.Z` y la versión en `.claude-plugin/plugin.json`. Mientra
 - **patch**: fixes o ajustes de redacción en plantillas existentes.
 - **minor**: contenido nuevo que no rompe nada (una plantilla nueva, una rama nueva del árbol de preguntas).
 - **major**: cambios que rompen algo que un repo destino ya pudiera usar (mover o renombrar archivos de `template/` referenciados desde `questions-flow.md`, cambiar la estructura generada en `docs/agents` o `docs/project`).
+
+## Licencia
+
+[MIT](./LICENSE). Puedes usar la skill y copiar sus plantillas en tus proyectos, y redistribuirla, conservando el aviso de copyright.
 
 ## Apoyar el proyecto
 
