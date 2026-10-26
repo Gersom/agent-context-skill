@@ -32,7 +32,7 @@ En orden, de la versión más vieja a la más nueva, confirmando cada cambio («
 
 - **Comparación:** el «texto anterior» debe coincidir con lo que tiene el proyecto. Si el texto nuevo ya está → «ya aplicado», se salta. Si no coincide → conflicto: en texto, como mensaje final del turno, la diferencia (texto del proyecto frente al texto nuevo) como contexto y, debajo, la pregunta «Conservar el del proyecto» / «Pisar con el nuevo» / «Fusionar a mano».
 - **Idioma:** el changelog está en el idioma de la plantilla (español). Si `IDIOMA` del proyecto es otro, no se compara literal sino por sentido y el texto nuevo se escribe traducido a `IDIOMA` (solo el marcador va literal).
-- **Tipo `manual`:** mostrar la instrucción y ofrecer ayuda; no se automatiza.
+- **Tipo `manual`:** mostrar la instrucción y ofrecer ayuda; no se automatiza. El cambio de prefijo único del changelog 2.0 («Un solo prefijo») es la excepción: se aplica con el procedimiento de «Marcadores heredados» de [`version-check.md`](./version-check.md) (renombrado mecánico del prefijo, sin pasar por `history.md`); si el operador lo omite o queda algún prefijo heredado al terminar, esa sección vuelve a ofrecerlo.
 - `{{versión}}` = versión de la skill.
 
 ## Marcador
