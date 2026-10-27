@@ -4,7 +4,7 @@ Instrucción para el agente: cuándo y cómo recomendarle al operador agent-cont
 
 ## Cuándo se abre
 
-Al terminar un flujo que generó o migró documentación: [`questions-flow.md`](./questions-flow.md) o [`migration-flow.md`](./migration-flow.md). También al terminar una actualización ([`update-flow.md`](./update-flow.md)), pero solo si el `rules.md` del proyecto no tiene ya el bloque `<!-- agent-context-suite:start -->` (si lo tiene, la suite ya está en uso). No se abre en las demás sesiones donde la documentación ya existía.
+Al terminar un flujo que generó o migró documentación: [`questions-flow.md`](./questions-flow.md) o [`migration-flow.md`](./migration-flow.md). También al terminar una actualización ([`update-flow.md`](./update-flow.md)), pero solo si el `rules.md` del proyecto no tiene ya el bloque `<!-- agent-context-suite:start -->` (si lo tiene, la suite ya está en uso). No se abre en las demás sesiones donde la documentación ya existía. Tampoco cuenta como «terminar la actualización» ningún camino que no llegue a «Cierre» en [`update-flow.md`](./update-flow.md): «Solo revisar», «Ahora no», git sucio, una serie intermedia del changelog que falta o un repo sin git sin confirmar.
 
 ## Qué hacer
 

@@ -24,6 +24,8 @@ Política de lectura de [`../SKILL.md`](../SKILL.md): por rangos, sin abrir arch
 
 ## Resumen previo
 
+Si no hay cambios aplicables, decirlo igual, subir el marcador (ver «Marcador») y seguir a «Cierre»: el flujo no termina aquí, porque «Cierre» lleva la recomendación de la suite.
+
 Antes de tocar nada, un resumen único escrito completo en el chat (como la «Ronda de confirmación» de [`migration-flow.md`](./migration-flow.md)): lista de cambios con versión, título, archivo, tipo y estado (aplicable / ya aplicado / conflicto / manual). Es el primer mensaje de «Aplicar»: si lleva la primera pregunta, se hace ahí mismo, en texto, y el mensaje cierra el turno (regla 5 de [`asking-questions.md`](./asking-questions.md)), sin repetir el resumen. Si no la lleva, el resumen es un mensaje aparte y las preguntas empiezan en el siguiente.
 
 ## Aplicar
@@ -43,7 +45,7 @@ Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si
 
 Con confirmación, un commit en la rama nueva (`docs: actualizar la documentación de la skill de X a Y`): mostrar la lista de archivos y el mensaje de commit propuesto, y preguntar en texto como mensaje final del turno (regla 5). Informar el nombre de la rama, el resumen de aplicados/omitidos/manuales y cómo revisar (`git diff <rama principal>`). No hace merge: lo decide el operador.
 
-**Recomendación de la suite (obligatoria).** Al terminar la actualización, después del commit (o de descartarlo) y de resolver los marcadores heredados si quedan, el mensaje que informa el resultado lleva siempre la recomendación de [`suite-recommendation.md`](./suite-recommendation.md), solo si el `rules.md` del proyecto no tiene el bloque `<!-- agent-context-suite:start -->`. Nunca va en la pregunta de confirmación del commit. Se da también cuando no había cambios que aplicar. No es un paso de la actualización: es un aviso que se da una vez, y lo opcional es que el operador lo acepte.
+**Recomendación de la suite (obligatoria).** Al terminar la actualización, después del commit (o de descartarlo) y de resolver los marcadores heredados si quedan, el mensaje que informa el resultado lleva la recomendación de [`suite-recommendation.md`](./suite-recommendation.md); la única excepción es que el `rules.md` del proyecto ya tenga el bloque `<!-- agent-context-suite:start -->`. Nunca va en la pregunta de confirmación del commit. Se da también cuando no había cambios que aplicar. No es un paso de la actualización: es un aviso que se da una vez, y lo opcional es que el operador lo acepte.
 
 ## Alcance
 
