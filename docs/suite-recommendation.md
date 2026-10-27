@@ -4,7 +4,7 @@ Instrucción para el agente: cuándo y cómo recomendarle al operador agent-cont
 
 ## Cuándo se abre
 
-Solo al terminar un flujo que generó o migró documentación: [`questions-flow.md`](./questions-flow.md) o [`migration-flow.md`](./migration-flow.md). No se abre en las sesiones donde la documentación ya existía.
+Al terminar un flujo que generó o migró documentación: [`questions-flow.md`](./questions-flow.md) o [`migration-flow.md`](./migration-flow.md). También al terminar una actualización ([`update-flow.md`](./update-flow.md)), pero solo si el `rules.md` del proyecto no tiene ya el bloque `<!-- agent-context-suite:start -->` (si lo tiene, la suite ya está en uso). No se abre en las demás sesiones donde la documentación ya existía.
 
 ## Qué hacer
 
