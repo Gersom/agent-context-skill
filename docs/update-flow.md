@@ -8,9 +8,9 @@ Solo desde [`version-check.md`](./version-check.md), cuando el operador elige «
 
 ## Precondiciones
 
-- Repo git. Si no lo es, avisar que sin git no hay rama ni cómo revertir y parar: el flujo no sigue sin rama.
+- Repo git. Si no lo es, avisar que sin git no hay rama ni cómo revertir y parar.
 - Git limpio, según [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio), pero aquí sobre el árbol completo (`git status --porcelain` sin filtrar). Si hay cambios sin commitear, no se sigue con confirmación: se pide que se commiteen o guarden y se para. No se improvisa un camino sin rama (por ejemplo, trabajar sobre la rama actual porque el árbol ya estaba modificado): sin rama nueva, el flujo no sigue.
-- Anotar la rama de partida (`git branch --show-current`). Si sale vacío (HEAD desacoplado), parar y pedir que se pase a una rama. Crear la rama `agent-context-update-<versión destino>` desde ella (`git switch -c`; si existe, sufijo numérico). Nunca se trabaja en la rama principal. El merge a la rama de partida solo se hace si el operador lo acepta en «Cierre».
+- Rama de trabajo, según [`working-branch.md`](./working-branch.md) («Al empezar»): `agent-context-update-<versión destino>`, creada desde la rama de partida.
 
 ## Qué leer
 
@@ -43,11 +43,9 @@ Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si
 
 ## Cierre
 
-Antes del commit, repetir la detección de «Marcadores heredados» de [`version-check.md`](./version-check.md) y, si el operador acepta, hacer el renombrado: así entra en el commit y no queda suelto en otra rama. Con confirmación, un commit en la rama nueva (`docs: actualizar la documentación de la skill de X a Y`): mostrar la lista de archivos y el mensaje de commit propuesto, y preguntar en texto como mensaje final del turno (regla 5). Informar el nombre de la rama, el resumen de aplicados/omitidos/manuales y cómo revisar (`git diff <rama de partida>..<rama nueva>`).
+Antes del commit, repetir la detección de «Marcadores heredados» de [`version-check.md`](./version-check.md) y, si el operador acepta, hacer el renombrado: así entra en el commit y no queda suelto en otra rama. Después, commit, merge y oferta de la suite según [`working-branch.md`](./working-branch.md) («Al terminar»), con el mensaje de commit `docs: update the agent-context documentation from skill X to Y`. Aquí, el resumen que se informa es el de aplicados/omitidos/manuales.
 
-**Merge a la rama de partida.** Con el commit hecho, en un mensaje aparte que cierra el turno (regla 5), con el hash del commit, los archivos y `git diff <rama de partida>..<rama nueva>` como contexto, preguntar en texto: «¿Hago el merge de `<rama nueva>` en `<rama de partida>`?», con «Hacer el merge» / «Dejar la rama para revisarla». Con «Hacer el merge»: `git switch <rama de partida>` y `git merge --no-ff -m "docs: actualizar la documentación de la skill de X a Y" <rama nueva>` (con `-m`, para que no se abra un editor). Si hay conflictos, parar, mostrarlos y preguntar si se resuelven juntos o se corta con `git merge --abort`; no se resuelven sin el operador. Nunca `git push`. Con «Dejar la rama», informar cómo hacerlo después. Si el operador descartó el commit, los cambios quedan sin commitear en la rama nueva: decirle en qué rama quedó y no preguntar el merge.
-
-**Oferta de la suite (siempre se da).** Al terminar la actualización, después del commit (o de descartarlo), de la pregunta del merge si correspondía (también si dejó la rama o hubo conflictos), el mensaje que informa el resultado lleva la recomendación de [`suite-recommendation.md`](./suite-recommendation.md); la única excepción es que el `rules.md` del proyecto ya tenga el bloque `<!-- agent-context-suite:start -->`. Nunca va en una pregunta (la del commit ni la del merge). Se da también cuando no había cambios que aplicar. No es un paso de la actualización: es un aviso que se da una vez, y lo opcional es que el operador lo acepte.
+La oferta de la suite se da siempre, también cuando no había cambios que aplicar; la única excepción es que el `rules.md` del proyecto ya tenga el bloque `<!-- agent-context-suite:start -->`.
 
 ## Alcance
 

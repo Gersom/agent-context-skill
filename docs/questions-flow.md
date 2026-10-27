@@ -41,6 +41,10 @@ Corre primero, antes de la Ronda 1, porque determina en qué idioma se redacta t
 
 ---
 
+## Rama de trabajo
+
+Antes de escribir el primer archivo, el flujo trabaja en una rama nueva, según [`working-branch.md`](./working-branch.md) («Al empezar»); al terminar, ofrece el merge a la rama de partida.
+
 ## Ronda 1 — Gate de alcance (siempre, sola)
 
 **Preguntar** (una sola pregunta, header `Alcance`; sin «(Recomendado)», porque depende solo de lo que el operador quiera): "¿Qué deseas hacer?"
@@ -217,7 +221,7 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
    - **Sí** → volver a la Ronda 2 y correr el flujo completo.
    - **No** → fin.
 
-**Cierre:** al terminar de verdad el flujo, el mensaje de cierre lleva siempre la recomendación de [`suite-recommendation.md`](./suite-recommendation.md). Si el operador responde «Sí» en el paso 5, el flujo vuelve a la Ronda 2 y la recomendación no se da todavía: va solo al terminar el flujo completo.
+**Cierre:** al terminar de verdad el flujo, commit y merge según [`working-branch.md`](./working-branch.md) («Al terminar») y, después, el mensaje de cierre lleva siempre la recomendación de [`suite-recommendation.md`](./suite-recommendation.md). Si el operador responde «Sí» en el paso 5, el flujo vuelve a la Ronda 2 y la recomendación no se da todavía: va solo al terminar el flujo completo.
 
 ---
 
