@@ -43,7 +43,7 @@ Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si
 
 Con confirmación, un commit en la rama nueva (`docs: actualizar la documentación de la skill de X a Y`): mostrar la lista de archivos y el mensaje de commit propuesto, y preguntar en texto como mensaje final del turno (regla 5). Informar el nombre de la rama, el resumen de aplicados/omitidos/manuales y cómo revisar (`git diff <rama principal>`). No hace merge: lo decide el operador.
 
-**Recomendación opcional de la suite.** Al terminar la actualización, el mensaje final puede llevar la recomendación de [`suite-recommendation.md`](./suite-recommendation.md), solo si el `rules.md` del proyecto no tiene el bloque `<!-- agent-context-suite:start -->`. No es un paso de la actualización: solo un aviso opcional, que se da una vez.
+**Recomendación opcional de la suite.** Al terminar la actualización, después del commit (o de descartarlo) y de resolver los marcadores heredados si quedan, el mensaje que informa el resultado puede llevar la recomendación de [`suite-recommendation.md`](./suite-recommendation.md), solo si el `rules.md` del proyecto no tiene el bloque `<!-- agent-context-suite:start -->`. Nunca va en la pregunta de confirmación del commit. No es un paso de la actualización: solo un aviso opcional, que se da una vez.
 
 ## Alcance
 
