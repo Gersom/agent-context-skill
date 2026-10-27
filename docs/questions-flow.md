@@ -217,7 +217,7 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
    - **Sí** → volver a la Ronda 2 y correr el flujo completo.
    - **No** → fin.
 
-**Cierre:** al terminar de verdad el flujo, el mensaje de cierre puede llevar la recomendación opcional de [`suite-recommendation.md`](./suite-recommendation.md). Si el operador responde «Sí» en el paso 5, el flujo vuelve a la Ronda 2 y la recomendación no se da todavía: va solo al terminar el flujo completo.
+**Cierre:** al terminar de verdad el flujo, el mensaje de cierre lleva siempre la recomendación de [`suite-recommendation.md`](./suite-recommendation.md). Si el operador responde «Sí» en el paso 5, el flujo vuelve a la Ronda 2 y la recomendación no se da todavía: va solo al terminar el flujo completo.
 
 ---
 
