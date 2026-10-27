@@ -9,8 +9,8 @@ Solo desde [`version-check.md`](./version-check.md), cuando el operador elige «
 ## Precondiciones
 
 - Repo git. Si no lo es, avisar que no habría cómo revertir y pedir confirmación explícita (`AskUserQuestion`) antes de seguir sin rama.
-- Git limpio, según [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio). Aquí, si hay cambios sin commitear, no se sigue con confirmación: se pide que se commiteen o guarden y se para.
-- Crear la rama `agent-context-update-<versión destino>` desde la actual (`git switch -c`; si existe, sufijo numérico). Nunca se trabaja en la rama principal ni se hace merge.
+- Git limpio, según [«Precondición: git limpio»](./migration-flow.md#precondición-git-limpio). Aquí, si hay cambios sin commitear, no se sigue con confirmación: se pide que se commiteen o guarden y se para. No se improvisa un camino sin rama (por ejemplo, trabajar sobre la rama actual porque el árbol ya estaba modificado): sin rama nueva, el flujo no sigue.
+- Anotar la rama de partida (`git branch --show-current`) y crear la rama `agent-context-update-<versión destino>` desde ella (`git switch -c`; si existe, sufijo numérico). Nunca se trabaja en la rama principal. El merge a la rama de partida solo se hace si el operador lo acepta en «Cierre».
 
 ## Qué leer
 
@@ -43,9 +43,11 @@ Al final, actualizar la línea 1 de `rules.md` a la versión de la skill solo si
 
 ## Cierre
 
-Con confirmación, un commit en la rama nueva (`docs: actualizar la documentación de la skill de X a Y`): mostrar la lista de archivos y el mensaje de commit propuesto, y preguntar en texto como mensaje final del turno (regla 5). Informar el nombre de la rama, el resumen de aplicados/omitidos/manuales y cómo revisar (`git diff <rama principal>`). No hace merge: lo decide el operador.
+Con confirmación, un commit en la rama nueva (`docs: actualizar la documentación de la skill de X a Y`): mostrar la lista de archivos y el mensaje de commit propuesto, y preguntar en texto como mensaje final del turno (regla 5). Informar el nombre de la rama, el resumen de aplicados/omitidos/manuales y cómo revisar (`git diff <rama principal>`). 
 
-**Oferta de la suite (siempre se da).** Al terminar la actualización, después del commit (o de descartarlo) y de resolver los marcadores heredados si quedan, el mensaje que informa el resultado lleva la recomendación de [`suite-recommendation.md`](./suite-recommendation.md); la única excepción es que el `rules.md` del proyecto ya tenga el bloque `<!-- agent-context-suite:start -->`. Nunca va en la pregunta de confirmación del commit. Se da también cuando no había cambios que aplicar. No es un paso de la actualización: es un aviso que se da una vez, y lo opcional es que el operador lo acepte.
+**Merge a la rama de partida.** Con el commit hecho, en un mensaje aparte que cierra el turno (regla 5), preguntar en texto: «¿Hago el merge de `<rama nueva>` en `<rama de partida>`?», con «Hacer el merge» / «Dejar la rama para revisarla». Con «Hacer el merge»: `git switch <rama de partida>` y `git merge <rama nueva>`; si hay conflictos, parar, mostrarlos y no resolverlos sin el operador. Nunca `git push`. Con «Dejar la rama», informar cómo hacerlo después. Sin commit (el operador lo descartó) no hay nada que fusionar y no se pregunta.
+
+**Oferta de la suite (siempre se da).** Al terminar la actualización, después del commit (o de descartarlo), de la pregunta del merge si correspondía y de resolver los marcadores heredados si quedan, el mensaje que informa el resultado lleva la recomendación de [`suite-recommendation.md`](./suite-recommendation.md); la única excepción es que el `rules.md` del proyecto ya tenga el bloque `<!-- agent-context-suite:start -->`. Nunca va en una pregunta (la del commit ni la del merge). Se da también cuando no había cambios que aplicar. No es un paso de la actualización: es un aviso que se da una vez, y lo opcional es que el operador lo acepte.
 
 ## Alcance
 
