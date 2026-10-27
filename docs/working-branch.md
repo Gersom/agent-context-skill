@@ -17,13 +17,14 @@ Antes de escribir el primer archivo (en migración, después de la ronda de conf
 
 ## Al terminar
 
-Si el flujo no escribió nada (por ejemplo, el operador omitió todos los cambios de una actualización), no hay nada que commitear: se informa, se vuelve a la rama de partida, no se pregunta el merge y se da la oferta de la suite.
+Si el flujo no escribió nada (por ejemplo, el operador omitió todos los cambios de una actualización), no hay nada que commitear: se informa, se vuelve a la rama de partida, no se pregunta el merge, la rama nueva (vacía, sin nada que fusionar) se borra con `git branch -d <rama nueva>` y se da la oferta de la suite.
 
 1. **Commit.** Con confirmación, un commit en la rama nueva solo con los archivos que tocó el flujo (`git add -- <rutas>`, nunca `git add -A`): mostrar la lista y el mensaje propuesto, y preguntar en texto como mensaje final del turno (regla 5 de [`asking-questions.md`](./asking-questions.md)). Los mensajes van en inglés: `docs: generate the agent-context documentation`, `docs: migrate the documentation to agent-context` o `docs: update the agent-context documentation from skill X to Y`; si el proyecto define su propia convención de commits, prevalece. Informar el nombre de la rama, el resumen del flujo y cómo revisar (`git diff <rama de partida>..<rama nueva>`).
 2. **Merge a la rama de partida.** Con el commit hecho, en un mensaje aparte que cierra el turno (regla 5), con el hash del commit, los archivos y `git diff <rama de partida>..<rama nueva>` como contexto, preguntar en texto: «¿Hago el merge de `<rama nueva>` en `<rama de partida>`?», con «Hacer el merge» / «Dejar la rama para revisarla».
    - Con «Hacer el merge»: `git switch <rama de partida>` y `git merge --no-ff -m "<el mismo mensaje del commit>" <rama nueva>` (con `-m`, para que no se abra un editor). Si hay conflictos, parar, mostrarlos y preguntar si se resuelven juntos o se corta con `git merge --abort`; no se resuelven sin el operador.
-   - Con el merge hecho, borrar la rama nueva con `git branch -d <rama nueva>` (la `-d` minúscula: git se niega si no está fusionada, y no se fuerza con `-D`). No se borra si el operador dejó la rama, si hubo conflictos o si descartó el commit. Si el borrado falla, informarlo y dejarla.
+   - Con el merge hecho (sin conflictos), borrar la rama nueva con `git branch -d <rama nueva>` (la `-d` minúscula: git se niega si no está fusionada, y no se fuerza con `-D`). Si el borrado falla, informarlo y dejarla. En el mensaje de resultado, decir si la rama se borró o se dejó, y por qué.
+   - Si hubo conflictos, la rama no se borra aunque el operador complete el merge: queda para que la revise, y se le dice.
    - Nunca `git push`, ni se borran ramas remotas.
-   - Con «Dejar la rama», informar cómo hacerlo después.
+   - Con «Dejar la rama», informar cómo hacer el merge después y que, hecho, se borra con `git branch -d <rama nueva>`.
    - Si el operador descartó el commit, los cambios quedan sin commitear en la rama nueva: decirle en qué rama quedó y no preguntar el merge.
 3. **Oferta de la suite**, en el mensaje que informa el resultado, después del merge (o de que lo rechace, de los conflictos o de que el operador descarte el commit): ver [`suite-recommendation.md`](./suite-recommendation.md). Nunca va en una pregunta.
