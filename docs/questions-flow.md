@@ -43,7 +43,7 @@ Corre primero, antes de la Ronda 1, porque determina en qué idioma se redacta t
 
 ## Rama de trabajo
 
-Antes de escribir el primer archivo, el flujo trabaja en una rama nueva, según [`working-branch.md`](./working-branch.md) («Al empezar»); al terminar, ofrece el merge a la rama de partida.
+Antes de escribir el primer archivo, el flujo trabaja en una rama nueva, según [`working-branch.md`](./working-branch.md) («Al empezar»); al terminar, ofrece el merge a la rama de partida. Si el flujo viene de [`migration-flow.md`](./migration-flow.md), la rama ya existe: no se crea otra ni se repite el cierre (lo da la migración).
 
 ## Ronda 1 — Gate de alcance (siempre, sola)
 

@@ -87,7 +87,7 @@ Solo después de la confirmación se ejecuta la migración — nunca se mueve o 
 
 ## Ejecución
 
-0. **Rama de trabajo.** Antes de mover o escribir nada, crear la rama según [`working-branch.md`](./working-branch.md) («Al empezar»).
+0. **Rama de trabajo.** Antes de mover o escribir nada, crear la rama según [`working-branch.md`](./working-branch.md) («Al empezar»); si se llega a `questions-flow.md` desde el paso 4, no se crea otra.
 1. **Resguardar el original, según la respuesta `Legacy`.**
    - **Conservar** → copiar a `docs-legacy/` en la raíz del repo destino **solo los archivos de la tabla confirmada** (los que matchean y los sin mapeo), no toda la carpeta (arrastraría documentación de usuario y otros archivos que no se migran). Con `cp --parents` desde la raíz del repo, que conserva la ruta relativa (ej. `docs-legacy/docs/claude/backlog.md`), sin modificarlos ni leerlos. Si `docs-legacy/` ya existía, solo se reemplaza si el operador lo eligió así; si no, queda como estaba y no se copia nada.
    - **No conservar** → no se crea `docs-legacy/`. Aplicar antes la [«Precondición: git limpio»](#precondición-git-limpio): el único respaldo del original es git.
@@ -99,7 +99,7 @@ Solo después de la confirmación se ejecuta la migración — nunca se mueve o 
    - Si el `AGENTS.md`/`CLAUDE.md` existente (fuera de ese bloque) apunta a rutas viejas, las de la documentación migrada, mostrar las rutas afectadas y preguntar si se corrigen, en texto como mensaje final del turno (regla 5 de [`asking-questions.md`](./asking-questions.md)). No se corrigen sin confirmar.
 6. **Retirar los originales.** Con las copias verificadas (existen y no están vacías: `ls`, `wc -c`) y confirmación explícita del operador (pregunta en texto como mensaje final del turno: la lista de las copias verificadas con sus tamaños de `wc -c` como contexto y, debajo, **Pregunta (Originales):** «Retirar (Recomendado)» / «Dejarlos»; se espera la respuesta en el chat), quitar de la carpeta vieja los originales ya migrados con `git rm`; si no es repo git, `rm` solo con esa confirmación. Se omite el original cuyo destino es su misma ruta. Los sin mapeo (paso 3) se mueven con `mv`/`git mv`. Con «Conservar» el respaldo ya está en `docs-legacy/`; con «No conservar», la pregunta avisa que el único respaldo es git.
 7. **Dejar registro de la migración.** La primera entrada de `docs/agents/history.md` no queda vacía ni es un volcado de `git log`: se registra la migración en sí (como ✅ Hecha) — qué se migró y desde qué archivos (de `docs-legacy/` o del git si no se conservó), si se condensó o se mantuvo el texto, y qué quedó en `others/` sin mapear.
-8. **Cierre.** Commit y merge a la rama de partida según [`working-branch.md`](./working-branch.md) («Al terminar»); después, la oferta de la suite (siempre se da): el mensaje de cierre lleva siempre la recomendación de [`suite-recommendation.md`](./suite-recommendation.md). No es un paso de la migración: es un aviso que se da una vez, y lo opcional es que el operador lo acepte.
+8. **Cierre.** Commit y merge a la rama de partida según [`working-branch.md`](./working-branch.md) («Al terminar»), una sola vez (el «Cierre» de `questions-flow.md` no se repite aquí); después, la oferta de la suite (siempre se da): el mensaje de cierre lleva siempre la recomendación de [`suite-recommendation.md`](./suite-recommendation.md). La oferta no es un paso de la migración: es un aviso que se da una vez, y lo opcional es que el operador lo acepte.
 
 ## Qué NO hace este flujo
 
