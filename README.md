@@ -27,11 +27,21 @@ Pídeselo al agente al empezar a trabajar en un repositorio:
 - **"Usa la skill agent-context-skill"**: si el repo ya tiene documentación de la skill, sigue el flujo existente; si no, evalúa si hay documentación de otro sistema para migrar o dispara el árbol de preguntas para generarla.
 - **"Usa la skill agent-context-skill y migra mi proyecto"**: fuerza el chequeo de migración (ver [`docs/migration-flow.md`](./docs/migration-flow.md)).
 
+## Herramientas complementarias (opcional)
+
+La skill funciona sola. Quien además quiera ver y editar las tareas desde la terminal y comprobar que la documentación esté en orden puede usar **agent-context-suite** (https://github.com/Gersom/agent-context-suite), publicada por el mismo autor como paquete de npm con el comando `acsuite`:
+
+- `acsuite board`: tablero de tareas en vivo.
+- `acsuite task`: consultar y editar las tareas sin tocar a mano `handoff.md`, `backlog.md` ni `history.md`.
+- `acsuite check`: verifica la documentación.
+
+Se instala con `npm install -g agent-context-suite` (Node 20 o superior) y su README explica el uso.
+
 ## Qué hay en el repo
 
 ```
 SKILL.md        # Punto de entrada: cuándo se dispara y qué hace
-docs/           # Flujos (questions-flow, migration-flow, multi-operator, update-flow, version-check, asking-questions), template-architecture.md y changelog/
+docs/           # Flujos (questions-flow, migration-flow, multi-operator, update-flow, version-check, asking-questions, suite-recommendation), template-architecture.md y changelog/
 template/       # Catálogo de plantillas que la skill copia al repo destino
 .claude-plugin/ # plugin.json y marketplace.json
 LICENSE         # Licencia MIT

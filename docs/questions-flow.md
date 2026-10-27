@@ -36,7 +36,7 @@ Corre primero, antes de la Ronda 1, porque determina en qué idioma se redacta t
    - Si es ambiguo o insuficiente (ej. el operador solo escribió *"skill agent-context-skill"*, sin palabras de idioma natural que lo identifiquen) → preguntar explícitamente, **en inglés** (idioma universal, para no asumir uno), con `AskUserQuestion`: pregunta *"Which language should I use for this project's documentation?"*, header `Language`, opciones `Español (Recomendado)` y `English` (otros idiomas, por «Otro»)
 3. **De acá en adelante, redactar todo contenido nuevo (prosa y headers de sección) en `IDIOMA`**, con estas excepciones que se mantienen siempre en inglés:
    - Nombres de archivo y carpetas del catálogo (`backlog.md`, `handoff.md`, `stack.md`, etc.).
-   - Términos propios de este kit (ej. "Handoff", "Backlog", "History", "Roadmap", "Placeholder") y jerga técnica sin traducción natural asentada (ej. "linter", "commit", "deploy", "merge").
+   - Términos propios de esta skill (ej. "Handoff", "Backlog", "History", "Roadmap", "Placeholder") y jerga técnica sin traducción natural asentada (ej. "linter", "commit", "deploy", "merge").
 4. **Si en esta ejecución se genera o se toca `docs/agents/rules.md`, registrar `IDIOMA`** en la regla correspondiente, para que sesiones futuras no vuelvan a preguntarlo.
 
 ---
@@ -216,6 +216,8 @@ Las reglas del modo están en [`multi-operator.md`](./multi-operator.md) (abrirl
    **"¿Quieres igual la documentación completa porque vas a seguir trabajando este proyecto?"**
    - **Sí** → volver a la Ronda 2 y correr el flujo completo.
    - **No** → fin.
+
+**Cierre:** al terminar de verdad el flujo, el mensaje de cierre puede llevar la recomendación opcional de [`suite-recommendation.md`](./suite-recommendation.md). Si el operador responde «Sí» en el paso 5, el flujo vuelve a la Ronda 2 y la recomendación no se da todavía: va solo al terminar el flujo completo.
 
 ---
 

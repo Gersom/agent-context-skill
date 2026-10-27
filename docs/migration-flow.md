@@ -98,10 +98,12 @@ Solo después de la confirmación se ejecuta la migración — nunca se mueve o 
    - Si el `AGENTS.md`/`CLAUDE.md` existente (fuera de ese bloque) apunta a rutas viejas, las de la documentación migrada, mostrar las rutas afectadas y preguntar si se corrigen, en texto como mensaje final del turno (regla 5 de [`asking-questions.md`](./asking-questions.md)). No se corrigen sin confirmar.
 6. **Retirar los originales.** Con las copias verificadas (existen y no están vacías: `ls`, `wc -c`) y confirmación explícita del operador (pregunta en texto como mensaje final del turno: la lista de las copias verificadas con sus tamaños de `wc -c` como contexto y, debajo, **Pregunta (Originales):** «Retirar (Recomendado)» / «Dejarlos»; se espera la respuesta en el chat), quitar de la carpeta vieja los originales ya migrados con `git rm`; si no es repo git, `rm` solo con esa confirmación. Se omite el original cuyo destino es su misma ruta. Los sin mapeo (paso 3) se mueven con `mv`/`git mv`. Con «Conservar» el respaldo ya está en `docs-legacy/`; con «No conservar», la pregunta avisa que el único respaldo es git.
 7. **Dejar registro de la migración.** La primera entrada de `docs/agents/history.md` no queda vacía ni es un volcado de `git log`: se registra la migración en sí (como ✅ Hecha) — qué se migró y desde qué archivos (de `docs-legacy/` o del git si no se conservó), si se condensó o se mantuvo el texto, y qué quedó en `others/` sin mapear.
+8. **Recomendación opcional de la suite.** Al terminar la migración, el mensaje de cierre puede llevar la recomendación de [`suite-recommendation.md`](./suite-recommendation.md). No es un paso de la migración: solo un aviso opcional, que se da una vez.
 
 ## Qué NO hace este flujo
 
 - Nunca retira los originales sin confirmación explícita (paso 6) ni borra `docs-legacy/`: si se conserva, queda como respaldo hasta que el operador lo borre a mano, y el flujo no vuelve a tocarlo después de crearlo.
+- No instala ni ejecuta nada de la suite: la recomendación del paso 8 es solo un aviso opcional.
 - Lo demás (no leer para clasificar, `docs/others/` sin transformar, fusiones solo con confirmación) ya está en la heurística, la ronda de confirmación y el paso 3.
 
 ---
