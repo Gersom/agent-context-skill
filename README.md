@@ -29,7 +29,7 @@ Pídeselo al agente al empezar a trabajar en un repositorio:
 
 ## Herramientas complementarias (opcional)
 
-La skill funciona sola. Quien además quiera ver y editar las tareas desde la terminal y comprobar que la documentación esté en orden puede usar **agent-context-suite** (https://github.com/Gersom/agent-context-suite), publicada por el mismo autor como paquete de npm con el comando `acsuite`:
+La skill funciona sola. Quien además quiera ver y editar las tareas desde la terminal y comprobar que la documentación esté en orden puede usar **agent-context-suite** (https://www.npmjs.com/package/agent-context-suite), publicada por el mismo autor como paquete de npm con el comando `acsuite`:
 
 - `acsuite board`: tablero de tareas en vivo.
 - `acsuite task`: consultar y editar las tareas sin tocar a mano `handoff.md`, `backlog.md` ni `history.md`.
