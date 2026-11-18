@@ -9,6 +9,7 @@ Para quien usa la carpeta con documentos, hojas de cálculo o imágenes. Sin ron
    - `office/rules.md` → `docs/agents/rules.md`, con `IDIOMA` registrado. No ofrezcas la recomendación de la suite (`suite-recommendation.md`): `rules.md` ya la lleva.
    - `office/AGENTS.md` → `AGENTS.md` y `template/CLAUDE.md` → `CLAUDE.md`, en la raíz; si ya existen con contenido propio, solo la sección delimitada.
    - Con git: `office/gitignore.txt` → `.gitignore` (si existe, agrega las líneas que falten).
+   - `office/open-board.bat` → `open-board.bat` en la raíz, literal (solo Windows).
 4. Con git: `git init` si falta, identidad local y primer commit, como dice «Instalar» de `office-git.md`.
-5. Si `acsuite --help` responde, `acsuite check <carpeta>`.
+5. Si `acsuite --help` responde, `acsuite check <carpeta>`. Si no responde, dile a la persona, en llano, que falta instalar el programa de tareas y que lo instale quien la ayuda (`npm install -g agent-context-suite`, Node 20 o superior); no lo instales tú.
 6. Cierre, sin rutas ni jerga: «Listo. Pídeme lo que necesites; si tienes que dejar algo para después, dime "pausa esto" y lo retomamos cuando quieras.»
