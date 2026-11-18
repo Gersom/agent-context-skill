@@ -36,7 +36,7 @@ Antes de la tarea, seguir [`docs/version-check.md`](./docs/version-check.md) (ve
 ### Si no existe → abrir el flujo que corresponda
 
 - **Hay documentación de contexto previa en otro formato** (ej. un `docs/claude/` con su propio `backlog.md`/`handoff.md`) → [`docs/migration-flow.md`](./docs/migration-flow.md): reutiliza ese contenido en vez de perderlo.
-- **No hay nada reconocible para migrar** → [`docs/questions-flow.md`](./docs/questions-flow.md): árbol de preguntas (idioma, alcance de la tarea, etapa del proyecto) que decide qué generar copiando solo lo que corresponda desde `template/`, nunca el catálogo completo, y asegura el puntero en `CLAUDE.md` y `AGENTS.md` de la raíz.
+- **No hay nada reconocible para migrar** → [`docs/questions-flow.md`](./docs/questions-flow.md): árbol de preguntas (idioma, perfil, alcance de la tarea, etapa del proyecto) que decide qué generar copiando solo lo que corresponda desde `template/`, nunca el catálogo completo, y asegura el puntero en `CLAUDE.md` y `AGENTS.md` de la raíz.
 
 ## Dónde está cada cosa
 

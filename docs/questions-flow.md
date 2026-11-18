@@ -41,6 +41,15 @@ Corre primero, antes de la Ronda 1, porque determina en qué idioma se redacta t
 
 ---
 
+## Ronda 0 — Perfil (siempre, sola; tras el idioma)
+
+**Preguntar** en texto, con opciones numeradas y sin jerga (excepción a [`asking-questions.md`](./asking-questions.md): aquí no va el recuadro): "¿Para qué vas a usar esta carpeta?"
+
+1. **Para un proyecto de programación** → sigue en esta página (Rama de trabajo y Ronda 1).
+2. **Para mi trabajo del día a día** (documentos, hojas de cálculo, imágenes…) → sigue [`office-profile.md`](./office-profile.md) y deja esta página: sin Rama de trabajo, rondas, `project/` ni `docs/README.md`. «Carpeta destino» rige igual.
+
+---
+
 ## Rama de trabajo
 
 Antes de escribir el primer archivo, el flujo trabaja en una rama nueva, según [`working-branch.md`](./working-branch.md) («Al empezar»); al terminar, ofrece el merge a la rama de partida. Si el flujo viene de [`migration-flow.md`](./migration-flow.md), la rama ya existe: no se crea otra ni se repite el cierre (lo da la migración).

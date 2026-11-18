@@ -6,7 +6,7 @@ Las plantillas llevan comentarios HTML de guía para quien las completa; al gene
 
 ## Estructura
 
-`template/` contiene `README.md`, `AGENTS.md`, `CLAUDE.md` y las carpetas `agents/`, `multi/` (solo modo multi-operador), `project/`, `external/` y `plans/`; cada una se describe en las secciones siguientes.
+`template/` contiene `README.md`, `AGENTS.md`, `CLAUDE.md` y las carpetas `agents/`, `multi/` (solo modo multi-operador), `office/` (solo el perfil no técnico), `project/`, `external/` y `plans/`; cada una se describe en las secciones siguientes.
 
 ## `README.md` (raíz de `template/`)
 
@@ -99,3 +99,7 @@ Documentación de negocio, relevante solo cuando el proyecto tiene un componente
 - **`costs.md`** — Estructura de costos del proyecto (de operarlo, no de desarrollarlo).
 - **`limits.md`** — Límites de uso: cuotas, rate limits, topes por plan.
 - **`payments.md`** — Cómo funciona el cobro/facturación, pasarelas de pago involucradas.
+
+## `office/` (perfil no técnico, opcional)
+
+Solo para quien usa la carpeta con documentos, hojas de cálculo o imágenes (Ronda 0 de [`questions-flow.md`](./questions-flow.md), flujo en [`office-profile.md`](./office-profile.md)). `rules.md` y `AGENTS.md` reemplazan a los de `agents/` y la raíz, sin jerga de código ni enlaces a `project/`; `gitignore.txt` se copia como `.gitignore` (lista blanca: solo `docs/**/*.md` y los archivos de la skill). Los demás archivos (`handoff`, `backlog`, `history`) se toman de `agents/`.
