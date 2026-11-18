@@ -1,6 +1,6 @@
 # Git del perfil no técnico
 
-La persona no ve git: lo usa el agente. Solo se versionan la documentación y los archivos de la skill.
+La persona no ve git: lo usa el agente.
 
 ## Antes de instalar
 
@@ -17,4 +17,4 @@ La persona no ve git: lo usa el agente. Solo se versionan la documentación y lo
 
 ## Commits
 
-Tras cada cambio de estado, el mismo `git add` (nunca `-A`) y `git commit -m "docs(T-N): start|pause|resume|close task"`, en inglés. Sin cambios, no commitees. Entrecomilla rutas con espacios.
+Tras cada cambio de estado, el mismo `git add` (nunca `-A`) y `git commit -m "docs(T-N): <add|update|start|pause|resume|close> task"`, en inglés. Sin cambios, no commitees. Entrecomilla rutas con espacios.
