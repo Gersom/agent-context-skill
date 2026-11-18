@@ -37,6 +37,18 @@ Ask the agent when you start working in a repository:
 - **"Use the agent-context-skill skill"**: if the repo already has the skill's documentation, it follows the existing flow; if not, it checks whether there is documentation from another system to migrate or triggers the question tree to generate it.
 - **"Use the agent-context-skill skill and migrate my project"**: forces the migration check (see [`docs/migration-flow.md`](./docs/migration-flow.md)).
 
+## For office work (non-technical profile)
+
+If you use the folder for your day-to-day work (documents, spreadsheets, images) rather than for programming, the skill asks when it starts ("What will you use this folder for?") and installs a profile of its own:
+
+- **No jargon, no plans:** the agent does what you ask and talks in plain language; there is no `project/`, no plans and no execution modes.
+- **Tasks you can pause and resume:** it registers a task only when the work has several steps or when you change topic. Phrases such as "pause this", "let's go back to the Excel" or "I'm done" pause, resume and close tasks. With several companies or projects in one folder, each task carries a label.
+- **Backup copies:** before modifying one of your files it saves a copy in `backups/`, and deletes it when the task closes.
+- **Git, out of sight:** the agent sets it up and uses it after a single confirmation, and it versions only the documentation, not your work files.
+- **Requires** the `acsuite` command from [agent-context-suite](https://www.npmjs.com/package/agent-context-suite) (see below): `acsuite board` shows your tasks.
+
+Details in [`docs/office-profile.md`](./docs/office-profile.md) and [`docs/office-git.md`](./docs/office-git.md).
+
 ## Complementary tools (optional)
 
 The skill works on its own. If you also want to view and edit tasks from the terminal and check that the documentation is in order, you can use **agent-context-suite** (https://www.npmjs.com/package/agent-context-suite), published by the same author as an npm package with the `acsuite` command:
@@ -51,7 +63,7 @@ Install it with `npm install -g agent-context-suite` (Node 20 or higher); its RE
 
 ```
 SKILL.md        # Entry point: when it triggers and what it does
-docs/           # Flows (questions-flow, migration-flow, multi-operator, update-flow, working-branch, version-check, asking-questions, suite-recommendation), template-architecture.md and changelog/
+docs/           # Flows (questions-flow, migration-flow, multi-operator, update-flow, working-branch, version-check, asking-questions, suite-recommendation, office-profile, office-git), template-architecture.md and changelog/
 template/       # Catalog of templates the skill copies into the target repo
 .claude-plugin/ # plugin.json and marketplace.json
 LICENSE         # MIT license
